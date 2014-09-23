@@ -4,12 +4,11 @@
 #  }
 #}
 
-
-
-
 Shoes.app( :width => 280, :height => 350 ) do
+  # Flow is like a box of matches
   flow( :width => 280, :margin => 10 ) do
 
+    # stack is just as stacked (apiladas) boxes
     stack :width => "100%" do
       banner "A POEM"
     end
