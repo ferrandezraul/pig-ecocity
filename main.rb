@@ -6,7 +6,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 require 'product_csv'
 
 
-PATH_TO_CSV = File.join( File.dirname( __FILE__ ), "products/products_original3.csv" )
+PATH_TO_CSV = File.join( File.dirname( __FILE__ ), "products/products_original.csv" )
 
 class Main < Shoes
   # Url method comes from Shoes
@@ -57,4 +57,4 @@ class Main < Shoes
 end
 
 # Need this. That's what opens the window
-Shoes.app :title => "Porc Ecocity", :width => 400, :height => 500
+Shoes.app :title => "Porc Ecocity", :width => 600, :height => 900

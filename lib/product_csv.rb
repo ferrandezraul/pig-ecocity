@@ -1,6 +1,3 @@
-#!/bin/env ruby
-# encoding: utf-8
-
 require 'csv'
 
 module Columns
@@ -29,7 +26,7 @@ class ProductCSV
 
     # By default separator is ","
     # CSV.read(file_path, { :col_sep => ';' })
-    products_array = CSV.read(file_path)
+    products_array = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
 
     products_array_clean = []
     products_array.each do |product_attributes|
