@@ -1,2 +1,5 @@
 # Ignore rubymine
 /*.idea
+
+# Ignore csv files open
+/products/.~*#
