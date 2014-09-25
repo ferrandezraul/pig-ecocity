@@ -1,6 +1,12 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
+
+
+PATH_TO_CSV = File.join( File.dirname( __FILE__ ), "products/products_original3.csv" )
 
 class Main < Shoes
   # Url method comes from Shoes
@@ -18,8 +24,15 @@ class Main < Shoes
   end
 
   def products
-    para "Products:\n",
-         link("Go back.", :click => "/")
+    para "Products:\n"
+
+    @productos = ProductCSV.read( PATH_TO_CSV )
+
+    @productos.each do |product|
+      para "#{product[:name]} \n"
+    end
+
+    para link("Go back.", :click => "/")
   end
 
   def orders

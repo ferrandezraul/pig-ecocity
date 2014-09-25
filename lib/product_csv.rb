@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 require 'csv'
 
 module Columns
@@ -31,7 +34,7 @@ class ProductCSV
     products_array_clean = []
     products_array.each do |product_attributes|
       # Filter headers. Note that it is assumed that headers start with '#'
-      products_array_clean.push product_attributes unless product_attributes.first.starts_with?("#")
+      products_array_clean.push product_attributes unless product_attributes.first.start_with?("#")
     end
 
     my_products = []
