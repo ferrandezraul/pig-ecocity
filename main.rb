@@ -1,3 +1,7 @@
+$:.unshift File.join( File.dirname( __FILE__ ), "lib" )
+
+require 'product_csv'
+
 class Main < Shoes
   # Url method comes from Shoes
   url '/', :index        # draws page from the index method   (you can organise your methods in different classes)
