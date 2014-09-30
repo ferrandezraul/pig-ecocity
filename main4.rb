@@ -24,7 +24,7 @@ Shoes.app :width => 800, :height => 600 do
     button "Productes" do
       @p.clear{
         @products.each do |product|
-          para "#{product[:name]}\n", :stroke => "#CD9", :margin => 4
+          para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
         end
       }
     end

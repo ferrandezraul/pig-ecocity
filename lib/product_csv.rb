@@ -1,4 +1,5 @@
 require 'csv'
+require 'product'
 
 module Columns
   NAME = 0            # Name
@@ -37,12 +38,13 @@ class ProductCSV
     my_products = []
     products_array_clean.each do |product_attributes|
 
-      my_products.push( { :name => product_attributes[Columns::NAME],
-                          :price => product_attributes[Columns::PRICE].to_f,
-                          :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
-                          :pvp => product_attributes[Columns::PVP].to_f,
-                          :observations => product_attributes[Columns::OBSERVATIONS],
-                          :subproducts => product_attributes[Columns::SUBPRODUCTS] } )
+      my_products << Product.new( { :name => product_attributes[Columns::NAME],
+                                  :price => product_attributes[Columns::PRICE].to_f,
+                                  :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
+                                  :pvp => product_attributes[Columns::PVP].to_f,
+                                  :observations => product_attributes[Columns::OBSERVATIONS],
+                                  :subproducts => product_attributes[Columns::SUBPRODUCTS] } )
+
     end
 
     my_products
