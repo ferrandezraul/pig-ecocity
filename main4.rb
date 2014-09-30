@@ -3,6 +3,7 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
+require 'customers_csv'
 
 
 Shoes.app :width => 800, :height => 600 do
@@ -12,17 +13,18 @@ Shoes.app :width => 800, :height => 600 do
 
   stack :margin => 10 do
     title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
-    para "Porc Ecocity", :align => "center", :stroke => "#DFA",
-         :margin => 0
 
-    PATH_TO_CSV = ::File.join( File.dirname( __FILE__ ), "products/products_original.csv" )
-    @productos = ProductCSV.read( PATH_TO_CSV )
+    PATH_TO_PRODUCTS_CSV = ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
+    PATH_TO_CUSTOMERS_CSV = ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
+
+    @products = ProductCSV.read( PATH_TO_PRODUCTS_CSV )
+    @customers = CustomerCSV.read( PATH_TO_CUSTOMERS_CSV )
     @orders = []
 
     button "Productes" do
       @p.clear{
-        @productos.each do |product|
-          para product[:name], :stroke => "#CD9", :margin => 4
+        @products.each do |product|
+          para "#{product[:name]}\n", :stroke => "#CD9", :margin => 4
         end
       }
     end
@@ -30,7 +32,15 @@ Shoes.app :width => 800, :height => 600 do
     button "Comandes" do
       @p.clear{
         @orders.each do |order|
-          para order[:name], :stroke => "#CD9", :margin => 4
+          para "#{order[:name]}\n", :stroke => "#CD9", :margin => 4
+        end
+      }
+    end
+
+    button "Clients" do
+      @p.clear{
+        @customers.each do |customer|
+          para "#{customer[:name]}\n", :stroke => "#CD9", :margin => 4
         end
       }
     end

@@ -26,9 +26,9 @@ class Main < Shoes
   def products
     para "Products:\n"
 
-    @productos = ProductCSV.read( PATH_TO_CSV )
+    @products = ProductCSV.read( PATH_TO_CSV )
 
-    @productos.each do |product|
+    @products.each do |product|
       para "#{product[:name]} \n"
     end
 
