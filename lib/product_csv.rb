@@ -3,7 +3,7 @@ require 'product'
 
 module Columns
   NAME = 0            # Name
-  PRICE = 1           # Price
+  PRICE_TIENDA = 1           # Price
   PRICE_COOPE = 2     # Price for cope
   PVP = 3             # PVP
   OBSERVATIONS = 4    # Observations
@@ -39,11 +39,11 @@ class ProductCSV
     products_array_clean.each do |product_attributes|
 
       my_products << Product.new( { :name => product_attributes[Columns::NAME],
-                                  :price => product_attributes[Columns::PRICE].to_f,
-                                  :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
-                                  :pvp => product_attributes[Columns::PVP].to_f,
-                                  :observations => product_attributes[Columns::OBSERVATIONS],
-                                  :subproducts => product_attributes[Columns::SUBPRODUCTS] } )
+                                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
+                                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
+                                    :pvp => product_attributes[Columns::PVP].to_f,
+                                    :observations => product_attributes[Columns::OBSERVATIONS],
+                                    :subproducts => product_attributes[Columns::SUBPRODUCTS] } )
 
     end
 

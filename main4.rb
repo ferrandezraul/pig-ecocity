@@ -40,7 +40,7 @@ Shoes.app :width => 800, :height => 600 do
     button "Clients" do
       @p.clear{
         @customers.each do |customer|
-          para "#{customer[:name]}\n", :stroke => "#CD9", :margin => 4
+          para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
         end
       }
     end

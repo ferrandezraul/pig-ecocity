@@ -1,4 +1,5 @@
 require 'csv'
+require 'customer'
 
 module CustomerColumns
   NAME = 0            # Name
@@ -31,9 +32,9 @@ class CustomerCSV
     my_customers = []
     customers_array_clean.each do |customer_attributes|
 
-      my_customers.push( { :name => customer_attributes[CustomerColumns::NAME],
-                          :address => customer_attributes[CustomerColumns::ADDRESS],
-                          :type => customer_attributes[CustomerColumns::TYPE] } )
+      my_customers << Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
+                                      :address => customer_attributes[CustomerColumns::ADDRESS],
+                                      :type => customer_attributes[CustomerColumns::TYPE] } )
     end
 
     my_customers
