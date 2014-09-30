@@ -45,6 +45,8 @@ Shoes.app :width => 800, :height => 600 do
       }
     end
 
+    # This is for clearing flow when user press any button
+    # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
     @p = flow
 
   end
