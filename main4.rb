@@ -84,7 +84,7 @@ Shoes.app :width => 800, :height => 600 do
       button "Comandes" do
         @p.clear{
           @orders.each do |order|
-            para "Comanda per #{order.customer.name}\" ", :stroke => "#CD9", :margin => 4
+            para "Comanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
             para "#{order.quantity.to_i} x #{order.weight.to_i} g. #{order.product.name}", :stroke => "#CD9", :margin => 4
           end
         }
@@ -113,7 +113,19 @@ Shoes.app :width => 800, :height => 600 do
             product = product_with_name(product_name.text)
             customer = customer_with_name(customer_name.text)
 
+            if product.nil? or customer.nil?
+              alert "Error: No s'ha trobat el producte o el client"
+              return
+            end
+
+            if quantity.text.to_i <= 0
+              alert "Quantitat ha de ser mes gran que 0"
+              return
+            end
+
             @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+
+            alert "Comanda afegida!"
           end
 
         }
