@@ -52,6 +52,7 @@ Shoes.app :width => 800, :height => 600 do
         return product
       end
     end
+    alert "Product with name \"#{name}\" not found"
   end
 
   def customer_with_name(name)
@@ -60,6 +61,7 @@ Shoes.app :width => 800, :height => 600 do
         return customer
       end
     end
+    alert "Customer with name \"#{name}\" not found"
   end
 
   stack :margin => 10 do
@@ -82,7 +84,8 @@ Shoes.app :width => 800, :height => 600 do
       button "Comandes" do
         @p.clear{
           @orders.each do |order|
-            para "#{order.to_s}\n", :stroke => "#CD9", :margin => 4
+            para "Comanda per #{order.customer.name}\" ", :stroke => "#CD9", :margin => 4
+            para "#{order.quantity.to_i} x #{order.weight.to_i} g. #{order.product.name}", :stroke => "#CD9", :margin => 4
           end
         }
       end
@@ -102,14 +105,17 @@ Shoes.app :width => 800, :height => 600 do
           para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
           product_name = list_box items: @product_names
           para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
-          quantity = edit_line.text.to_i
+          quantity = edit_line
           para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
-          peso = edit_line.text.to_i
+          peso = edit_line
 
-          product = product_with_name(product_name)
-          customer = customer_with_name(customer_name)
+          button "Crear comanda" do
+            product = product_with_name(product_name.text)
+            customer = customer_with_name(customer_name.text)
 
-          @orders << ::Order.new( customer, product, quantity, peso )
+            @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+          end
+
         }
       end
 
