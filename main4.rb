@@ -16,7 +16,7 @@ Shoes.app :width => 800, :height => 600 do
   end
 
   def customers_csv__path
-    return ::File.join( File.dirname( __FILE__ ), "csv/wrong_customers.csv" )
+    return ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
   end
 
   def load_products
@@ -64,6 +64,18 @@ Shoes.app :width => 800, :height => 600 do
         @customers.each do |customer|
           para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
         end
+      }
+    end
+
+    button "Nova Comanda" do
+      @p.clear{
+        para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+        client = list_box items: @customers
+        para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+        product = list_box items: @products
+        para "Selecciona la quantitat en grams:", :stroke => "#CD9", :margin => 4
+        peso = edit_line.text.to_i
+        peso = peso.to_f
       }
     end
 
