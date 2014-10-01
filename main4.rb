@@ -73,7 +73,7 @@ Shoes.app :width => 800, :height => 600 do
     @orders = []
 
     flow :margin => 10 do
-      button "Productes" do
+      button "Productes", :margin => 4 do
         @p.clear{
           @products.each do |product|
             para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
@@ -81,7 +81,7 @@ Shoes.app :width => 800, :height => 600 do
         }
       end
 
-      button "Comandes" do
+      button "Comandes", :margin => 4 do
         @p.clear{
           @orders.each do |order|
             para "Comanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
@@ -90,7 +90,7 @@ Shoes.app :width => 800, :height => 600 do
         }
       end
 
-      button "Clients" do
+      button "Clients", :margin => 4 do
         @p.clear{
           @customers.each do |customer|
             para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
@@ -98,36 +98,37 @@ Shoes.app :width => 800, :height => 600 do
         }
       end
 
-      button "Nova Comanda" do
+      button "Nova Comanda", :margin => 4 do
         @p.clear{
-          para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-          customer_name = list_box items: @customer_names
-          para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-          product_name = list_box items: @product_names
-          para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
-          quantity = edit_line
-          para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
-          peso = edit_line
+          stack :margin => 4 do
+            para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+            customer_name = list_box items: @customer_names
+            para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+            product_name = list_box items: @product_names
+            para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
+            quantity = edit_line
+            para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
+            peso = edit_line
 
-          button "Crear comanda" do
-            product = product_with_name(product_name.text)
-            customer = customer_with_name(customer_name.text)
+            button "Crear comanda", :margin => 10 do
+              if quantity.text.to_i <= 0
+                alert "Quantitat ha de ser mes gran que 0"
+                return
+              end
 
-            if product.nil? or customer.nil?
-              alert "Error: No s'ha trobat el producte o el client"
-              return
+              product = product_with_name(product_name.text)
+              customer = customer_with_name(customer_name.text)
+
+              if product.nil? or customer.nil?
+                alert "Error: No s'ha trobat el producte o el client"
+                return
+              end
+
+              @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+
+              alert "Comanda afegida!"
             end
-
-            if quantity.text.to_i <= 0
-              alert "Quantitat ha de ser mes gran que 0"
-              return
-            end
-
-            @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
-
-            alert "Comanda afegida!"
           end
-
         }
       end
 
