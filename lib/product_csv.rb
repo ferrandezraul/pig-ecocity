@@ -1,5 +1,6 @@
 require 'csv'
 require 'product'
+require 'errors'
 
 module Columns
   NAME = 0            # Name
@@ -38,6 +39,8 @@ class ProductCSV
     my_products = []
     products_array_clean.each do |product_attributes|
 
+      verify_product_attributes( product_attributes )
+
       my_products << Product.new( { :name => product_attributes[Columns::NAME],
                                     :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                                     :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
@@ -49,6 +52,15 @@ class ProductCSV
 
     my_products
 
+  end
+
+  private
+
+  def self.verify_product_attributes( attributes )
+    raise Errors::ProductCSVError.new, "Error loading csv. Nom de producte invalid" unless attributes[Columns::NAME]
+    raise Errors::ProductCSVError.new, "Error loading csv. Preu tenda del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_TIENDA]
+    raise Errors::ProductCSVError.new, "Error loading csv. Preu coope del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_COOPE]
+    raise Errors::ProductCSVError.new, "Error loading csv. Preu PVP del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PVP]
   end
 
 end

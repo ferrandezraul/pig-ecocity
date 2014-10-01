@@ -11,14 +11,36 @@ Shoes.app :width => 800, :height => 600 do
 
   @title = "Ecocity Porc"
 
+  def products_csv__path
+    return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
+  end
+
+  def customers_csv__path
+    return ::File.join( File.dirname( __FILE__ ), "csv/wrong_customers.csv" )
+  end
+
+  def load_products
+    begin
+      @products = ProductCSV.read( products_csv__path )
+    rescue Errors::ProductCSVError => e
+      alert e.message
+    end
+  end
+
+  def load_customers
+    begin
+      @customers = CustomerCSV.read( customers_csv__path )
+    rescue Errors::CustomersCSVError => e
+      alert e.message
+    end
+  end
+
   stack :margin => 10 do
     title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
 
-    PATH_TO_PRODUCTS_CSV = ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
-    PATH_TO_CUSTOMERS_CSV = ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
+    load_products
+    load_customers
 
-    @products = ProductCSV.read( PATH_TO_PRODUCTS_CSV )
-    @customers = CustomerCSV.read( PATH_TO_CUSTOMERS_CSV )
     @orders = []
 
     button "Productes" do

@@ -1,5 +1,6 @@
 require 'csv'
 require 'customer'
+require 'errors'
 
 module CustomerColumns
   NAME = 0            # Name
@@ -32,6 +33,8 @@ class CustomerCSV
     my_customers = []
     customers_array_clean.each do |customer_attributes|
 
+      verify_customer_attributes( customer_attributes)
+
       my_customers << Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
                                       :address => customer_attributes[CustomerColumns::ADDRESS],
                                       :type => customer_attributes[CustomerColumns::TYPE] } )
@@ -39,6 +42,15 @@ class CustomerCSV
 
     my_customers
 
+  end
+
+  private
+
+  def self.verify_customer_attributes( attributes )
+    raise Errors::CustomersCSVError.new, "Error loading customers csv. Nom de client invalid" unless attributes[CustomerColumns::NAME]
+    raise Errors::CustomersCSVError.new, "Error loading customers csv. Addreca del client \"#{attributes[CustomerColumns::NAME]}\" invalid" unless attributes[CustomerColumns::ADDRESS]
+    raise Errors::CustomersCSVError.new, "Error loading customers csv. Tipus del client \"#{attributes[CustomerColumns::NAME]}\" invalid" unless attributes[CustomerColumns::TYPE]
+    raise Errors::CustomersCSVError.new, "Error loading customers csv. Tipus del client \"#{attributes[CustomerColumns::NAME]}\" invalid. Tipus ha de ser CLIENT, COOPE o TIENDA" unless attributes[CustomerColumns::TYPE] =~ /CLIENT|COOPE|TIENDA/
   end
 
 end
