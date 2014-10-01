@@ -9,12 +9,12 @@ require 'errors'
 
 class Main < Shoes
   # Url method comes from Shoes
-  url '/', :index        # draws page from the index method   (you can organise your methods in different classes)
-  url '/products', :products   # draws page from the products method
+  url '/', :index                # draws page from the index method   (you can organise your methods in different classes)
+  url '/products', :products     # draws page from the products method
   url '/customers', :customers   # draws page from the customers method
-  url '/orders', :orders   # draws page from the orders method
-  url '/summary', :summary # draws page from the summary method
-  url '/new_order', :new_order # draws page from the new_order method
+  url '/orders', :orders         # draws page from the orders method
+  url '/summary', :summary       # draws page from the summary method
+  url '/new_order', :new_order   # draws page from the new_order method
 
   def products_csv__path
     return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -41,20 +41,17 @@ class Main < Shoes
   end
 
   def index
-    load_products
-    load_customers
-
     para link("Products\n", :click => "/products"),
          link("Clients\n", :click => "/customers"),
          link("Orders\n", :click => "/orders"),
-         link("Summary\n", :click => "/summary")
+         link("Summary\n", :click => "/summary"),
          link("New Order\n", :click => "/new_order")
   end
 
   def products
-    para "Products:\n"
-
     load_products
+
+    para "Products:\n"
 
     @products.each do |product|
       para "#{product.to_s} \n"
@@ -64,9 +61,9 @@ class Main < Shoes
   end
 
   def customers
-    para "Clients:\n"
-
     load_customers
+
+    para "Clients:\n"
 
     @customers.each do |customer|
       para "#{customer.to_s} \n"
