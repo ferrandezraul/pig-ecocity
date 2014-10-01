@@ -4,6 +4,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
 require 'customers_csv'
+require 'order'
 
 
 Shoes.app :width => 800, :height => 600 do
@@ -25,6 +26,11 @@ Shoes.app :width => 800, :height => 600 do
     rescue Errors::ProductCSVError => e
       alert e.message
     end
+
+    @product_names = []
+    @products.each do |product|
+      @product_names << product.name
+    end
   end
 
   def load_customers
@@ -32,6 +38,27 @@ Shoes.app :width => 800, :height => 600 do
       @customers = CustomerCSV.read( customers_csv__path )
     rescue Errors::CustomersCSVError => e
       alert e.message
+    end
+
+    @customer_names = []
+    @customers.each do |customer|
+      @customer_names << customer.name
+    end
+  end
+
+  def product_with_name(name)
+    @products.each do |product|
+      if product.name == name
+        return product
+      end
+    end
+  end
+
+  def customer_with_name(name)
+    @customers.each do |customer|
+      if customer.name == name
+        return customer
+      end
     end
   end
 
@@ -55,7 +82,7 @@ Shoes.app :width => 800, :height => 600 do
       button "Comandes" do
         @p.clear{
           @orders.each do |order|
-            para "#{order[:name]}\n", :stroke => "#CD9", :margin => 4
+            para "#{order.to_s}\n", :stroke => "#CD9", :margin => 4
           end
         }
       end
@@ -71,13 +98,18 @@ Shoes.app :width => 800, :height => 600 do
       button "Nova Comanda" do
         @p.clear{
           para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-          client = list_box items: @customers
+          customer_name = list_box items: @customer_names
           para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-          product = list_box items: @products
-          para "Selecciona la quantitat en grams:", :stroke => "#CD9", :margin => 4
+          product_name = list_box items: @product_names
+          para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
+          quantity = edit_line.text.to_i
+          para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
           peso = edit_line.text.to_i
-          peso = peso.to_f
 
+          product = product_with_name(product_name)
+          customer = customer_with_name(customer_name)
+
+          @orders << ::Order.new( customer, product, quantity, peso )
         }
       end
 
