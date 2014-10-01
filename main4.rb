@@ -43,45 +43,49 @@ Shoes.app :width => 800, :height => 600 do
 
     @orders = []
 
-    button "Productes" do
-      @p.clear{
-        @products.each do |product|
-          para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
-        end
-      }
-    end
+    flow :margin => 10 do
+      button "Productes" do
+        @p.clear{
+          @products.each do |product|
+            para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
+          end
+        }
+      end
 
-    button "Comandes" do
-      @p.clear{
-        @orders.each do |order|
-          para "#{order[:name]}\n", :stroke => "#CD9", :margin => 4
-        end
-      }
-    end
+      button "Comandes" do
+        @p.clear{
+          @orders.each do |order|
+            para "#{order[:name]}\n", :stroke => "#CD9", :margin => 4
+          end
+        }
+      end
 
-    button "Clients" do
-      @p.clear{
-        @customers.each do |customer|
-          para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
-        end
-      }
-    end
+      button "Clients" do
+        @p.clear{
+          @customers.each do |customer|
+            para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
+          end
+        }
+      end
 
-    button "Nova Comanda" do
-      @p.clear{
-        para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-        client = list_box items: @customers
-        para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-        product = list_box items: @products
-        para "Selecciona la quantitat en grams:", :stroke => "#CD9", :margin => 4
-        peso = edit_line.text.to_i
-        peso = peso.to_f
-      }
-    end
+      button "Nova Comanda" do
+        @p.clear{
+          para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+          client = list_box items: @customers
+          para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+          product = list_box items: @products
+          para "Selecciona la quantitat en grams:", :stroke => "#CD9", :margin => 4
+          peso = edit_line.text.to_i
+          peso = peso.to_f
 
-    # This is for clearing flow when user press any button
-    # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
-    @p = flow
+        }
+      end
+
+      # This is for clearing flow when user press any button
+      # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
+      @p = flow
+
+    end
 
   end
 end
