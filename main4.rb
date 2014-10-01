@@ -6,8 +6,7 @@ require 'product_csv'
 require 'customers_csv'
 require 'order'
 
-
-Shoes.app :width => 800, :height => 600 do
+Shoes.app :width => 1000, :height => 1000 do
   background "#555"
 
   @title = "Ecocity Porc"
@@ -21,9 +20,7 @@ Shoes.app :width => 800, :height => 600 do
   end
 
   def load_products
-
     debug( "Loading Products ..." )
-
     begin
       @products = ProductCSV.read( products_csv__path )
     rescue Errors::ProductCSVError => e
@@ -37,9 +34,7 @@ Shoes.app :width => 800, :height => 600 do
   end
 
   def load_customers
-
     debug( "Loading Customers ..." )
-
     begin
       @customers = CustomerCSV.read( customers_csv__path )
     rescue Errors::CustomersCSVError => e
@@ -89,9 +84,7 @@ Shoes.app :width => 800, :height => 600 do
           if product.nil? or customer.nil?
             return
           end
-
           @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
-
           alert "Comanda afegida!"
         end
       end
@@ -120,7 +113,6 @@ Shoes.app :width => 800, :height => 600 do
       alert "Selecciona un client"
       return false
     end
-
     true
   end
 
@@ -129,13 +121,13 @@ Shoes.app :width => 800, :height => 600 do
 
     load_products
     load_customers
-
     @orders = []
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
         @p.clear{
           @products.each do |product|
+            debug (product.to_s)
             para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
           end
         }
@@ -167,7 +159,6 @@ Shoes.app :width => 800, :height => 600 do
       # This is for clearing flow when user press any button
       # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
       @p = flow
-
     end
 
   end
