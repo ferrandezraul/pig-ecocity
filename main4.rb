@@ -21,6 +21,9 @@ Shoes.app :width => 800, :height => 600 do
   end
 
   def load_products
+
+    debug( "Loading Products ..." )
+
     begin
       @products = ProductCSV.read( products_csv__path )
     rescue Errors::ProductCSVError => e
@@ -34,6 +37,9 @@ Shoes.app :width => 800, :height => 600 do
   end
 
   def load_customers
+
+    debug( "Loading Customers ..." )
+
     begin
       @customers = CustomerCSV.read( customers_csv__path )
     rescue Errors::CustomersCSVError => e
@@ -76,23 +82,46 @@ Shoes.app :width => 800, :height => 600 do
       peso = edit_line
 
       button "Crear comanda", :margin => 10 do
-        if quantity.text.to_i <= 0
-          alert "Quantitat ha de ser mes gran que 0"
-          return
+        if order_attributes_valid?( customer_name.text, product_name.text, quantity.text.to_i, peso.text.to_i )
+          product = product_with_name(product_name.text)
+          customer = customer_with_name(customer_name.text)
+
+          if product.nil? or customer.nil?
+            return
+          end
+
+          @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+
+          alert "Comanda afegida!"
         end
-
-        product = product_with_name(product_name.text)
-        customer = customer_with_name(customer_name.text)
-
-        if product.nil? or customer.nil?
-          return
-        end
-
-        @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
-
-        alert "Comanda afegida!"
       end
+
     end
+  end
+
+  def order_attributes_valid?( customer_name, product_name, quantity, peso )
+    if quantity <= 0
+      alert "Quantitat ha de ser mes gran que 0"
+      return false
+    end
+    if product_name.nil?
+      alert "Selecciona un producte."
+      return false
+    end
+    if product_name.empty?
+      alert "Selecciona un producte."
+      return false
+    end
+    if customer_name.nil?
+      alert "Selecciona un client"
+      return false
+    end
+    if customer_name.empty?
+      alert "Selecciona un client"
+      return false
+    end
+
+    true
   end
 
   stack :margin => 10 do
