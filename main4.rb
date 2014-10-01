@@ -64,6 +64,37 @@ Shoes.app :width => 800, :height => 600 do
     alert "Customer with name \"#{name}\" not found"
   end
 
+  def get_new_order
+    stack :margin => 4 do
+      para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+      customer_name = list_box items: @customer_names
+      para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+      product_name = list_box items: @product_names
+      para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
+      quantity = edit_line
+      para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
+      peso = edit_line
+
+      button "Crear comanda", :margin => 10 do
+        if quantity.text.to_i <= 0
+          alert "Quantitat ha de ser mes gran que 0"
+          return
+        end
+
+        product = product_with_name(product_name.text)
+        customer = customer_with_name(customer_name.text)
+
+        if product.nil? or customer.nil?
+          return
+        end
+
+        @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+
+        alert "Comanda afegida!"
+      end
+    end
+  end
+
   stack :margin => 10 do
     title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
 
@@ -100,35 +131,7 @@ Shoes.app :width => 800, :height => 600 do
 
       button "Nova Comanda", :margin => 4 do
         @p.clear{
-          stack :margin => 4 do
-            para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-            customer_name = list_box items: @customer_names
-            para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-            product_name = list_box items: @product_names
-            para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
-            quantity = edit_line
-            para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
-            peso = edit_line
-
-            button "Crear comanda", :margin => 10 do
-              if quantity.text.to_i <= 0
-                alert "Quantitat ha de ser mes gran que 0"
-                return
-              end
-
-              product = product_with_name(product_name.text)
-              customer = customer_with_name(customer_name.text)
-
-              if product.nil? or customer.nil?
-                alert "Error: No s'ha trobat el producte o el client"
-                return
-              end
-
-              @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
-
-              alert "Comanda afegida!"
-            end
-          end
+          get_new_order
         }
       end
 
