@@ -4,6 +4,8 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
 require 'customers_csv'
+require 'customer_helper'
+require 'product_helper'
 require 'order'
 require 'table'
 
@@ -27,11 +29,7 @@ Shoes.app :width => 1000, :height => 700 do
     rescue Errors::ProductCSVError => e
       alert e.message
     end
-
-    @product_names = []
-    @products.each do |product|
-      @product_names << product.name
-    end
+    @product_names = ProductHelper.names(@products)
   end
 
   def load_customers
@@ -41,32 +39,10 @@ Shoes.app :width => 1000, :height => 700 do
     rescue Errors::CustomersCSVError => e
       alert e.message
     end
-
-    @customer_names = []
-    @customers.each do |customer|
-      @customer_names << customer.name
-    end
+    @customer_names = CustomerHelper.names(@customers)
   end
 
-  def product_with_name(name)
-    @products.each do |product|
-      if product.name == name
-        return product
-      end
-    end
-    alert "Product with name \"#{name}\" not found"
-  end
-
-  def customer_with_name(name)
-    @customers.each do |customer|
-      if customer.name == name
-        return customer
-      end
-    end
-    alert "Customer with name \"#{name}\" not found"
-  end
-
-  def get_new_order
+  def new_order_dialog
     stack :margin => 4 do
       para "Selecciona el client:", :stroke => "#CD9", :margin => 4
       customer_name = list_box items: @customer_names
@@ -79,12 +55,9 @@ Shoes.app :width => 1000, :height => 700 do
 
       button "Crear comanda", :margin => 10 do
         if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
-          product = product_with_name(product_name.text)
-          customer = customer_with_name(customer_name.text)
+          product = ProductHelper.find_product_with_name( @products, product_name.text )
+          customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
 
-          if product.nil? or customer.nil?
-            return
-          end
           @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
           alert "Comanda afegida!"
         end
@@ -93,7 +66,7 @@ Shoes.app :width => 1000, :height => 700 do
     end
   end
 
-  def get_total
+  def resume_dialog
     stack :margin => 4 do
       para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
       list_box items: @product_names do |product_name|
@@ -150,10 +123,8 @@ Shoes.app :width => 1000, :height => 700 do
     flow :margin => 10 do
       button "Productes", :margin => 4 do
         @p.clear{
-          stack :margin => 40 do
-            @products.each do |product|
-              para product.to_s, :stroke => "#DFA", :align => "left"
-            end
+          @products.each do |product|
+            para "#{product.to_s}\n", :stroke => "#DFA", :align => "left"
           end
         }
       end
@@ -177,13 +148,13 @@ Shoes.app :width => 1000, :height => 700 do
 
       button "Nova Comanda", :margin => 4 do
         @p.clear{
-          get_new_order
+          new_order_dialog
         }
       end
 
       button "TOTAL", :margin => 4 do
         @p.clear{
-          get_total
+          resume_dialog
         }
       end
 
