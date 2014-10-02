@@ -7,6 +7,7 @@ require 'customers_csv'
 require 'customer_helper'
 require 'product_helper'
 require 'order'
+require 'order_item'
 require 'table'
 
 Shoes.app :width => 1000, :height => 700 do
@@ -53,12 +54,19 @@ Shoes.app :width => 1000, :height => 700 do
       para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
       peso = edit_line
 
+      @ordered_items = []
+
+      button "Agegir Producte", :margin => 10 do
+        product = ProductHelper.find_product_with_name( @products, product_name.text )
+        @ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
+      end
+
       button "Crear comanda", :margin => 10 do
         if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
           product = ProductHelper.find_product_with_name( @products, product_name.text )
           customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
 
-          @orders << ::Order.new( customer, product, quantity.text.to_i, peso.text.to_i )
+          @orders << ::Order.new( customer, @ordered_items )
           alert "Comanda afegida!"
         end
       end
@@ -133,7 +141,10 @@ Shoes.app :width => 1000, :height => 700 do
         @p.clear{
           @orders.each do |order|
             para "\nComanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
-            para "#{order.quantity.to_i} x #{order.weight.to_i} g. #{order.product.name}\n", :stroke => "#CD9", :margin => 4
+            items = order.order_items
+            items.each do |item|
+              para "#{item.quantity.to_i} x #{item.weight.to_i} g. #{item.product.name}\n", :stroke => "#CD9", :margin => 4
+            end
           end
         }
       end

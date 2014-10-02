@@ -3,19 +3,15 @@ require 'customer'
 
 class Order
   attr_reader :customer
-  attr_reader :product
-  attr_reader :quantity
-  attr_reader :weight
+  attr_reader :order_items
 
-  def initialize(customer, product, quantity, weight)
+  def initialize(customer, order_items)
     @customer = customer
-    @product = product
-    @quantity = quantity
-    @weight = weight
+    @order_items = order_items
   end
 
   def to_s
-    "Customer: #{@customer.name} \nQuantity: #{@quantity} \nWeight: #{@weight} \nProduct: #{@product.name}"
+    "Customer: #{@customer.name} \nItems: #{@order_items.to_s}"
   end
 
 end
