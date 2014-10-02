@@ -61,7 +61,7 @@ Shoes.app :width => 1000, :height => 700 do
         @ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
         @text_order_items.clear {
           @ordered_items.each do |item|
-            para "#{item.quantity} x #{item.weight} kg #{item.product.name}\n", :stroke => "#CD9", :margin => 4
+            para "#{item.to_s}\n", :stroke => "#CD9", :margin => 4
           end
         }
       end
@@ -150,11 +150,7 @@ Shoes.app :width => 1000, :height => 700 do
       button "Comandes", :margin => 4 do
         @p.clear{
           @orders.each do |order|
-            para "\nComanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
-            items = order.order_items
-            items.each do |item|
-              para "#{item.quantity.to_i} x #{item.weight.to_i} g. #{item.product.name}\n", :stroke => "#CD9", :margin => 4
-            end
+            para "#{order.to_s}\n", :stroke => "#CD9", :margin => 4
           end
         }
       end

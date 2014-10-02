@@ -11,7 +11,11 @@ class Order
   end
 
   def to_s
-    "Customer: #{@customer.name} \nItems: #{@order_items.to_s}"
+    items = "Productes: \n"
+    @order_items.each do |item |
+      items += "#{item.to_s}\n"
+    end
+    "Client: #{@customer.name} \n#{ items }"
   end
 
 end
