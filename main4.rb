@@ -78,7 +78,7 @@ Shoes.app :width => 1000, :height => 700 do
       peso = edit_line
 
       button "Crear comanda", :margin => 10 do
-        if order_attributes_valid?( customer_name.text, product_name.text, quantity.text.to_i, peso.text.to_i )
+        if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
           product = product_with_name(product_name.text)
           customer = customer_with_name(customer_name.text)
 
@@ -110,7 +110,14 @@ Shoes.app :width => 1000, :height => 700 do
   end
 
   def order_attributes_valid?( customer_name, product_name, quantity, peso )
-    if quantity <= 0
+    begin
+      !Float(quantity)
+    rescue
+      alert "Quantitat ha de ser un numero"""
+      return false
+    end
+
+    if quantity.to_i <= 0
       alert "Quantitat ha de ser mes gran que 0"
       return false
     end
