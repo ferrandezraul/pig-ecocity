@@ -5,8 +5,9 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 require 'product_csv'
 require 'customers_csv'
 require 'order'
+require 'table'
 
-Shoes.app :width => 1000, :height => 1000 do
+Shoes.app :width => 1000, :height => 800 do
   background "#555"
 
   @title = "Ecocity Porc"
@@ -125,10 +126,15 @@ Shoes.app :width => 1000, :height => 1000 do
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
+        @products_array_table = []
+        @products.each do |product|
+          a_product = [ product.name, product.price_tienda, product.price_coope ]
+          @products_array_table << a_product
+        end
+
         @p.clear{
-          @products.each do |product|
-            debug (product.to_s)
-            para "#{product.to_s}\n", :stroke => "#CD9", :margin => 4
+          stack :margin => 40 do
+            table( :top=>0, :left=>0, :rows=>@products_array_table.size, :headers=>[["Name", 200], ["Price Tienda EUR/KG", 200], ["Price Coope EUR/KG", 200]],:items=> @products_array_table )
           end
         }
       end

@@ -3,6 +3,8 @@ class Product
   attr_reader :price_tienda
   attr_reader :price_coope
   attr_reader :pvp
+  attr_reader :observations
+  attr_reader :subproducts
 
   def initialize(product)
     @name = product[:name]
@@ -15,10 +17,13 @@ class Product
 
   def to_s
     # Align to the left with a size of 10 chars
-    name_formatted = "%-100s" % @name.to_s
-    price_tienda_formatted = "%50s" % "Tienda #{@price_tienda.to_f} EUR/KG"
-    price_coope_formatted = "%-50s" % "Coope #{@price_coope.to_f} EUR/KG"
-    price_pvp_formatted = "%-50s" % "PVP #{@pvp.to_f} EUR/KG"
+    name_formatted = @name[0..15]
+    p_tienda = "%.2f" % @price_tienda.to_f
+    price_tienda_formatted = " Tienda #{p_tienda} EUR/KG"
+    p_coope = "%.2f" % @price_coope.to_f
+    price_coope_formatted = " Coope #{p_coope} EUR/KG"
+    p_pvp = "%.2f" % @pvp.to_f
+    price_pvp_formatted = " PVP #{p_pvp} EUR/KG"
 
     name_formatted + price_tienda_formatted + price_coope_formatted + price_pvp_formatted
   end
