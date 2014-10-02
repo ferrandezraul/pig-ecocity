@@ -133,8 +133,8 @@ Shoes.app :width => 1000, :height => 800 do
         end
 
         @p.clear{
-          stack :margin => 40 do
-            table( :top=>0, :left=>0, :rows=>@products_array_table.size, :headers=>[["Name", 200], ["Price Tienda EUR/KG", 200], ["Price Coope EUR/KG", 200]],:items=> @products_array_table )
+          stack :margin => 40, :height => 800 do
+            table( :top=>0, :left=>0, :rows=>@products_array_table.count, :headers=>[["Name", 200], ["Price Tienda EUR/KG", 200], ["Price Coope EUR/KG", 200]],:items=> @products_array_table )
           end
         }
       end
