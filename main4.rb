@@ -7,7 +7,7 @@ require 'customers_csv'
 require 'order'
 require 'table'
 
-Shoes.app :width => 1000, :height => 800 do
+Shoes.app :width => 1000, :height => 700 do
   background "#555"
 
   @title = "Ecocity Porc"
@@ -93,6 +93,22 @@ Shoes.app :width => 1000, :height => 800 do
     end
   end
 
+  def get_total
+    stack :margin => 4 do
+      para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+      list_box items: @product_names do |product_name|
+        ordered = 0
+        @orders.each do |order|
+          if order.product.name == product_name.text
+            ordered += 1
+          end
+        end
+        @text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
+      end
+      @text_resume = flow
+    end
+  end
+
   def order_attributes_valid?( customer_name, product_name, quantity, peso )
     if quantity <= 0
       alert "Quantitat ha de ser mes gran que 0"
@@ -126,15 +142,11 @@ Shoes.app :width => 1000, :height => 800 do
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
-        @products_array_table = []
-        @products.each do |product|
-          a_product = [ product.name, product.price_tienda, product.price_coope ]
-          @products_array_table << a_product
-        end
-
         @p.clear{
-          stack :margin => 40, :height => 800 do
-            table( :top=>0, :left=>0, :rows=>@products_array_table.count, :headers=>[["Name", 200], ["Price Tienda EUR/KG", 200], ["Price Coope EUR/KG", 200]],:items=> @products_array_table )
+          stack :margin => 40 do
+            @products.each do |product|
+              para product.to_s, :stroke => "#DFA", :align => "left"
+            end
           end
         }
       end
@@ -159,6 +171,12 @@ Shoes.app :width => 1000, :height => 800 do
       button "Nova Comanda", :margin => 4 do
         @p.clear{
           get_new_order
+        }
+      end
+
+      button "TOTAL", :margin => 4 do
+        @p.clear{
+          get_total
         }
       end
 

@@ -29,7 +29,7 @@ class TestProduct < Test::Unit::TestCase
                              :observations => "Nothing",
                              :subproducts => [ "Leche", "cacao" ] } )
 
-    assert_equal( "Costelles Tienda 10.00 EUR/KG Coope 12.00 EUR/KG PVP 14.00 EUR/KG", product.to_s )
+    assert_equal( "Costelles           (10.00,12.00,14.00)  EUR/KG", product.to_s )
   end
 
   def test_to_s_scenario2
@@ -40,7 +40,7 @@ class TestProduct < Test::Unit::TestCase
                              :observations => "Nothing",
                              :subproducts => [ "Leche", "cacao" ] } )
 
-    assert_equal( "Costelles super  Tienda 10.00 EUR/KG Coope 12.00 EUR/KG PVP 14.00 EUR/KG", product.to_s )
+    assert_equal( "Costelles super bone(10.00,12.00,14.00)  EUR/KG", product.to_s )
   end
 
 end

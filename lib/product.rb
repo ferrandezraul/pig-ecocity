@@ -17,15 +17,14 @@ class Product
 
   def to_s
     # Align to the left with a size of 10 chars
-    name_formatted = @name[0..15]
-    p_tienda = "%.2f" % @price_tienda.to_f
-    price_tienda_formatted = " Tienda #{p_tienda} EUR/KG"
-    p_coope = "%.2f" % @price_coope.to_f
-    price_coope_formatted = " Coope #{p_coope} EUR/KG"
-    p_pvp = "%.2f" % @pvp.to_f
-    price_pvp_formatted = " PVP #{p_pvp} EUR/KG"
+    name_formatted = '%-20.20s' % @name
+    p_tienda = "%4.2f" % @price_tienda.to_f
+    p_coope = "%4.2f" % @price_coope.to_f
+    p_pvp = "%4.2f" % @pvp.to_f
 
-    name_formatted + price_tienda_formatted + price_coope_formatted + price_pvp_formatted
+    price_formatted = "(#{p_tienda.to_s},#{p_coope.to_s},#{p_pvp.to_s})  EUR/KG"
+
+    name_formatted + price_formatted
   end
 
 end
