@@ -59,7 +59,14 @@ Shoes.app :width => 1000, :height => 700 do
       button "Agegir Producte", :margin => 10 do
         product = ProductHelper.find_product_with_name( @products, product_name.text )
         @ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
+        @text_order_items.clear {
+          @ordered_items.each do |item|
+            para "#{item.quantity} x #{item.weight} kg #{item.product.name}\n", :stroke => "#CD9", :margin => 4
+          end
+        }
       end
+
+      @text_order_items = flow
 
       button "Crear comanda", :margin => 10 do
         if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
@@ -80,8 +87,11 @@ Shoes.app :width => 1000, :height => 700 do
       list_box items: @product_names do |product_name|
         ordered = 0
         @orders.each do |order|
-          if order.product.name == product_name.text
-            ordered += 1
+          items = order.order_items
+          items.each do |item|
+            if item.product.name == product_name.text
+              ordered += 1
+            end
           end
         end
         @text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
