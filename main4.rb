@@ -132,8 +132,8 @@ Shoes.app :width => 1000, :height => 700 do
       button "Comandes", :margin => 4 do
         @p.clear{
           @orders.each do |order|
-            para "Comanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
-            para "#{order.quantity.to_i} x #{order.weight.to_i} g. #{order.product.name}", :stroke => "#CD9", :margin => 4
+            para "\nComanda per #{order.customer.name}\n", :stroke => "#CD9", :margin => 4
+            para "#{order.quantity.to_i} x #{order.weight.to_i} g. #{order.product.name}\n", :stroke => "#CD9", :margin => 4
           end
         }
       end
