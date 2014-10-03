@@ -13,7 +13,7 @@ class OrderItem
   end
 
   def to_s
-    "#{@quantity.to_i} x #{@weight.to_i} kg #{@product.name}"
+    "#{@quantity.to_i} x #{@weight.to_i} kg #{@product.to_s}"
   end
 
 end

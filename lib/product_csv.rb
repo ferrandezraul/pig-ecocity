@@ -41,12 +41,14 @@ class ProductCSV
 
       verify_product_attributes( product_attributes )
 
+      subproducts = get_subproducts( product_attributes )
+
       my_products << Product.new( { :name => product_attributes[Columns::NAME],
                                     :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                                     :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
                                     :pvp => product_attributes[Columns::PVP].to_f,
                                     :observations => product_attributes[Columns::OBSERVATIONS],
-                                    :subproducts => product_attributes[Columns::SUBPRODUCTS] } )
+                                    :subproducts => subproducts } )
 
     end
 
@@ -61,6 +63,29 @@ class ProductCSV
     raise Errors::ProductCSVError.new, "Error loading csv. Preu tenda del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_TIENDA]
     raise Errors::ProductCSVError.new, "Error loading csv. Preu coope del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_COOPE]
     raise Errors::ProductCSVError.new, "Error loading csv. Preu PVP del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PVP]
+  end
+
+  def self.has_subproducts?( product_attributes )
+    if product_attributes[Columns::SUBPRODUCTS]
+      return true
+    end
+
+    return false
+  end
+
+  def self.get_subproducts( product_attributes )
+    subproducts = []
+    if !has_subproducts?( product_attributes )
+      return subproducts
+    end
+
+    i = 0
+    while product_attributes[Columns::SUBPRODUCTS + i]
+      subproducts << product_attributes[Columns::SUBPRODUCTS + i]
+      i += 1
+    end
+
+    subproducts
   end
 
 end

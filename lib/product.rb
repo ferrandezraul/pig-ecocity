@@ -24,7 +24,17 @@ class Product
 
     price_formatted = "(#{p_tienda.to_s},#{p_coope.to_s},#{p_pvp.to_s})  EUR/KG"
 
-    name_formatted + price_formatted
+    subproducts_formatted = ""
+    @subproducts.each do |subproduct|
+      subproducts_formatted += "\n\t#{subproduct.to_s}"
+    end
+
+
+    name_formatted + price_formatted + subproducts_formatted
+  end
+
+  def has_subproducts?
+    @subproducts.empty? ? false : true
   end
 
 end
