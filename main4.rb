@@ -44,41 +44,51 @@ Shoes.app :width => 1000, :height => 700 do
   end
 
   def new_order_dialog
-    stack :margin => 4 do
-      para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-      customer_name = list_box items: @customer_names
-      para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-      product_name = list_box items: @product_names
-      para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
-      quantity = edit_line
-      para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
-      peso = edit_line
+    flow do
+      border red
+      @text_order_items = stack :margin => 4, :width => 500
+      stack :margin => 4, :width => 250 do
+        border yellow
+        para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+        customer_name = list_box items: @customer_names, :margin => 4
+        para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+        product_name = list_box items: @product_names, :margin => 4
+        para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
+        quantity = edit_line :margin => 4
+        para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
+        peso = edit_line :margin => 4
 
-      @ordered_items = []
+        ordered_items = []
 
-      button "Agegir Producte", :margin => 10 do
-        product = ProductHelper.find_product_with_name( @products, product_name.text )
-        @ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
-        @text_order_items.clear {
-          @ordered_items.each do |item|
-            para "#{item.to_s}\n", :stroke => "#CD9", :margin => 4
-          end
-        }
-      end
-
-      @text_order_items = flow
-
-      button "Crear comanda", :margin => 10 do
-        if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
+        button "Agegir Producte", :margin => 10 do
           product = ProductHelper.find_product_with_name( @products, product_name.text )
-          customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
-
-          @orders << ::Order.new( customer, @ordered_items )
-          alert "Comanda afegida!"
+          ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
+          print_ordered_items ordered_items
         end
-      end
 
+        flow do
+          button "Crear comanda", :margin => 10 do
+            if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
+              customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
+              @orders << Order.new( customer, ordered_items )
+              alert "Comanda afegida!"
+              @text_order_items.clear
+            end
+          end
+        end
+
+      end
     end
+
+  end
+
+  def print_ordered_items ordered_items
+    @text_order_items.clear {
+      border blue
+      ordered_items.each do |item|
+        para "#{item.to_s}\n", :stroke => "#CD9", :margin => 4
+      end
+    }
   end
 
   def resume_dialog
