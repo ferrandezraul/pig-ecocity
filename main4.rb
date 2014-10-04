@@ -66,14 +66,11 @@ Shoes.app :width => 1000, :height => 700 do
           print_ordered_items ordered_items
         end
 
-        flow do
-          button "Crear comanda", :margin => 10 do
-            if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
-              customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
-              @orders << Order.new( customer, ordered_items )
-              alert "Comanda afegida!"
-              @text_order_items.clear
-            end
+        button "Crear comanda", :margin => 10 do
+          if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
+            create_order( customer_name.text, ordered_items)
+            alert "Comanda afegida!"
+            @text_order_items.clear
           end
         end
 
@@ -82,11 +79,16 @@ Shoes.app :width => 1000, :height => 700 do
 
   end
 
+  def create_order(customer_name, order_items )
+    customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
+    @orders << Order.new( customer, order_items )
+  end
+
   def print_ordered_items ordered_items
     @text_order_items.clear {
       border blue
       ordered_items.each do |item|
-        para "#{item.to_s}\n", :stroke => "#CD9", :margin => 4
+        para "#{item.to_s}", :stroke => "#CD9", :margin => 4
       end
     }
   end
