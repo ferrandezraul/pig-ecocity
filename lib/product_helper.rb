@@ -2,11 +2,7 @@ class ProductHelper
 
   # Return array with names of products
   def self.names( products )
-    product_names = []
-    products.each do |product|
-      product_names << product.name
-    end
-    product_names
+    products.collect { |product| product.name }
   end
 
   # Return customer with given name

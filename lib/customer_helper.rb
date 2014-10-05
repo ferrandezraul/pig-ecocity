@@ -2,11 +2,8 @@ class CustomerHelper
 
   # Return array with names of customers
   def self.names( customers )
-    customer_names = []
-    customers.each do |customer|
-      customer_names << customer.name
-    end
-    customer_names
+    # returns new array with customers name
+    customers.collect { |customer| customer.name }
   end
 
   # Return customer with given name

@@ -30,14 +30,10 @@ class ProductCSV
     # CSV.read(file_path, { :col_sep => ';' })
     products_array = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
 
-    products_array_clean = []
-    products_array.each do |product_attributes|
-      # Filter headers. Note that it is assumed that headers start with '#'
-      products_array_clean.push product_attributes unless product_attributes.first.start_with?("#")
-    end
+    products_array.reject! { |product_attributes| product_attributes.first.start_with?("#") }
 
     my_products = []
-    products_array_clean.each do |product_attributes|
+    products_array.each do |product_attributes|
 
       verify_product_attributes( product_attributes )
 
