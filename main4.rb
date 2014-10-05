@@ -54,7 +54,7 @@ Shoes.app :width => 1000, :height => 700 do
         para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
         product_name = list_box items: @gui_product_names, :margin => 4
         para "Observacions:", :stroke => "#CD9", :margin => 4
-        observations = edit_line items: @gui_customer_names, :margin => 4
+        gui_observations = edit_line items: @gui_customer_names, :margin => 4
         para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
         quantity = edit_line :margin => 4
         para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
@@ -64,7 +64,7 @@ Shoes.app :width => 1000, :height => 700 do
 
         button "Agegir Producte", :margin => 10 do
           product = ProductHelper.find_product_with_name( @products, product_name.text )
-          ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i, observations.text )
+          ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i, gui_observations.text )
           print_ordered_items ordered_items
         end
 
@@ -74,6 +74,7 @@ Shoes.app :width => 1000, :height => 700 do
             alert "Comanda afegida!"
             @gui_text_order_items.clear
             ordered_items.clear
+            gui_observations.text = ""
           end
         end
 
