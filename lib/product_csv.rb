@@ -38,12 +38,12 @@ class ProductCSV
     # Returns new array with products
     products_array.map do |product_attributes|
       subproducts = get_subproducts( product_attributes )
-      Product.new( { :name => product_attributes[Columns::NAME],
-                     :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
-                     :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
-                     :pvp => product_attributes[Columns::PVP].to_f,
-                     :observations => product_attributes[Columns::OBSERVATIONS],
-                     :subproducts => subproducts } )
+      Product.new( :name => product_attributes[Columns::NAME],
+                   :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
+                   :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
+                   :pvp => product_attributes[Columns::PVP].to_f,
+                   :observations => product_attributes[Columns::OBSERVATIONS],
+                   :subproducts => subproducts )
 
     end
 

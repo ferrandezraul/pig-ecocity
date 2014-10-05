@@ -3,13 +3,13 @@ class Customer
   attr_reader :address
   attr_reader :type
 
-  def initialize(customer)
+  def initialize(params)
 
-    raise "Wrong customer type found" unless customer[:type] =~ /CLIENT|COOPE|TIENDA/
+    raise "Wrong customer type found" unless params[:type] =~ /CLIENT|COOPE|TIENDA/
 
-    @name = customer[:name]
-    @address = customer[:address]
-    @type = customer[:type]
+    @name = params[:name]
+    @address = params[:address]
+    @type = params[:type]
   end
 
   def to_s

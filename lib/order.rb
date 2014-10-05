@@ -7,7 +7,7 @@ class Order
 
   def initialize(customer, order_items)
     @customer = customer
-    @order_items = order_items
+    @order_items = order_items.dup
   end
 
   def to_s

@@ -32,9 +32,9 @@ class CustomerCSV
 
     # Returns new array with customers
     customers_array.map do |customer_attributes|
-      Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
-                      :address => customer_attributes[CustomerColumns::ADDRESS],
-                      :type => customer_attributes[CustomerColumns::TYPE] } )
+      Customer.new( :name => customer_attributes[CustomerColumns::NAME],
+                    :address => customer_attributes[CustomerColumns::ADDRESS],
+                    :type => customer_attributes[CustomerColumns::TYPE] )
     end
 
   end

@@ -30,7 +30,7 @@ Shoes.app :width => 1000, :height => 700 do
     rescue Errors::ProductCSVError => e
       alert e.message
     end
-    @product_names = ProductHelper.names(@products)
+    @gui_product_names = ProductHelper.names(@products)
   end
 
   def load_customers
@@ -40,19 +40,21 @@ Shoes.app :width => 1000, :height => 700 do
     rescue Errors::CustomersCSVError => e
       alert e.message
     end
-    @customer_names = CustomerHelper.names(@customers)
+    @gui_customer_names = CustomerHelper.names(@customers)
   end
 
   def new_order_dialog
     flow do
       border red
-      @text_order_items = stack :margin => 4, :width => 500
+      @gui_text_order_items = stack :margin => 4, :width => 500
       stack :margin => 4, :width => 250 do
         border yellow
         para "Selecciona el client:", :stroke => "#CD9", :margin => 4
-        customer_name = list_box items: @customer_names, :margin => 4
+        customer_name = list_box items: @gui_customer_names, :margin => 4
         para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-        product_name = list_box items: @product_names, :margin => 4
+        product_name = list_box items: @gui_product_names, :margin => 4
+        para "Observacions:", :stroke => "#CD9", :margin => 4
+        observations = edit_line items: @gui_customer_names, :margin => 4
         para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
         quantity = edit_line :margin => 4
         para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
@@ -62,7 +64,7 @@ Shoes.app :width => 1000, :height => 700 do
 
         button "Agegir Producte", :margin => 10 do
           product = ProductHelper.find_product_with_name( @products, product_name.text )
-          ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i )
+          ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i, observations.text )
           print_ordered_items ordered_items
         end
 
@@ -70,7 +72,8 @@ Shoes.app :width => 1000, :height => 700 do
           if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
             create_order( customer_name.text, ordered_items)
             alert "Comanda afegida!"
-            @text_order_items.clear
+            @gui_text_order_items.clear
+            ordered_items.clear
           end
         end
 
@@ -85,7 +88,7 @@ Shoes.app :width => 1000, :height => 700 do
   end
 
   def print_ordered_items ordered_items
-    @text_order_items.clear {
+    @gui_text_order_items.clear {
       border blue
       ordered_items.each do |item|
         para "#{item.to_s}", :stroke => "#CD9", :margin => 4
@@ -96,7 +99,7 @@ Shoes.app :width => 1000, :height => 700 do
   def resume_dialog
     stack :margin => 4 do
       para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-      list_box items: @product_names do |product_name|
+      list_box items: @gui_product_names do |product_name|
         ordered = 0
         @orders.each do |order|
           items = order.order_items
@@ -106,9 +109,9 @@ Shoes.app :width => 1000, :height => 700 do
             end
           end
         end
-        @text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
+        @gui_text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
       end
-      @text_resume = flow
+      @gui_text_resume = flow
     end
   end
 
@@ -152,7 +155,7 @@ Shoes.app :width => 1000, :height => 700 do
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
-        @p.clear{
+        @gui_main_window.clear{
           @products.each do |product|
             para "#{product.to_s}\n", :stroke => "#DFA", :align => "left"
           end
@@ -160,7 +163,7 @@ Shoes.app :width => 1000, :height => 700 do
       end
 
       button "Comandes", :margin => 4 do
-        @p.clear{
+        @gui_main_window.clear{
           @orders.each do |order|
             para "#{order.to_s}\n", :stroke => "#CD9", :margin => 4
           end
@@ -168,7 +171,7 @@ Shoes.app :width => 1000, :height => 700 do
       end
 
       button "Clients", :margin => 4 do
-        @p.clear{
+        @gui_main_window.clear{
           @customers.each do |customer|
             para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
           end
@@ -176,20 +179,20 @@ Shoes.app :width => 1000, :height => 700 do
       end
 
       button "Nova Comanda", :margin => 4 do
-        @p.clear{
+        @gui_main_window.clear{
           new_order_dialog
         }
       end
 
       button "TOTAL", :margin => 4 do
-        @p.clear{
+        @gui_main_window.clear{
           resume_dialog
         }
       end
 
       # This is for clearing flow when user press any button
       # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
-      @p = flow
+      @gui_main_window = flow
     end
 
   end

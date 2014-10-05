@@ -6,13 +6,13 @@ class Product
   attr_reader :observations
   attr_reader :subproducts
 
-  def initialize(product)
-    @name = product[:name]
-    @price_tienda = product[:price_tienda]
-    @price_coope = product[:price_coope]
-    @pvp = product[:pvp]
-    @observations = product[:observations]
-    @subproducts = product[:subproducts]
+  def initialize(params)
+    @name = params[:name]
+    @price_tienda = params[:price_tienda]
+    @price_coope = params[:price_coope]
+    @pvp = params[:pvp]
+    @observations = params[:observations]
+    @subproducts = params[:subproducts]
   end
 
   def to_s

@@ -9,6 +9,7 @@ class CustomerHelper
   # Return customer with given name
   # raises an exception if not found
   def self.find_customer_with_name( customers, name )
+
     customers.each do |customer|
       if customer.name == name
         return customer
