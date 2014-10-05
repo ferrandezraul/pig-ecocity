@@ -91,7 +91,11 @@ Shoes.app :width => 1000, :height => 700 do
     @gui_text_order_items.clear {
       border blue
       ordered_items.each do |item|
-        para "#{item.to_s}", :stroke => "#CD9", :margin => 4
+        para "#{item.quantity.to_i} x #{item.weight.to_i} kg #{item.product.to_s}", :stroke => "#CD9", :margin => 4
+        if item.has_observations?
+          para strong("Observacions: #{item.observations}"), :stroke => "#CD9", :margin => 4
+        end
+        #para "#{item.to_s}", :stroke => "#CD9", :margin => 4
       end
     }
   end
