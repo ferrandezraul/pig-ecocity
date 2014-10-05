@@ -33,23 +33,19 @@ class ProductCSV
     # Filter headers. Note that it is assumed that headers start with '#'
     products_array.reject! { |product_attributes| product_attributes.first.start_with?("#") }
 
-    my_products = []
-    products_array.each do |product_attributes|
+    products_array.each { |product_attributes| verify_product_attributes( product_attributes ) }
 
-      verify_product_attributes( product_attributes )
-
+    # Returns new array with products
+    products_array.map do |product_attributes|
       subproducts = get_subproducts( product_attributes )
-
-      my_products << Product.new( { :name => product_attributes[Columns::NAME],
-                                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
-                                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
-                                    :pvp => product_attributes[Columns::PVP].to_f,
-                                    :observations => product_attributes[Columns::OBSERVATIONS],
-                                    :subproducts => subproducts } )
+      Product.new( { :name => product_attributes[Columns::NAME],
+                     :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
+                     :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
+                     :pvp => product_attributes[Columns::PVP].to_f,
+                     :observations => product_attributes[Columns::OBSERVATIONS],
+                     :subproducts => subproducts } )
 
     end
-
-    my_products
 
   end
 

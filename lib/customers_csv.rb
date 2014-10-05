@@ -30,14 +30,12 @@ class CustomerCSV
     # Raise exception if invalid attributes
     customers_array.each { |customer_attributes| verify_customer_attributes( customer_attributes) }
 
-    # Create new array with customers
-    my_customers = customers_array.map do |customer_attributes|
+    # Returns new array with customers
+    customers_array.map do |customer_attributes|
       Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
                       :address => customer_attributes[CustomerColumns::ADDRESS],
                       :type => customer_attributes[CustomerColumns::TYPE] } )
     end
-
-    my_customers
 
   end
 
