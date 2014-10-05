@@ -3,9 +3,9 @@ require 'customer'
 require 'errors'
 
 module CustomerColumns
-  NAME = 0            # Name
-  ADDRESS = 1           # Price
-  TYPE = 2     # Price for cope
+  NAME = 0       # Name
+  ADDRESS = 1    # Price
+  TYPE = 2       # Price for cope
 end
 
 class CustomerCSV
@@ -24,20 +24,17 @@ class CustomerCSV
     # CSV.read(file_path, { :col_sep => ';' })
     customers_array = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
 
-    customers_array_clean = []
-    customers_array.each do |customer_attributes|
-      # Filter headers. Note that it is assumed that headers start with '#'
-      customers_array_clean.push customer_attributes unless customer_attributes.first.start_with?("#")
-    end
+    # Filter headers. Note that it is assumed that headers start with '#'
+    customers_array.reject! { |customer_attributes| customer_attributes.first.start_with?("#") }
 
-    my_customers = []
-    customers_array_clean.each do |customer_attributes|
+    # Raise exception if invalid attributes
+    customers_array.each { |customer_attributes| verify_customer_attributes( customer_attributes) }
 
-      verify_customer_attributes( customer_attributes)
-
-      my_customers << Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
-                                      :address => customer_attributes[CustomerColumns::ADDRESS],
-                                      :type => customer_attributes[CustomerColumns::TYPE] } )
+    # Create new array with customers
+    my_customers = customers_array.map do |customer_attributes|
+      Customer.new( { :name => customer_attributes[CustomerColumns::NAME],
+                      :address => customer_attributes[CustomerColumns::ADDRESS],
+                      :type => customer_attributes[CustomerColumns::TYPE] } )
     end
 
     my_customers
