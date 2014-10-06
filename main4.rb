@@ -69,6 +69,10 @@ Shoes.app :width => 1000, :height => 700 do
         end
 
         button "Crear comanda", :margin => 10 do
+          if ordered_items.empty?
+            alert "Ha de afegir un producte per poder realitzar una comanda."
+            return
+          end
           if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
             create_order( customer_name.text, ordered_items)
             alert "Comanda afegida!"
