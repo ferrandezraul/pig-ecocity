@@ -96,7 +96,6 @@ Shoes.app :width => 1000, :height => 700 do
         if item.has_observations?
           para strong("Observacions: #{item.observations}"), :stroke => "#CD9", :margin => 4
         end
-        #para "#{item.to_s}", :stroke => "#CD9", :margin => 4
       end
     }
   end
@@ -124,7 +123,7 @@ Shoes.app :width => 1000, :height => 700 do
     begin
       !Float(quantity)
     rescue
-      alert "Quantitat ha de ser un numero"""
+      alert "Quantitat ha de ser un numero"
       return false
     end
 
