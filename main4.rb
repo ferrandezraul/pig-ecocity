@@ -49,6 +49,9 @@ Shoes.app :width => 1000, :height => 700 do
       @gui_text_order_items = stack :margin => 4, :width => 500
       stack :margin => 4, :width => 250 do
         border yellow
+        para "Data:", :stroke => "#CD9", :margin => 4
+        gui_date = edit_line :margin => 4
+        gui_date.text = Date.today.to_s
         para "Selecciona el client:", :stroke => "#CD9", :margin => 4
         customer_name = list_box items: @gui_customer_names, :margin => 4
         para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
@@ -74,7 +77,7 @@ Shoes.app :width => 1000, :height => 700 do
             return
           end
           if order_attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
-            create_order( customer_name.text, ordered_items)
+            create_order( customer_name.text, ordered_items, gui_date.text )
             alert "Comanda afegida!"
             @gui_text_order_items.clear
             ordered_items.clear
@@ -87,9 +90,9 @@ Shoes.app :width => 1000, :height => 700 do
 
   end
 
-  def create_order(customer_name, order_items )
+  def create_order(customer_name, order_items, date_string )
     customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
-    @orders << Order.new( customer, order_items )
+    @orders << Order.new( customer, order_items, date_string )
   end
 
   def print_ordered_items ordered_items
