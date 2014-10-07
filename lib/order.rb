@@ -20,6 +20,17 @@ class Order
     "Date: #{@date.to_s}\nClient: #{@customer.name} \n#{ items }"
   end
 
+  # Returns number of times a product has been ordered
+  def times_ordered( product_name )
+    ordered = 0
+    @order_items.each do |item|
+      if item.product.name == product_name
+        ordered += 1
+      end
+    end
+    ordered
+  end
+
   def self.attributes_valid?( customer_name, product_name, quantity, peso )
     begin
       !Float(quantity)

@@ -111,12 +111,7 @@ Shoes.app :width => 1000, :height => 700 do
       list_box items: @gui_product_names do |product_name|
         ordered = 0
         @orders.each do |order|
-          items = order.order_items
-          items.each do |item|
-            if item.product.name == product_name.text
-              ordered += 1
-            end
-          end
+          ordered += order.times_ordered(product_name.text)
         end
         @gui_text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
       end
