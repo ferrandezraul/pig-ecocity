@@ -32,7 +32,8 @@ class Product
       end
     end
 
-    name_formatted + price_formatted + subproducts_formatted
+    #name_formatted + price_formatted + subproducts_formatted
+    name_formatted + subproducts_formatted
   end
 
   def has_subproducts?
