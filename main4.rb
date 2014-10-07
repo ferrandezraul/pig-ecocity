@@ -9,6 +9,7 @@ require 'product_helper'
 require 'order'
 require 'order_item'
 require 'table'
+require 'pig'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -42,11 +43,13 @@ Shoes.app :width => 1000, :height => 700 do
   @title = "Ecocity Porc"
 
   def new_order_dialog
-    flow do
-      border red
-      @gui_text_order_items = stack :margin => 4, :width => 500
-      stack :margin => 4, :width => 250 do
-        border yellow
+    flow :margin => 4 do
+      border "#CD9"
+
+      # This stack is 230 pixels wide
+      # width needed to create 2 columns. See http://shoesrb.com/manual/Rules.html
+      stack :margin => 4, :width => 230 do
+        border "#CD9"
         para "Data:", :stroke => "#CD9", :margin => 4
         gui_date = edit_line :margin => 4
         gui_date.text = Date.today.to_s
@@ -78,11 +81,16 @@ Shoes.app :width => 1000, :height => 700 do
           end
           create_order( customer_name.text, ordered_items, gui_date.text )
           alert "Comanda afegida!"
-          @gui_text_order_items.clear
+          @gui_text_order_items.clear{ stack :margin => 4, :width => -200 }
           ordered_items.clear
           gui_observations.text = ""
         end
 
+      end
+
+      # @gui_text_order_items is a stack 100% minus 230 pixels wide
+      @gui_text_order_items = stack :margin => 4, :width => -230 do
+        border "#CD9"
       end
     end
 
@@ -95,7 +103,7 @@ Shoes.app :width => 1000, :height => 700 do
 
   def print_ordered_items ordered_items
     @gui_text_order_items.clear {
-      border blue
+      border "#CD9"
       ordered_items.each do |item|
         para "#{item.quantity.to_i} x #{item.weight.to_f} kg #{item.product.to_s}", :stroke => "#CD9", :margin => 4
         if item.has_observations?
@@ -107,8 +115,9 @@ Shoes.app :width => 1000, :height => 700 do
 
   def resume_dialog
     stack :margin => 4 do
+      border "#CD9"
       para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-      list_box items: @gui_product_names do |product_name|
+      list_box items: @gui_product_names, :margin => 4 do |product_name|
         times_ordered = 0
         kg_ordered = 0
         @orders.each do |order|
@@ -122,6 +131,13 @@ Shoes.app :width => 1000, :height => 700 do
       end
       @gui_text_resume = flow
     end
+
+    stack :margin => 4 do
+      border "#CD9"
+      para "Porc restant:", :stroke => "#CD9", :margin => 4
+      para @pig.to_s, :stroke => "#CD9", :margin => 4
+    end
+
   end
 
   stack :margin => 10 do
@@ -130,6 +146,7 @@ Shoes.app :width => 1000, :height => 700 do
     @products = load_products
     @customers = load_customers
     @orders = []
+    @pig = Pig.new
 
     @gui_product_names = ProductHelper.names(@products)
     @gui_customer_names = CustomerHelper.names(@customers)
