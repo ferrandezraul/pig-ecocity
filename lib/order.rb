@@ -31,11 +31,29 @@ class Order
     ordered
   end
 
+  # Returns number of times a product has been ordered
+  def kg_ordered( product_name )
+    ordered = 0
+    @order_items.each do |item|
+      if item.product.name == product_name
+        ordered += item.weight
+      end
+    end
+    ordered
+  end
+
   def self.attributes_valid?( customer_name, product_name, quantity, peso )
     begin
       !Float(quantity)
     rescue
       alert "Quantitat ha de ser un numero"
+      return false
+    end
+
+    begin
+      !Float(peso)
+    rescue
+      alert "Pes ha de ser un numero en kg"
       return false
     end
 

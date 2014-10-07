@@ -58,15 +58,15 @@ Shoes.app :width => 1000, :height => 700 do
         gui_observations = edit_line items: @gui_customer_names, :margin => 4
         para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
         quantity = edit_line :margin => 4
-        para "Selecciona el pes en grams:", :stroke => "#CD9", :margin => 4
+        para "Selecciona el pes en Kg:", :stroke => "#CD9", :margin => 4
         peso = edit_line :margin => 4
 
         ordered_items = []
 
         button "Agegir Producte", :margin => 10 do
-          if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text.to_i )
+          if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text )
             product = ProductHelper.find_product_with_name( @products, product_name.text )
-            ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_i, gui_observations.text )
+            ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
             print_ordered_items ordered_items
           end
         end
@@ -97,7 +97,7 @@ Shoes.app :width => 1000, :height => 700 do
     @gui_text_order_items.clear {
       border blue
       ordered_items.each do |item|
-        para "#{item.quantity.to_i} x #{item.weight.to_i} kg #{item.product.to_s}", :stroke => "#CD9", :margin => 4
+        para "#{item.quantity.to_i} x #{item.weight.to_f} kg #{item.product.to_s}", :stroke => "#CD9", :margin => 4
         if item.has_observations?
           para strong("Observacions: #{item.observations}"), :stroke => "#CD9", :margin => 4
         end
@@ -109,11 +109,16 @@ Shoes.app :width => 1000, :height => 700 do
     stack :margin => 4 do
       para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
       list_box items: @gui_product_names do |product_name|
-        ordered = 0
+        times_ordered = 0
+        kg_ordered = 0
         @orders.each do |order|
-          ordered += order.times_ordered(product_name.text)
+          times_ordered += order.times_ordered(product_name.text)
+          kg_ordered += order.kg_ordered(product_name.text)
         end
-        @gui_text_resume.clear { para "Ordered #{ordered.to_i} times", :stroke => "#CD9", :margin => 4 }
+        @gui_text_resume.clear {
+          para "Ordered #{times_ordered.to_i} times\n", :stroke => "#CD9", :margin => 4
+          para strong("Total #{kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
+        }
       end
       @gui_text_resume = flow
     end

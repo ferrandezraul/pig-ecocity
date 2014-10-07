@@ -16,9 +16,9 @@ class OrderItem
 
   def to_s
     if has_observations?
-      "#{@quantity.to_i} x #{@weight.to_i} kg #{@product.to_s}\nObservacions: #{@observations.to_s}"
+      "#{@quantity.to_i} x #{@weight.to_f} kg #{@product.to_s}\nObservacions: #{@observations.to_s}"
     else
-      "#{@quantity.to_i} x #{@weight.to_i} kg #{@product.to_s}"
+      "#{@quantity.to_i} x #{@weight.to_f} kg #{@product.to_s}"
     end
   end
 
