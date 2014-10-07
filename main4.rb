@@ -114,30 +114,35 @@ Shoes.app :width => 1000, :height => 700 do
   end
 
   def resume_dialog
-    stack :margin => 4 do
-      border "#CD9"
-      para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-      list_box items: @gui_product_names, :margin => 4 do |product_name|
-        times_ordered = 0
-        kg_ordered = 0
-        @orders.each do |order|
-          times_ordered += order.times_ordered(product_name.text)
-          kg_ordered += order.kg_ordered(product_name.text)
-        end
-        @gui_text_resume.clear {
-          para "Ordered #{times_ordered.to_i} times\n", :stroke => "#CD9", :margin => 4
-          para strong("Total #{kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
-        }
+    flow :margin => 4 do
+
+      # stack 230 pixels wide
+      stack :margin => 4, :width => 240 do
+        border "#CD9"
+        para "Porc restant", :stroke => "#CD9", :margin => 4
+        para @pig.to_s, :stroke => "#CD9", :margin => 4
       end
-      @gui_text_resume = flow
-    end
 
-    stack :margin => 4 do
-      border "#CD9"
-      para "Porc restant:", :stroke => "#CD9", :margin => 4
-      para @pig.to_s, :stroke => "#CD9", :margin => 4
-    end
+      # stack 100% minus 230 pixels wide
+      stack :margin => 4, :width => -240 do
+        border "#CD9"
+        para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+        list_box items: @gui_product_names, :margin => 4 do |product_name|
+          times_ordered = 0
+          kg_ordered = 0
+          @orders.each do |order|
+            times_ordered += order.times_ordered(product_name.text)
+            kg_ordered += order.kg_ordered(product_name.text)
+          end
+          @gui_text_resume.clear {
+            para "Ordered #{times_ordered.to_i} times\n", :stroke => "#CD9", :margin => 4
+            para strong("Total #{kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
+          }
+        end
+        @gui_text_resume = flow
+      end
 
+    end
   end
 
   stack :margin => 10 do
