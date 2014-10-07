@@ -5,11 +5,14 @@ class Order
   attr_reader :customer
   attr_reader :order_items
   attr_reader :date
+  attr_reader :total
 
   def initialize(customer, order_items, date)
     @customer = customer
     @order_items = order_items.dup
     @date = date
+
+    @total = calculate_total
   end
 
   def to_s
@@ -17,7 +20,7 @@ class Order
     @order_items.each do |item |
       items += "#{item.to_s}\n"
     end
-    "Date: #{@date.to_s}\nClient: #{@customer.name} \n#{ items }"
+    "Date: #{@date.to_s}\nClient: #{@customer.name} \n#{ items }\nTOTAL = #{ '%.2f' % @total } EUR"
   end
 
   # Returns number of times a product has been ordered
@@ -40,6 +43,14 @@ class Order
       end
     end
     ordered
+  end
+
+  def calculate_total
+    total = 0
+    @order_items.each do |item|
+      total += item.price
+    end
+    total
   end
 
   def self.attributes_valid?( customer_name, product_name, quantity, peso )

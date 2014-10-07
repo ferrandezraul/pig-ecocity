@@ -69,7 +69,8 @@ Shoes.app :width => 1000, :height => 700 do
         button "Agegir Producte", :margin => 10 do
           if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text )
             product = ProductHelper.find_product_with_name( @products, product_name.text )
-            ordered_items << OrderItem.new( product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
+            customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
+            ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
             print_ordered_items ordered_items
           end
         end
@@ -81,7 +82,7 @@ Shoes.app :width => 1000, :height => 700 do
           end
           create_order( customer_name.text, ordered_items, gui_date.text )
           alert "Comanda afegida!"
-          @gui_text_order_items.clear{ stack :margin => 4, :width => -200 }
+          @gui_text_order_items.clear{ stack :margin => 4, :width => -230 }
           ordered_items.clear
           gui_observations.text = ""
         end
@@ -105,10 +106,7 @@ Shoes.app :width => 1000, :height => 700 do
     @gui_text_order_items.clear {
       border "#CD9"
       ordered_items.each do |item|
-        para "#{item.quantity.to_i} x #{item.weight.to_f} kg #{item.product.to_s}", :stroke => "#CD9", :margin => 4
-        if item.has_observations?
-          para strong("Observacions: #{item.observations}"), :stroke => "#CD9", :margin => 4
-        end
+        para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
       end
     }
   end
