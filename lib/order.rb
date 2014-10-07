@@ -20,4 +20,35 @@ class Order
     "Date: #{@date.to_s}\nClient: #{@customer.name} \n#{ items }"
   end
 
+  def self.attributes_valid?( customer_name, product_name, quantity, peso )
+    begin
+      !Float(quantity)
+    rescue
+      alert "Quantitat ha de ser un numero"
+      return false
+    end
+
+    if quantity.to_i <= 0
+      alert "Quantitat ha de ser mes gran que 0"
+      return false
+    end
+    if product_name.nil?
+      alert "Selecciona un producte."
+      return false
+    end
+    if product_name.empty?
+      alert "Selecciona un producte."
+      return false
+    end
+    if customer_name.nil?
+      alert "Selecciona un client"
+      return false
+    end
+    if customer_name.empty?
+      alert "Selecciona un client"
+      return false
+    end
+    true
+  end
+
 end
