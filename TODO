@@ -1,6 +1,8 @@
-Order class contains more than one product
-Product may contain subproducts
+Preparar precio comanda segun el tipo de cliente. Generar factura e imprimir/guardar/escribir factura
 
-ude debug("whatever") http://shoesrb.com/manual/Built-in.html#debug
+Cada producto resta una parte del cerdo
+    - Tabla producto / partes del cerdo
 
-Millorar les vistes de productes, customers i orders (make columns??)
+save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
+
+Visualizar en TOTAL -> total de comandas. Total de dinero.
