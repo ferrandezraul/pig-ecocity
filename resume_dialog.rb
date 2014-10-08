@@ -32,7 +32,7 @@ class ResumeDialog
           end
           @gui_text_resume.clear {
             @app.para "Ordered #{times_ordered.to_i} times\n", :stroke => "#CD9", :margin => 4
-            @app.para @app.strong("Total #{kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
+            @app.para @app.strong("Total #{'%.3f' % kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
           }
         end
         @gui_text_resume = @app.flow

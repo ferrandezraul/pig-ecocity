@@ -23,40 +23,40 @@ class OrderDialog
         @app.para "Data:", :stroke => "#CD9", :margin => 4
         gui_date = @app.edit_line :margin => 4
         gui_date.text = Date.today.to_s
-        @app.para "Selecciona el client:", :stroke => "#CD9", :margin => 4
+        @app.para "Client:", :stroke => "#CD9", :margin => 4
         customer_name = @app.list_box items: @gui_customer_names, :margin => 4
-        @app.para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
+        @app.para "Producte:", :stroke => "#CD9", :margin => 4
         product_name = @app.list_box items: @gui_product_names, :margin => 4
         @app.para "Observacions:", :stroke => "#CD9", :margin => 4
         gui_observations = @app.edit_line items: @gui_customer_names, :margin => 4
-        @app.para "Selecciona quantitat:", :stroke => "#CD9", :margin => 4
+        @app.para "Quantitat:", :stroke => "#CD9", :margin => 4
         quantity = @app.edit_line :margin => 4
-        @app.para "Selecciona el pes en Kg:", :stroke => "#CD9", :margin => 4
+        @app.para "Pes en Kg: (exemple 0.2 = 200g.)", :stroke => "#CD9", :margin => 4
         peso = @app.edit_line :margin => 4
 
-        ordered_items = []
+        @ordered_items = []
 
         @app.button "Agegir Producte", :margin => 10 do
           if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text )
             product = ProductHelper.find_product_with_name( @products, product_name.text )
             customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
-            ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
-            print_ordered_items ordered_items
-            debug( "Product #{product_name.text} added to order." )
+            @ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
+            print_ordered_items
+            debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
           end
         end
 
         @app.button "Crear comanda", :margin => 10 do
-          if ordered_items.empty?
+          if @ordered_items.empty?
             alert "Ha de afegir un producte per poder realitzar una comanda."
-            return
+          else
+            create_order( customer_name.text, @ordered_items, gui_date.text )
+            alert "Comanda afegida!"
+            @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -230 }
+            @ordered_items.clear
+            gui_observations.text = ""
+            debug( "Order for #{customer_name.text} added." )
           end
-          create_order( customer_name.text, ordered_items, gui_date.text )
-          alert "Comanda afegida!"
-          @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -230 }
-          ordered_items.clear
-          gui_observations.text = ""
-          debug( "Order for #{customer_name.text} added." )
         end
 
       end
@@ -75,13 +75,21 @@ class OrderDialog
     @orders << Order.new( customer, order_items, date_string )
   end
 
-  def print_ordered_items ordered_items
+  def print_ordered_items
     @gui_text_order_items.clear {
       @app.border "#CD9"
       total = 0
-      ordered_items.each do |item|
+      @ordered_items.each do |item|
         total += item.price
-        @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
+        @app.flow do
+          @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
+          @app.button "Eliminar", :margin => 10 do
+            @ordered_items.delete(item)
+            debug("Deleted #{item.product.name} from order.")
+            print_ordered_items
+          end
+        end
+
       end
       @app.para @app.strong( "TOTAL = #{'%.2f' % total} EUR"), :stroke => "#CD9", :margin => 8, :align => 'right'
     }
