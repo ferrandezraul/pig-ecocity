@@ -82,11 +82,15 @@ class OrderDialog
       @ordered_items.each do |item|
         total += item.price
         @app.flow do
-          @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
-          @app.button "Eliminar", :margin => 10 do
-            @ordered_items.delete(item)
-            debug("Deleted #{item.product.name} from order.")
-            print_ordered_items
+          @app.stack :width => -110, :margin => 4 do
+            @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
+          end
+          @app.stack :width => 110 do
+            @app.button "Eliminar", :margin => 4 do
+              @ordered_items.delete(item)
+              debug("Deleted #{item.product.name} from order.")
+              print_ordered_items
+            end
           end
         end
 
