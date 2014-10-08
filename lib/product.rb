@@ -2,7 +2,7 @@ class Product
   attr_reader :name
   attr_reader :price_tienda
   attr_reader :price_coope
-  attr_reader :pvp
+  attr_reader :price_pvp
   attr_reader :observations
   attr_reader :subproducts
 
@@ -10,7 +10,7 @@ class Product
     @name = params[:name]
     @price_tienda = params[:price_tienda]
     @price_coope = params[:price_coope]
-    @pvp = params[:pvp]
+    @price_pvp = params[:pvp]
     @observations = params[:observations]
     @subproducts = params[:subproducts]
   end
@@ -20,7 +20,7 @@ class Product
     name_formatted = '%-20.20s' % @name
     p_tienda = "%4.2f" % @price_tienda.to_f
     p_coope = "%4.2f" % @price_coope.to_f
-    p_pvp = "%4.2f" % @pvp.to_f
+    p_pvp = "%4.2f" % @price_pvp.to_f
 
     price_formatted = "(#{p_tienda.to_s},#{p_coope.to_s},#{p_pvp.to_s})  EUR/KG"
 
