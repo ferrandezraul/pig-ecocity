@@ -1,10 +1,11 @@
-Move resume dialog to its own class as it is done with order dialog
+Add to order dialog, possibility to delete order items.
+Add to all comandas, possibility to delete comanda. (Create order dialog??) Rename orderdialog to newOrderDialog??
 
-Preparar precio comanda segun el tipo de cliente. Generar factura e imprimir/guardar/escribir factura
-
-Cada producto resta una parte del cerdo
-    - Tabla producto / partes del cerdo
+Visualizar en TOTAL -> total de comandas. Total de dinero.
 
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
 
-Visualizar en TOTAL -> total de comandas. Total de dinero.
+Generar factura e imprimir/guardar/escribir factura
+
+Cada producto resta una parte del cerdo
+    - Tabla producto / partes del cerdo
