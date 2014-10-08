@@ -10,6 +10,7 @@ require 'order'
 require 'order_item'
 require 'pig'
 require 'order_dialog'
+require 'orders_dialog'
 require 'resume_dialog'
 
 def products_csv__path
@@ -65,9 +66,7 @@ Shoes.app :width => 1000, :height => 700 do
 
       button "Comandes", :margin => 4 do
         @gui_main_window.clear{
-          @orders.each do |order|
-            para "#{order.to_s}\n", :stroke => "#CD9", :margin => 4
-          end
+          OrdersDialog.new(self, @orders)
         }
       end
 
