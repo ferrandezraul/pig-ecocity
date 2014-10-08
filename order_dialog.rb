@@ -1,4 +1,7 @@
+$:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
+require 'product_helper'
+require 'customer_helper'
 
 class OrderDialog
 
@@ -39,6 +42,7 @@ class OrderDialog
             customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
             ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
             print_ordered_items ordered_items
+            debug( "Product #{product_name.text} added to order." )
           end
         end
 
@@ -52,6 +56,7 @@ class OrderDialog
           @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -230 }
           ordered_items.clear
           gui_observations.text = ""
+          debug( "Order for #{customer_name.text} added." )
         end
 
       end

@@ -1,3 +1,5 @@
+Move resume dialog to its own class as it is done with order dialog
+
 Preparar precio comanda segun el tipo de cliente. Generar factura e imprimir/guardar/escribir factura
 
 Cada producto resta una parte del cerdo
