@@ -105,9 +105,12 @@ Shoes.app :width => 1000, :height => 700 do
   def print_ordered_items ordered_items
     @gui_text_order_items.clear {
       border "#CD9"
+      total = 0
       ordered_items.each do |item|
+        total += item.price
         para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
       end
+      para strong( "TOTAL = #{'%.2f' % total} EUR"), :stroke => "#CD9", :margin => 8, :align => 'right'
     }
   end
 
