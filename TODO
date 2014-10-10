@@ -1,7 +1,5 @@
 Refactor OrderDialog in smaller functions
 Rename OrderDialog to NewOrderDialog
-Add to order dialog, possibility to delete order items.
-Add to all comandas, possibility to delete comanda. (Create order dialog??) Rename orderdialog to newOrderDialog??
 
 Visualizar en TOTAL -> total de comandas. Total de dinero.
 

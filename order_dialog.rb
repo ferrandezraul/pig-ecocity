@@ -32,18 +32,14 @@ class OrderDialog
         @app.para "Quantitat:", :stroke => "#CD9", :margin => 4
         quantity = @app.edit_line :margin => 4
         @app.para "Pes en Kg: (exemple 0.2 = 200g.)", :stroke => "#CD9", :margin => 4
-        peso = @app.edit_line :margin => 4
+        weigh = @app.edit_line :margin => 4
 
         @ordered_items = []
 
         @app.button "Afegir Producte", :margin => 10 do
-          if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text )
-            product = ProductHelper.find_product_with_name( @products, product_name.text )
-            customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
-            @ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
-            @gui_text_order_items.clear { print_items( @ordered_items ) }
-            debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
-          end
+          add_item_to_ordered_items( customer_name.text, product_name.text, quantity.text, weigh.text, gui_observations.text )
+          @gui_text_order_items.clear { print_items( @ordered_items ) }
+          debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
         end
 
         @app.button "Crear comanda", :margin => 10 do
@@ -100,6 +96,14 @@ class OrderDialog
     @ordered_items.delete(item)
     debug("Deleted #{item.product.name} from order.")
     @gui_text_order_items.clear { print_items( @ordered_items ) }
+  end
+
+  def add_item_to_ordered_items( customer_name, product_name, quantity, weigh, gui_observations )
+    if Order.attributes_valid?( customer_name, product_name, quantity, weigh )
+      product = ProductHelper.find_product_with_name( @products, product_name )
+      customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
+      @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations )
+    end
   end
 
 
