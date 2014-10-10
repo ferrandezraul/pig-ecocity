@@ -36,12 +36,12 @@ class OrderDialog
 
         @ordered_items = []
 
-        @app.button "Agegir Producte", :margin => 10 do
+        @app.button "Afegir Producte", :margin => 10 do
           if Order.attributes_valid?( customer_name.text, product_name.text, quantity.text, peso.text )
             product = ProductHelper.find_product_with_name( @products, product_name.text )
             customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text )
             @ordered_items << OrderItem.new( customer, product, quantity.text.to_i, peso.text.to_f, gui_observations.text )
-            print_ordered_items
+            @gui_text_order_items.clear { print_items( @ordered_items ) }
             debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
           end
         end
@@ -75,27 +75,32 @@ class OrderDialog
     @orders << Order.new( customer, order_items, date_string )
   end
 
-  def print_ordered_items
-    @gui_text_order_items.clear {
-      @app.border "#CD9"
-      total = 0
-      @ordered_items.each do |item|
-        total += item.price
-        @app.flow do
-          @app.stack :width => -110, :margin => 4 do
-            @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
-          end
-          @app.stack :width => 110 do
-            @app.button "Eliminar", :margin => 4 do
-              @ordered_items.delete(item)
-              debug("Deleted #{item.product.name} from order.")
-              print_ordered_items
-            end
+  def print_items(items)
+    @app.border "#CD9"
+    total = 0
+    items.each do |item|
+      total += item.price
+      @app.flow do
+        @app.stack :width => -110, :margin => 4 do
+          @app.para "#{item.to_s}", :stroke => "#CD9", :margin => 4, :align => 'right'
+        end
+        @app.stack :width => 110 do
+          @app.button "Eliminar", :margin => 4 do
+            delete(item)
+            debug("Deleted #{item.product.name} from order.")
           end
         end
-
       end
-      @app.para @app.strong( "TOTAL = #{'%.2f' % total} EUR"), :stroke => "#CD9", :margin => 8, :align => 'right'
-    }
+
+    end
+    @app.para @app.strong( "TOTAL = #{'%.2f' % total} EUR"), :stroke => "#CD9", :margin => 8, :align => 'right'
   end
+
+  def delete(item)
+    @ordered_items.delete(item)
+    debug("Deleted #{item.product.name} from order.")
+    @gui_text_order_items.clear { print_items( @ordered_items ) }
+  end
+
+
 end
