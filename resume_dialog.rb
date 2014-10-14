@@ -26,13 +26,16 @@ class ResumeDialog
         @app.list_box items: @gui_product_names, :margin => 4 do |product_name|
           times_ordered = 0
           kg_ordered = 0
+          euros_ordered = 0
           @orders.each do |order|
             times_ordered += order.times_ordered(product_name.text)
             kg_ordered += order.kg_ordered(product_name.text)
+            euros_ordered += order.euros_ordered(product_name.text)
           end
           @gui_text_resume.clear {
             @app.para "Ordered #{times_ordered.to_i} times\n", :stroke => "#CD9", :margin => 4
             @app.para @app.strong("Total #{'%.3f' % kg_ordered.to_f} Kg\n"), :stroke => "#CD9", :margin => 4
+            @app.para @app.strong("Total #{'%.2f' % euros_ordered.to_f} EUR\n"), :stroke => "#CD9", :margin => 4
           }
         end
         @gui_text_resume = @app.flow

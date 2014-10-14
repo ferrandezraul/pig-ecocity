@@ -45,6 +45,17 @@ class Order
     ordered
   end
 
+  # Returns number of times a product has been ordered
+  def euros_ordered( product_name )
+    euros_ordered = 0
+    @order_items.each do |item|
+      if item.product.name == product_name
+        euros_ordered += item.price
+      end
+    end
+    euros_ordered
+  end
+
   def calculate_total
     total = 0
     @order_items.each do |item|
