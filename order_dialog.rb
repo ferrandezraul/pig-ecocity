@@ -39,7 +39,6 @@ class OrderDialog
         @app.button "Afegir Producte", :margin => 10 do
           add_item_to_ordered_items( customer_name.text, product_name.text, quantity.text, weigh.text, gui_observations.text )
           @gui_text_order_items.clear { print_items( @ordered_items ) }
-          debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
         end
 
         @app.button "Crear comanda", :margin => 10 do
@@ -103,6 +102,7 @@ class OrderDialog
       product = ProductHelper.find_product_with_name( @products, product_name )
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
       @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations )
+      debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
     end
   end
 

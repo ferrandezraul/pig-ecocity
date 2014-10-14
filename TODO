@@ -1,7 +1,9 @@
+Cuando se crea una comanda y se selecciona un lote, dar opciones de subproductos.
+
+Clean up code since it is starting to be ugly.
+
 Refactor OrderDialog in smaller functions
 Rename OrderDialog to NewOrderDialog
-
-Visualizar en TOTAL -> total de comandas. Total de dinero.
 
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
 

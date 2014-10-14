@@ -1,5 +1,6 @@
 require 'csv'
 require 'product'
+require 'subproduct'
 require 'errors'
 
 module Columns
@@ -36,7 +37,7 @@ class ProductCSV
     products_array.each { |product_attributes| verify_product_attributes( product_attributes ) }
 
     # Returns new array with products
-    products_array.map do |product_attributes|
+    final_products = products_array.map do |product_attributes|
       subproducts = get_subproducts( product_attributes )
       Product.new( :name => product_attributes[Columns::NAME],
                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
@@ -74,8 +75,9 @@ class ProductCSV
 
     i = 0
     while product_attributes[Columns::SUBPRODUCTS + i]
-      subproducts << product_attributes[Columns::SUBPRODUCTS + i]
-      i += 1
+      subproducts << { :weight => product_attributes[Columns::SUBPRODUCTS + i],
+                       :name => product_attributes[Columns::SUBPRODUCTS + i + 1] }
+      i += 2
     end
 
     subproducts
