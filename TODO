@@ -1,4 +1,12 @@
-In Product.rb, change that subproducts should be a list of new objects ProductItem that has:
+In Product.rb, change that subproducts should be a list of new objects
+SubProduct (already exist) that has:
+attr_reader :name
+attr_reader :weight
+attr_reader :quantity
+
+and doesn't contain price. Adapt all code and then ...
+
+Create OrderSubItem to have:
 attr_reader :name
 attr_reader :weight
 attr_reader :quantity
@@ -8,12 +16,12 @@ and doesn't contain price. Adapt all code and then ...
 
 Change OrderItem to have:
 
-attr_reader :product  (product object)
+attr_reader :product  (product object with possible subproducts)
 attr_reader :quantity
 attr_reader :weight     (Change that weight is not mandatory for Products that have ProductItems)
 attr_reader :observations
 attr_reader :price  (the price is calculated in constructor cause the customer is passed there)
-attr_reader :items (list of ProductItem objects)
+attr_reader :items (list of OrderSubItem objects)
 
 And change to_s function from OrderItem to consider new items attr.
 
