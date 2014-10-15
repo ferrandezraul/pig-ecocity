@@ -26,7 +26,25 @@ class OrderDialog
         @app.para "Client:", :stroke => "#CD9", :margin => 4
         customer_name = @app.list_box items: @gui_customer_names, :margin => 4
         @app.para "Producte:", :stroke => "#CD9", :margin => 4
-        product_name = @app.list_box items: @gui_product_names, :margin => 4
+
+        product_name = @app.list_box items: @gui_product_names, :margin => 4 do |list|
+          product = ProductHelper.find_product_with_name( @products, list.text )
+          if product.has_subproducts?
+            subproducts = product.subproducts
+            @gui_subproducts.clear{
+              @app.para "Choose subproducts:", :stroke => "#CD9", :margin => 4
+              subproducts.each do |subproduct|
+                @app.para "#{subproduct[:name]}", :stroke => "#CD9", :margin => 4
+              end
+            }
+          else
+            @gui_subproducts.clear
+          end
+        end
+
+        # @gui_text_order_items is a stack 100% minus 230 pixels wide
+        @gui_subproducts = @app.stack :margin => 4
+
         @app.para "Observacions:", :stroke => "#CD9", :margin => 4
         gui_observations = @app.edit_line items: @gui_customer_names, :margin => 4
         @app.para "Quantitat:", :stroke => "#CD9", :margin => 4

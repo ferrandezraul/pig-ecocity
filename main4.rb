@@ -39,7 +39,7 @@ def load_customers
   end
 end
 
-Shoes.app :width => 1000, :height => 700 do
+Shoes.app :width => 1000, :height => 900 do
   background "#555"
 
   @title = "Ecocity Porc"
