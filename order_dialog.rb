@@ -120,7 +120,7 @@ class OrderDialog
       product = ProductHelper.find_product_with_name( @products, product_name )
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
       @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations )
-      debug( "Product #{product_name.text} added to order from #{customer_name.text}." )
+      debug( "Product #{product_name} added to order from #{customer_name}." )
     end
   end
 

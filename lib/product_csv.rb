@@ -30,16 +30,16 @@ class ProductCSV
 
     # By default separator is ","
     # CSV.read(file_path, { :col_sep => ';' })
-    products_array = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
+    products_attributes_list = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
 
     # Filter headers. Note that it is assumed that headers start with '#'
-    products_array.reject! { |product_attributes| product_attributes.first.start_with?("#") }
+    products_attributes_list.reject! { |product_attributes| product_attributes.first.start_with?("#") }
 
-    products_array.each { |product_attributes| verify_product_attributes( product_attributes ) }
+    products_attributes_list.each { |product_attributes| verify_product_attributes( product_attributes ) }
 
-    # Returns new array with products
-    final_products = products_array.map do |product_attributes|
-      subproducts = get_subproducts( product_attributes )
+    # Returns new array with product objects
+    products_list = products_attributes_list.map do |product_attributes|
+      subproducts = get_subproducts_attributes( product_attributes )
       Product.new( :name => product_attributes[Columns::NAME],
                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
@@ -49,11 +49,11 @@ class ProductCSV
 
     end
 
-    final_products.each do |product|
+    products_list.each do |product|
       if !product.subproducts.empty?
         subproducts_list = product.subproducts
         subproducts_list.each do |subproduct|
-          real_product = ProductHelper.find_product_with_name( final_products, subproduct[:name] )
+          real_product = ProductHelper.find_product_with_name( products_list, subproduct[:name] )
           raise "Subproduct not found #{subproduct[:name]} in product #{product.name}" unless real_product
           subproduct.merge!( :product => real_product )
         end
@@ -83,7 +83,7 @@ class ProductCSV
   # == Example
   # [ { :weight => 0,5, :name => "Llom", :product => product_object_llom },
   #   { :weight => 0,4, :name => "Carn picada", :product => product_object_carn_picada } ]
-  def self.get_subproducts( product_attributes )
+  def self.get_subproducts_attributes( product_attributes )
     subproducts = []
     if !has_subproducts?( product_attributes )
       return subproducts
@@ -94,12 +94,9 @@ class ProductCSV
       subproduct_weight = product_attributes[Columns::SUBPRODUCTS + i]
       subproduct_name = product_attributes[Columns::SUBPRODUCTS + i + 1]
 
-      names = []
-      if subproduct_name.include?("|")
-        names = subproduct_name.split("|")
-      else
-        names << subproduct_name
-      end
+      # example, if subproduct_name="Botifarra|Costelles"
+      # names contains ["Botifarra","Costelles"]
+      names = split_subproducts_names( subproduct_name )
 
       names.each do |name|
         subproducts << { :weight => subproduct_weight,
@@ -110,6 +107,20 @@ class ProductCSV
     end
 
     subproducts
+  end
+
+  # Returns list of product names included in name and separated by '|'
+  # == Example
+  # name = "Botifarra|Costelles"
+  # split_subproducts_names( name )
+  # returns ["Botifarra","Costelles"]
+  def self.split_subproducts_names( name )
+    names = []
+    if name.include?("|")
+      names = name.split("|")
+    else
+      names << name
+    end
   end
 
 end
