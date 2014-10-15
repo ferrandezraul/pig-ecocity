@@ -4,7 +4,7 @@ class Product
   attr_reader :price_coope
   attr_reader :price_pvp
   attr_reader :observations
-  attr_reader :subproducts
+  attr_accessor :subproducts
 
   def initialize(params)
     @name = params[:name]

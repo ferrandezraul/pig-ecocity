@@ -48,6 +48,17 @@ class ProductCSV
 
     end
 
+    final_products.each do |product|
+      if !product.subproducts.empty?
+        subproducts_list = product.subproducts
+        subproducts_list.each do |subproduct|
+          real_product = ProductHelper.find_product_with_name( final_products, subproduct[:name] )
+          raise "Subproduct not found #{subproduct[:name]} in product #{product.name}" unless real_product
+          subproduct.merge!( :product => real_product )
+        end
+      end
+    end
+
   end
 
   private
@@ -75,8 +86,21 @@ class ProductCSV
 
     i = 0
     while product_attributes[Columns::SUBPRODUCTS + i]
-      subproducts << { :weight => product_attributes[Columns::SUBPRODUCTS + i],
-                       :name => product_attributes[Columns::SUBPRODUCTS + i + 1] }
+      subproduct_weight = product_attributes[Columns::SUBPRODUCTS + i]
+      subproduct_name = product_attributes[Columns::SUBPRODUCTS + i + 1]
+
+      names = []
+      if subproduct_name.include?("|")
+        names = subproduct_name.split("|")
+      else
+        names << subproduct_name
+      end
+
+      names.each do |name|
+        subproducts << { :weight => subproduct_weight,
+                         :name => name }
+      end
+
       i += 2
     end
 

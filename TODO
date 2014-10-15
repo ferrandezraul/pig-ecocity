@@ -1,3 +1,5 @@
+Refactor products_csv with smaller functions
+En products view, display subproducts properly.
 Cuando se crea una comanda y se selecciona un lote, dar opciones de subproductos.
 
 Clean up code since it is starting to be ugly.
