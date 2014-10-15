@@ -1,3 +1,26 @@
+In order_dialog.rb, extend add_item_to_ordered_items( customer_name, product_name, quantity, weigh, gui_observations )
+with another attribute which could be SubProductItems with quantity, weight and product attributes
+i.e subproduct_items = [ { :weight => 0,5, :quantity => 1, :product => product_object_llom },
+                         { :weight => 0,4, :quantity => 1, :product => product_object_carn_picada } ]
+
+An order item should have subitems? --> Create class LotItem that contains:
+attr_reader :product
+attr_reader :quantity
+attr_reader :weight
+attr_reader :observations
+
+and doesn't contain price.
+And then change OrderItem to have:
+
+attr_reader :product  (product object)
+attr_reader :quantity
+attr_reader :weight
+attr_reader :observations
+attr_reader :price  (the price is calculated in constructor cause the customer is passed there)
+attr_reader :items (LotItem objects)
+
+And change to_s function from OrderItem to consider new items attr.
+
 Refactor products_csv with smaller functions
 En products view, display subproducts properly.
 Cuando se crea una comanda y se selecciona un lote, dar opciones de subproductos.
