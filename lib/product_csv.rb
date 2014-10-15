@@ -22,7 +22,8 @@ class ProductCSV
   #    :price_coope => 9.50,
   #    :pvp => 10.50,
   #    :observations => "Cuits o sense coure",
-  #    :subproducts => []                       # ["0,5 kg Llom", "0,4 kg Carn picada"]
+  #    :subproducts => []                       # [ { :weight => 0,5, :name => "Llom", :product => product_object_llom },
+  #                                                 { :weight => 0,4, :name => "Carn picada", :product => product_object_carn_picada } ]
   #  }
   #]
   def self.read( file_path )
@@ -78,6 +79,10 @@ class ProductCSV
     return false
   end
 
+  # Returns array of hashes
+  # == Example
+  # [ { :weight => 0,5, :name => "Llom", :product => product_object_llom },
+  #   { :weight => 0,4, :name => "Carn picada", :product => product_object_carn_picada } ]
   def self.get_subproducts( product_attributes )
     subproducts = []
     if !has_subproducts?( product_attributes )
