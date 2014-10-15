@@ -32,7 +32,7 @@ class OrderDialog
           if product.has_subproducts?
             subproducts = product.subproducts
             @gui_subproducts.clear{
-              @app.para "Choose subproducts:", :stroke => "#CD9", :margin => 4
+              @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
               subproducts.each do |subproduct|
                 @app.para "#{subproduct[:name]}", :stroke => "#CD9", :margin => 4
               end

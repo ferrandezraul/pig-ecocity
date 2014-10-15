@@ -27,8 +27,9 @@ class Product
     subproducts_formatted = ""
 
     if has_subproducts?
+      subproducts_formatted += "\n\tOpcions a escollir:\n"
       @subproducts.each do |subproduct|
-        subproducts_formatted += "\n\t#{subproduct.to_s}"
+        subproducts_formatted += "\t#{subproduct[:weight]} Kg\t#{subproduct[:product].to_s}\n"
       end
     end
 
