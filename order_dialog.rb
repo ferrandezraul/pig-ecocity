@@ -27,7 +27,7 @@ class OrderDialog
         customer_name = @app.list_box items: @gui_customer_names, :margin => 4
         @app.para "Producte:", :stroke => "#CD9", :margin => 4
 
-        product_name = @app.list_box items: @gui_product_names, :margin => 4 do |list|
+        @gui_product_name_selected = @app.list_box items: @gui_product_names, :margin => 2 do |list|
           product = ProductHelper.find_product_with_name( @products, list.text )
           if product.has_subproducts?
             subproducts = product.subproducts
@@ -38,10 +38,11 @@ class OrderDialog
               subproducts.each do |subproduct|
                 @app.flow do
                   @app.stack :margin => 2, :width => 50 do
-                    @app.edit_line :stroke => "#CD9", :margin => 2, :width => 30
+                    @app.edit_line :stroke => "#CD9", :width => 50
                   end
                   @app.stack :margin => 2, :width => -50 do
-                    @app.para "#{subproduct[:product].name}", :stroke => "#CD9", :margin => 2, :width => -30
+                    # http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
+                    @app.para "kg #{'%-25.25s' % subproduct[:product].name}", :stroke => "#CD9", :width => -50
                   end
                 end
               end
@@ -64,7 +65,7 @@ class OrderDialog
         @ordered_items = []
 
         @app.button "Afegir Producte", :margin => 10 do
-          add_item_to_ordered_items( customer_name.text, product_name.text, quantity.text, weigh.text, gui_observations.text )
+          add_item_to_ordered_items( customer_name.text, @gui_product_name_selected.text, quantity.text, weigh.text, gui_observations.text )
           @gui_text_order_items.clear { print_items( @ordered_items ) }
         end
 
