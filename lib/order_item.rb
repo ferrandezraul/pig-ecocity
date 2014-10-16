@@ -7,13 +7,15 @@ class OrderItem
   attr_reader :weight
   attr_reader :observations
   attr_reader :price
+  attr_reader :sub_products  # Only for lots (A list of SubProduct objects)
 
-  def initialize(customer, product, quantity, weight, observations)
+  def initialize(customer, product, quantity, weight, observations, sub_products)
     @product = product
     @quantity = quantity
     @weight = weight
     @observations = observations
     @price = calculate_price(customer.type)
+    @sub_products = sub_products
   end
 
   def to_s

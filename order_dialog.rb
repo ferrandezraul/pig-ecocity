@@ -18,7 +18,7 @@ class OrderDialog
 
       # This stack is 230 pixels wide
       # width needed to create 2 columns. See http://shoesrb.com/manual/Rules.html
-      @app.stack :margin => 4, :width => 230 do
+      @app.stack :margin => 4, :width => 260 do
         @app.border "#CD9"
         @app.para "Data:", :stroke => "#CD9", :margin => 4
         gui_date = @app.edit_line :margin => 4
@@ -33,8 +33,17 @@ class OrderDialog
             subproducts = product.subproducts
             @gui_subproducts.clear{
               @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
+              subproducts_weight = []
+              subproducts_name = []
               subproducts.each do |subproduct|
-                @app.para "#{subproduct[:product].name}", :stroke => "#CD9", :margin => 4
+                @app.flow do
+                  @app.stack :margin => 2, :width => 50 do
+                    @app.edit_line :stroke => "#CD9", :margin => 2, :width => 30
+                  end
+                  @app.stack :margin => 2, :width => -50 do
+                    @app.para "#{subproduct[:product].name}", :stroke => "#CD9", :margin => 2, :width => -30
+                  end
+                end
               end
             }
           else
@@ -65,7 +74,7 @@ class OrderDialog
           else
             create_order( customer_name.text, @ordered_items, gui_date.text )
             alert "Comanda afegida!"
-            @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -230 }
+            @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -260 }
             @ordered_items.clear
             gui_observations.text = ""
             debug( "Order for #{customer_name.text} added." )
@@ -75,7 +84,7 @@ class OrderDialog
       end
 
       # @gui_text_order_items is a stack 100% minus 230 pixels wide
-      @gui_text_order_items = @app.stack :margin => 4, :width => -230 do
+      @gui_text_order_items = @app.stack :margin => 4, :width => -260 do
         @app.border "#CD9"
       end
     end
@@ -119,7 +128,10 @@ class OrderDialog
     if Order.attributes_valid?( customer_name, product_name, quantity, weigh )
       product = ProductHelper.find_product_with_name( @products, product_name )
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
-      @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations )
+
+      # TODO
+      subproducts = []
+      @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations, subproducts )
       debug( "Product #{product_name} added to order from #{customer_name}." )
     end
   end
