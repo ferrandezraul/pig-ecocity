@@ -38,7 +38,7 @@ class OrderDialog
               subproducts.each do |subproduct|
                 @app.flow do
                   @app.stack :margin => 2, :width => 50 do
-                    @app.edit_line :stroke => "#CD9", :width => 50
+                    @app.edit_line "#{subproduct[:weight]}", :stroke => "#CD9", :width => 50
                   end
                   @app.stack :margin => 2, :width => -50 do
                     # http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
