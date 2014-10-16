@@ -2,6 +2,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_helper'
 require 'customer_helper'
+require 'subproducts_dialog'
 
 class OrderDialog
 
@@ -21,10 +22,10 @@ class OrderDialog
       @app.stack :margin => 4, :width => 260 do
         @app.border "#CD9"
         @app.para "Data:", :stroke => "#CD9", :margin => 4
-        gui_date = @app.edit_line :margin => 4
-        gui_date.text = Date.today.to_s
+        @gui_date = @app.edit_line :margin => 4
+        @gui_date.text = Date.today.to_s
         @app.para "Client:", :stroke => "#CD9", :margin => 4
-        customer_name = @app.list_box items: @gui_customer_names, :margin => 4
+        @gui_customer_name_selected = @app.list_box items: @gui_customer_names, :margin => 4
         @app.para "Producte:", :stroke => "#CD9", :margin => 4
 
         @gui_product_name_selected = @app.list_box items: @gui_product_names, :margin => 2 do |list|
@@ -32,20 +33,7 @@ class OrderDialog
           if product.has_subproducts?
             subproducts = product.subproducts
             @gui_subproducts.clear{
-              @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
-              subproducts_weight = []
-              subproducts_name = []
-              subproducts.each do |subproduct|
-                @app.flow do
-                  @app.stack :margin => 2, :width => 50 do
-                    @app.edit_line "#{subproduct[:weight]}", :stroke => "#CD9", :width => 50
-                  end
-                  @app.stack :margin => 2, :width => -50 do
-                    # http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
-                    @app.para "kg #{'%-25.25s' % subproduct[:product].name}", :stroke => "#CD9", :width => -50
-                  end
-                end
-              end
+              SubProductsDialog.new( @app, subproducts )
             }
           else
             @gui_subproducts.clear
@@ -56,16 +44,19 @@ class OrderDialog
         @gui_subproducts = @app.stack :margin => 4
 
         @app.para "Observacions:", :stroke => "#CD9", :margin => 4
-        gui_observations = @app.edit_line items: @gui_customer_names, :margin => 4
+        @gui_observations = @app.edit_line items: @gui_customer_names, :margin => 4
         @app.para "Quantitat:", :stroke => "#CD9", :margin => 4
-        quantity = @app.edit_line :margin => 4
-        @app.para "Pes en Kg: (exemple 0.2 = 200g.)", :stroke => "#CD9", :margin => 4
-        weigh = @app.edit_line :margin => 4
+        @quantity = @app.edit_line :margin => 4
+        @app.para "Pes en Kg: (ex. 0.2 = 200g.)", :stroke => "#CD9", :margin => 4
+        @app.flow do
+          @gui_weigh = @app.edit_line :margin => 2
+          @app.para "Kg", :stroke => "#CD9", :margin => 2
+        end
 
         @ordered_items = []
 
         @app.button "Afegir Producte", :margin => 10 do
-          add_item_to_ordered_items( customer_name.text, @gui_product_name_selected.text, quantity.text, weigh.text, gui_observations.text )
+          add_item_to_ordered_items( @gui_customer_name_selected.text, @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
           @gui_text_order_items.clear { print_items( @ordered_items ) }
         end
 
@@ -73,12 +64,12 @@ class OrderDialog
           if @ordered_items.empty?
             alert "Ha de afegir un producte per poder realitzar una comanda."
           else
-            create_order( customer_name.text, @ordered_items, gui_date.text )
+            create_order( @gui_customer_name_selected.text, @ordered_items, @gui_date.text )
             alert "Comanda afegida!"
             @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -260 }
             @ordered_items.clear
-            gui_observations.text = ""
-            debug( "Order for #{customer_name.text} added." )
+            @gui_observations.text = ""
+            debug( "Order for #{@gui_customer_name_selected.text} added." )
           end
         end
 
@@ -119,20 +110,25 @@ class OrderDialog
     @app.para @app.strong( "TOTAL = #{'%.2f' % total} EUR"), :stroke => "#CD9", :margin => 8, :align => 'right'
   end
 
+  def print_product_name(name)
+    # http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
+    @app.para "kg #{'%-25.25s' % name}", :stroke => "#CD9", :width => -50
+  end
+
   def delete(item)
     @ordered_items.delete(item)
     debug("Deleted #{item.product.name} from order.")
     @gui_text_order_items.clear { print_items( @ordered_items ) }
   end
 
-  def add_item_to_ordered_items( customer_name, product_name, quantity, weigh, gui_observations )
+  def add_item_to_ordered_items( customer_name, product_name, quantity, weigh, observations )
     if Order.attributes_valid?( customer_name, product_name, quantity, weigh )
       product = ProductHelper.find_product_with_name( @products, product_name )
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
 
       # TODO
       subproducts = []
-      @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, gui_observations, subproducts )
+      @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
       debug( "Product #{product_name} added to order from #{customer_name}." )
     end
   end

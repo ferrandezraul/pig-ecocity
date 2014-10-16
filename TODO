@@ -2,6 +2,10 @@ Arreglar to_s y como se escribe en pantalla con el formato conseguido en order_d
 # http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
 @app.para "kg #{'%-20.20s' % subproduct[:product].name}", :stroke => "#CD9", :width => -50
 
+Continue with SubProductsDialog. How to extract information from there ...
+
+Peso no es obligatorio para produtos con subproductos
+
 Change OrderItem to have:
 
 attr_reader :product  (product object with possible subproducts)

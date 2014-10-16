@@ -1,5 +1,5 @@
 
-Shoes.app :width => 1000, :margin => 5 do
+Shoes.app :margin => 5 do
   border yellow
   flow :width => 1000, :margin => 5 do
     border blue
