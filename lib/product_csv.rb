@@ -56,6 +56,7 @@ class ProductCSV
           real_product = ProductHelper.find_product_with_name( products_list, subproduct[:name] )
           raise "Subproduct not found #{subproduct[:name]} in product #{product.name}" unless real_product
           subproduct.merge!( :product => real_product )
+          subproduct.delete( :name )
         end
       end
     end

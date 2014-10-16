@@ -34,7 +34,7 @@ class OrderDialog
             @gui_subproducts.clear{
               @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
               subproducts.each do |subproduct|
-                @app.para "#{subproduct[:name]}", :stroke => "#CD9", :margin => 4
+                @app.para "#{subproduct[:product].name}", :stroke => "#CD9", :margin => 4
               end
             }
           else
