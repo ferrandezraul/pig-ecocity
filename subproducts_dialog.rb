@@ -19,13 +19,18 @@ class SubProductsDialog
     @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
 
     @gui_selected = @subproducts.map do |subproduct|
-      @app.flow do
-        @checked = @app.check :margin => 4
+      @app.flow {
+        @checked = @app.check :margin => 2
         # Default weight comes from subproduct
         @weight = @app.edit_line "#{subproduct.weight}", :stroke => "#CD9", :width => 50
         print_product_name( subproduct.name )
-        @name = subproduct.name
-      [ @checked, @weight, @name]
+      }
+      [ @checked, @weight, subproduct]
+    end
+
+    @app.button "Select" do
+      selected = @gui_selected.map do |c, weight, subproduct|
+        @subproducts_selected << subproduct if c.checked?
       end
     end
 

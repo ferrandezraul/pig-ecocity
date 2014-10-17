@@ -59,14 +59,14 @@ class OrderItem
   end
 
   def get_subproducts_string
-    if @sub_products.empty?
-      ""
-    else
-      sub_string = ""
+    sub_string = ""
+    if !@sub_products.empty?
       @sub_products.each do |subproduct|
-        sub_string += "#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}\n"
+        sub_string += "\n#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
       end
     end
+
+    sub_string
   end
 
 end
