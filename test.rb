@@ -1,16 +1,15 @@
 
-Shoes.app :margin => 5 do
-  border yellow
-  flow :width => 1000, :margin => 5 do
-    border blue
-    stack :width => 230 do
-      button "Eliminar", :margin => 10 do
-      end
-      edit_line "hola", :margin => 10 do
-      end
+Shoes.app do
+  @list = ['Frances Johnson', 'Ignatius J. Reilly',
+           'Winston Niles Rumfoord']
+  stack do
+    @list.map! do |name|
+      flow { @c = check; para name }
+      [@c, name]
     end
-    stack :width => -230 do
-      para "Hola", :margin => 14, :width => -230
+    button "What's been checked?" do
+      selected = @list.map { |c, name| name if c.checked? }.compact
+      alert("You selected: " + selected.join(', '))
     end
   end
 end
