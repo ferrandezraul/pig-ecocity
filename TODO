@@ -1,7 +1,3 @@
-Arreglar to_s y como se escribe en pantalla con el formato conseguido en order_dialog.rb
-# http://stackoverflow.com/questions/14714936/fix-ruby-string-to-n-characters
-@app.para "kg #{'%-20.20s' % subproduct[:product].name}", :stroke => "#CD9", :width => -50
-
 Continue with SubProductsDialog. How to extract information from there ...
 
 Peso no es obligatorio para produtos con subproductos
@@ -30,7 +26,7 @@ Cuando se crea una comanda y se selecciona un lote, dar opciones de subproductos
 
 Clean up code since it is starting to be ugly.
 
-Refactor OrderDialog in smaller functions
+Refactor OrderDialog in smaller functions                                                   my_products
 Rename OrderDialog to NewOrderDialog
 
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?

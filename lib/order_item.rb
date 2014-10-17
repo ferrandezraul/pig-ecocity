@@ -19,11 +19,7 @@ class OrderItem
   end
 
   def to_s
-    if has_observations?
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR\nObservacions: #{@observations.to_s}"
-    else
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR"
-    end
+    get_observations_string + get_subproducts_string
   end
 
   def has_observations?
@@ -52,6 +48,25 @@ class OrderItem
     end
 
     total
+  end
+
+  def get_observations_string
+    if has_observations?
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR\nObservacions: #{@observations.to_s}"
+    else
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR"
+    end
+  end
+
+  def get_subproducts_string
+    if @sub_products.empty?
+      ""
+    else
+      sub_string = ""
+      @sub_products.each do |subproduct|
+        sub_string += "#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}\n"
+      end
+    end
   end
 
 end

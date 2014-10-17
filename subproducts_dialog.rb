@@ -4,11 +4,13 @@ require 'product_helper'
 require 'customer_helper'
 
 class SubProductsDialog
+  attr_reader :subproducts_selected
+
   def initialize( app, subproducts)
     @app = app
     @subproducts = subproducts
+    @subproducts_selected = []
     draw
-
   end
 
   private
@@ -20,10 +22,11 @@ class SubProductsDialog
     @subproducts.each do |subproduct|
       @app.flow do
         @app.stack :margin => 2, :width => 50 do
-          @app.edit_line "#{subproduct[:weight]}", :stroke => "#CD9", :width => 50
+          # Default weight comes from subproduct
+          @app.edit_line "#{subproduct.weight}", :stroke => "#CD9", :width => 50
         end
         @app.stack :margin => 2, :width => -50 do
-          print_product_name( subproduct[:product].name )
+          print_product_name( subproduct.name )
         end
       end
     end

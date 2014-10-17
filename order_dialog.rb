@@ -33,7 +33,7 @@ class OrderDialog
           if product.has_subproducts?
             subproducts = product.subproducts
             @gui_subproducts.clear{
-              SubProductsDialog.new( @app, subproducts )
+              @gui_subproducts_dialog = SubProductsDialog.new( @app, subproducts )
             }
           else
             @gui_subproducts.clear
@@ -56,6 +56,7 @@ class OrderDialog
         @ordered_items = []
 
         @app.button "Afegir Producte", :margin => 10 do
+          # Also uses internally @gui_subproducts_dialog
           add_item_to_ordered_items( @gui_customer_name_selected.text, @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
           @gui_text_order_items.clear { print_items( @ordered_items ) }
         end
@@ -127,7 +128,7 @@ class OrderDialog
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
 
       # TODO
-      subproducts = []
+      subproducts = @gui_subproducts_dialog.subproducts_selected
       @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
       debug( "Product #{product_name} added to order from #{customer_name}." )
     end

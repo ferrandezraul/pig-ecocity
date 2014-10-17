@@ -16,24 +16,18 @@ class Product
   end
 
   def to_s
-    # Align to the left with a size of 10 chars
+    # Align to the left with a size of 20 chars
     name_formatted = '%-20.20s' % @name
-    p_tienda = "%4.2f" % @price_tienda.to_f
-    p_coope = "%4.2f" % @price_coope.to_f
-    p_pvp = "%4.2f" % @price_pvp.to_f
-
-    price_formatted = "(#{p_tienda.to_s},#{p_coope.to_s},#{p_pvp.to_s})  EUR/KG"
 
     subproducts_formatted = ""
 
     if has_subproducts?
       subproducts_formatted += "\n\tOpcions a escollir:\n"
       @subproducts.each do |subproduct|
-        subproducts_formatted += "\t#{subproduct[:weight]} Kg\t#{subproduct[:product].to_s}\n"
+        subproducts_formatted += "\t#{subproduct.weight} Kg\t#{subproduct.name}\n"
       end
     end
 
-    #name_formatted + price_formatted + subproducts_formatted
     name_formatted + subproducts_formatted
   end
 

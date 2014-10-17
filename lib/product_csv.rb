@@ -53,10 +53,8 @@ class ProductCSV
       if !product.subproducts.empty?
         subproducts_list = product.subproducts
         subproducts_list.each do |subproduct|
-          real_product = ProductHelper.find_product_with_name( products_list, subproduct[:name] )
-          raise "Subproduct not found #{subproduct[:name]} in product #{product.name}" unless real_product
-          subproduct.merge!( :product => real_product )
-          subproduct.delete( :name )
+          real_product = ProductHelper.find_product_with_name( products_list, subproduct.name )
+          raise "Subproduct not found #{subproduct.name} in product #{product.name}" unless real_product
         end
       end
     end
@@ -100,8 +98,9 @@ class ProductCSV
       names = split_subproducts_names( subproduct_name )
 
       names.each do |name|
-        subproducts << { :weight => subproduct_weight,
-                         :name => name }
+        subproducts << SubProduct.new( :name => name,
+                                       :weight => subproduct_weight,
+                                       :quantity => 1 )
       end
 
       i += 2
