@@ -25,7 +25,6 @@ class SubProductsDialog
     @subproducts_selected.clear
     @selected.each do |checkbox, weight_editor, subproduct|
       checkbox.checked = false
-      weight_editor.text = ""
     end
   end
 

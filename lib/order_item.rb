@@ -15,7 +15,7 @@ class OrderItem
     @weight = weight
     @observations = observations
     @price = calculate_price(customer.type)
-    @sub_products = sub_products
+    @sub_products = sub_products.dup
   end
 
   def to_s
