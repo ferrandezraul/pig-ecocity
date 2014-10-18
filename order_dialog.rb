@@ -58,7 +58,7 @@ class OrderDialog
         @app.button "Afegir Producte", :margin => 10 do
           # Also uses internally @gui_subproducts_dialog
           add_item_to_ordered_items( @gui_customer_name_selected.text, @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
-          @gui_text_order_items.clear { print_items( @ordered_items ) }
+          @gui_order_view.clear { print_items( @ordered_items ) }
           @gui_subproducts_dialog.clear
         end
 
@@ -68,8 +68,8 @@ class OrderDialog
           else
             add_order( @gui_customer_name_selected.text, @ordered_items, @gui_date.text )
             alert "Comanda afegida!"
-            @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -260 }
             @ordered_items.clear
+            @gui_order_view.clear{ print_items( @ordered_items ) }
             @gui_observations.text = ""
             @gui_subproducts_dialog.clear
             debug( "Order for #{@gui_customer_name_selected.text} added." )
@@ -79,7 +79,7 @@ class OrderDialog
       end
 
       # @gui_text_order_items is a stack 100% minus 230 pixels wide
-      @gui_text_order_items = @app.stack :margin => 4, :width => -260 do
+      @gui_order_view = @app.stack :margin => 4, :width => -260 do
         @app.border "#CD9"
       end
     end
@@ -121,7 +121,7 @@ class OrderDialog
   def delete(item)
     @ordered_items.delete(item)
     debug("Deleted #{item.product.name} from order.")
-    @gui_text_order_items.clear { print_items( @ordered_items ) }
+    @gui_order_view.clear { print_items( @ordered_items ) }
   end
 
   def add_item_to_ordered_items( customer_name, product_name, quantity, weigh, observations )
