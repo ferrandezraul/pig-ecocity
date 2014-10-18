@@ -8,7 +8,7 @@ class ResumeDialog
     @app = app
     @orders = orders
     @pig = pig
-    @gui_product_names = ProductHelper.names(products)
+    @product_names = ProductHelper.names(products)
 
     @app.flow :margin => 4 do
 
@@ -23,7 +23,7 @@ class ResumeDialog
       @app.stack :margin => 4, :width => -240 do
         @app.border "#CD9"
         @app.para "Selecciona el producte:", :stroke => "#CD9", :margin => 4
-        @app.list_box items: @gui_product_names, :margin => 4 do |product_name|
+        @app.list_box items: @product_names, :margin => 4 do |product_name|
           times_ordered = 0
           kg_ordered = 0
           euros_ordered = 0
