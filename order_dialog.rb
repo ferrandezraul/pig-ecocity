@@ -59,17 +59,19 @@ class OrderDialog
           # Also uses internally @gui_subproducts_dialog
           add_item_to_ordered_items( @gui_customer_name_selected.text, @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
           @gui_text_order_items.clear { print_items( @ordered_items ) }
+          @gui_subproducts_dialog.clear
         end
 
         @app.button "Crear comanda", :margin => 10 do
           if @ordered_items.empty?
             alert "Ha de afegir un producte per poder realitzar una comanda."
           else
-            create_order( @gui_customer_name_selected.text, @ordered_items, @gui_date.text )
+            add_order( @gui_customer_name_selected.text, @ordered_items, @gui_date.text )
             alert "Comanda afegida!"
             @gui_text_order_items.clear{ @app.stack :margin => 4, :width => -260 }
             @ordered_items.clear
             @gui_observations.text = ""
+            @gui_subproducts_dialog.clear
             debug( "Order for #{@gui_customer_name_selected.text} added." )
           end
         end
@@ -85,7 +87,7 @@ class OrderDialog
 
   private
 
-  def create_order(customer_name, order_items, date_string )
+  def add_order(customer_name, order_items, date_string )
     customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
     @orders << Order.new( customer, order_items, date_string )
   end
@@ -128,7 +130,7 @@ class OrderDialog
       customer = CustomerHelper.find_customer_with_name( @customers, customer_name )
 
       # TODO
-      subproducts = @gui_subproducts_dialog.subproducts_selected
+      subproducts = @gui_subproducts_dialog.get_selected_subproducts
       @ordered_items << OrderItem.new( customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
       debug( "Product #{product_name} added to order from #{customer_name}." )
     end

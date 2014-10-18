@@ -4,7 +4,6 @@ require 'product_helper'
 require 'customer_helper'
 
 class SubProductsDialog
-  attr_reader :subproducts_selected
 
   def initialize( app, subproducts)
     @app = app
@@ -13,25 +12,36 @@ class SubProductsDialog
     draw
   end
 
+  def get_selected_subproducts
+    @selected.map do |c, weight, subproduct|
+      @subproducts_selected << subproduct if c.checked?
+    end
+
+    @subproducts_selected
+  end
+
+  def clear
+    debug( "Clearing Subproduct dialog")
+    @subproducts_selected.clear
+    @selected.each do |checkbox, weight_editor, subproduct|
+      checkbox.checked = false
+      weight_editor.text = ""
+    end
+  end
+
   private
 
   def draw
     @app.para "Tria els productes del lot:", :stroke => "#CD9", :margin => 4
 
-    @gui_selected = @subproducts.map do |subproduct|
+    @selected = @subproducts.map do |subproduct|
       @app.flow {
-        @checked = @app.check :margin => 2
+        @checkbox = @app.check :margin => 2
         # Default weight comes from subproduct
-        @weight = @app.edit_line "#{subproduct.weight}", :stroke => "#CD9", :width => 50
+        @weight_editor = @app.edit_line "#{subproduct.weight}", :stroke => "#CD9", :width => 50
         print_product_name( subproduct.name )
       }
-      [ @checked, @weight, subproduct]
-    end
-
-    @app.button "Select" do
-      selected = @gui_selected.map do |c, weight, subproduct|
-        @subproducts_selected << subproduct if c.checked?
-      end
+      [ @checkbox, @weight_editor, subproduct]
     end
 
   end
