@@ -5,26 +5,36 @@ require 'customer_helper'
 
 class SubProductsDialog
 
-  def initialize( app, subproducts)
+  def initialize( app)
     @app = app
-    @subproducts = subproducts
     @subproducts_selected = []
+  end
+
+  def subproducts=(subproducts)
+    @subproducts = subproducts
     draw
   end
 
   def get_selected_subproducts
-    @selected.map do |c, weight, subproduct|
-      @subproducts_selected << subproduct if c.checked?
+    if @selected
+      @selected.map do |c, weight, subproduct|
+        @subproducts_selected << subproduct if c.checked?
+      end
+
+      return @subproducts_selected
+    else
+      return []
     end
 
-    @subproducts_selected
   end
 
   def clear
     debug( "Clearing Subproduct dialog")
     @subproducts_selected.clear
-    @selected.each do |checkbox, weight_editor, subproduct|
-      checkbox.checked = false
+    if @selected
+      @selected.each do |checkbox, weight_editor, subproduct|
+        checkbox.checked = false
+      end
     end
   end
 

@@ -52,8 +52,8 @@ Shoes.app :width => 1000, :height => 900 do
     @orders = []
     @pig = Pig.new
 
-    @gui_product_names = ProductHelper.names(@products)
-    @gui_customer_names = CustomerHelper.names(@customers)
+    @product_names = ProductHelper.names(@products)
+    @customer_names = CustomerHelper.names(@customers)
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
