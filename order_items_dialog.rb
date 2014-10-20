@@ -21,12 +21,14 @@ class OrderItemsDialog
   def customer=(customer)
     @ordered_items.clear
     @customer = customer
+    clear
   end
 
   def clear
     @ordered_items.clear
     @gui_observations.text = ""
     @gui_subproducts_dialog.clear
+    @gui_order_view.clear
   end
 
   def draw
@@ -57,7 +59,7 @@ class OrderItemsDialog
     end
 
     @app.button "Afegir Producte", :margin => 10 do
-      # Also uses internally @gui_subproducts_dialog
+      # Uses internally @gui_subproducts_dialog
       add_item_to_ordered_items( @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
       @gui_order_view.clear { print_items( @ordered_items ) }
       @gui_subproducts_dialog.clear
@@ -70,12 +72,11 @@ class OrderItemsDialog
   def add_item_to_ordered_items( product_name, quantity, weigh, observations )
     if Order.attributes_valid?( @customer.name, product_name, quantity, weigh )
       product = ProductHelper.find_product_with_name( @products, product_name )
-
-      # TODO
       subproducts = @gui_subproducts_dialog.get_selected_subproducts
+
       @ordered_items << OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
+
       debug( "Product #{product_name} added to order from #{@customer.name}." )
-      debug(OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts ))
     end
   end
 
@@ -90,7 +91,7 @@ class OrderItemsDialog
         @app.stack :width => 110 do
           @app.button "Eliminar", :margin => 4 do
             delete(item)
-            debug("Deleted #{item.product.name} from order.")
+            @gui_order_view.clear { print_items( @ordered_items ) }
           end
         end
       end
@@ -102,7 +103,6 @@ class OrderItemsDialog
   def delete(item)
     @ordered_items.delete(item)
     debug("Deleted #{item.product.name} from order.")
-    @gui_order_view.clear { print_items( @ordered_items ) }
   end
 
 end

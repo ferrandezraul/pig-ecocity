@@ -48,7 +48,6 @@ Shoes.app :width => 1000, :height => 900 do
     title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
 
     @products = load_products
-    debug(@products)
     @customers = load_customers
     @orders = []
     @pig = Pig.new
