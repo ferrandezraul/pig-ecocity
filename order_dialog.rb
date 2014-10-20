@@ -21,7 +21,7 @@ class OrderDialog
       # This stack is 230 pixels wide
       # width needed to create 2 columns. See http://shoesrb.com/manual/Rules.html
       @app.stack :margin => 4, :width => 260 do
-        @app.border "#CD9"
+        #@app.border "#CD9"
 
         @app.para "Data:", :stroke => "#CD9", :margin => 4
         @gui_date = @app.edit_line :margin => 4
@@ -32,30 +32,32 @@ class OrderDialog
           customer = CustomerHelper.find_customer_with_name( @customers, list.text)
           @order_items_dialog.customer = customer
         end
-
-        @app.button "Crear comanda", :margin => 10 do
-          if @order_items_dialog.ordered_items.empty?
-            alert "Ha de afegir un producte per poder realitzar una comanda."
-          else
-            add_order( @gui_customer_name_selected.text, @order_items_dialog.ordered_items, @gui_date.text )
-            alert "Comanda afegida!"
-            @order_items_dialog.clear
-            # TODO Move this to @order_items_dialog
-            @gui_order_view.clear
-            debug( "Order for #{@gui_customer_name_selected.text} added." )
-          end
-        end
-
       end
 
       # @gui_text_order_items is a stack 100% minus 230 pixels wide
       @gui_order_view = @app.stack :margin => 4, :width => -260 do
-        @app.border "#CD9"
+        #@app.border "#CD9"
       end
 
       @order_items_dialog = OrderItemsDialog.new( @app, @products, @gui_order_view )
-      @order_items_dialog.draw
+      @app.stack :margin => 4, :width => 260 do
+        @order_items_dialog.draw
+      end
+    end
 
+    @app.stack :margin => 4, :width => 260 do
+      @app.button "Crear comanda", :margin => 10 do
+        if @order_items_dialog.ordered_items.empty?
+          alert "Ha de afegir un producte per poder realitzar una comanda."
+        else
+          add_order( @gui_customer_name_selected.text, @order_items_dialog.ordered_items, @gui_date.text )
+          alert "Comanda afegida!"
+          @order_items_dialog.clear
+          # TODO Move this to @order_items_dialog
+          @gui_order_view.clear
+          debug( "Order for #{@gui_customer_name_selected.text} added." )
+        end
+      end
     end
   end
 
