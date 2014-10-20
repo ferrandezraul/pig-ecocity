@@ -1,3 +1,7 @@
+Apply Observable module as done in robot exercise.
+El robot tiene observadores y el plateau es informado cuando un robot cambia su estado.
+La order tiene observadores y la order_view es informada cuando una order cambia.
+
 Continue with SubProductsDialog. How to extract information from there ...
 
 Peso no es obligatorio para produtos con subproductos

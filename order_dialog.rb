@@ -26,6 +26,7 @@ class OrderDialog
 
         @app.para "Client:", :stroke => "#CD9", :margin => 4
         @gui_customer_name_selected = @app.list_box items: @customer_names, :margin => 4 do |list|
+          @order_items_dialog = OrderItemsDialog.new( @app, @products, @gui_order_view )
           customer = CustomerHelper.find_customer_with_name( @customers, list.text)
           @order_items_dialog.customer = customer
         end
@@ -33,12 +34,6 @@ class OrderDialog
 
       # @gui_order_view is a stack 100% minus 230 pixels wide
       @gui_order_view = @app.stack :margin => 4, :width => -260
-
-      @order_items_dialog = OrderItemsDialog.new( @app, @products, @gui_order_view )
-
-      @app.stack :margin => 4, :width => 260 do
-        @order_items_dialog.draw
-      end
     end
 
     @app.stack :margin => 4, :width => 260 do

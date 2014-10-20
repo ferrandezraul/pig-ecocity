@@ -19,8 +19,8 @@ class OrderItemsDialog
 
   # deletes ordered_items
   def customer=(customer)
-    @ordered_items.clear
     @customer = customer
+    draw
     clear
   end
 
