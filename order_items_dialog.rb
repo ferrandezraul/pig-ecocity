@@ -75,11 +75,11 @@ class OrderItemsDialog
       subproducts = @gui_subproducts_dialog.get_selected_subproducts
       @ordered_items << OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
       debug( "Product #{product_name} added to order from #{@customer.name}." )
+      debug(OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts ))
     end
   end
 
   def print_items(items)
-    @app.border "#CD9"
     total = 0
     items.each do |item|
       total += item.price

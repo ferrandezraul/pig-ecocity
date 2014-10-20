@@ -38,11 +38,11 @@ class OrderItem
     total = 0
     case customer_type
       when "CLIENT"
-        total += @quantity * @weight * @product.price_pvp
+        total += @quantity * @weight.to_f * @product.price_pvp.to_f
       when "COOPE"
-        total += @quantity * @weight * @product.price_coope
+        total += @quantity * @weight.to_f * @product.price_coope.to_f
       when "TIENDA"
-        total += @quantity * @weight * @product.price_tienda
+        total += @quantity * @weight.to_f * @product.price_tienda.to_f
       else
         total += 0
     end
@@ -52,9 +52,9 @@ class OrderItem
 
   def get_observations_string
     if has_observations?
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR\nObservacions: #{@observations.to_s}"
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price.to_f} EUR\nObservacions: #{@observations.to_s}"
     else
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price} EUR"
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price.to_f} EUR"
     end
   end
 
