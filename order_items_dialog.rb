@@ -14,7 +14,7 @@ class OrderItemsDialog
     @ordered_items = []
     @gui_order_view = order_view
 
-    @gui_subproducts_dialog = SubProductsDialog.new( @app )
+    @subproducts_dialog = SubProductsDialog.new( @app )
   end
 
   # deletes ordered_items
@@ -27,7 +27,7 @@ class OrderItemsDialog
   def clear
     @ordered_items.clear
     @gui_observations.text = ""
-    @gui_subproducts_dialog.clear
+    @subproducts_dialog.clear
     @gui_order_view.clear
   end
 
@@ -38,7 +38,8 @@ class OrderItemsDialog
       if product.has_subproducts?
         subproducts = product.subproducts
         @gui_subproducts.clear{
-          @gui_subproducts_dialog.subproducts = subproducts
+          # Redraws subproducts
+          @subproducts_dialog.subproducts = subproducts
         }
       else
         @gui_subproducts.clear
@@ -62,7 +63,7 @@ class OrderItemsDialog
       # Uses internally @gui_subproducts_dialog
       add_item_to_ordered_items( @gui_product_name_selected.text, @quantity.text, @gui_weigh.text, @gui_observations.text )
       @gui_order_view.clear { print_items( @ordered_items ) }
-      @gui_subproducts_dialog.clear
+      @subproducts_dialog.clear
     end
   end
 
@@ -72,9 +73,8 @@ class OrderItemsDialog
   def add_item_to_ordered_items( product_name, quantity, weigh, observations )
     product = ProductHelper.find_product_with_name( @products, product_name )
 
-    if Order.attributes_valid?( @customer.name, product, quantity, weigh )
-      subproducts = @gui_subproducts_dialog.get_selected_subproducts
-
+    if Order.attributes_valid?( @customer, product, quantity, weigh )
+      subproducts = @subproducts_dialog.get_selected_subproducts
       @ordered_items << OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
 
       debug( "Product #{product_name} added to order from #{@customer.name}." )
@@ -92,7 +92,6 @@ class OrderItemsDialog
         @app.stack :width => 110 do
           @app.button "Eliminar", :margin => 4 do
             delete(item)
-            @gui_order_view.clear { print_items( @ordered_items ) }
           end
         end
       end
@@ -103,6 +102,7 @@ class OrderItemsDialog
 
   def delete(item)
     @ordered_items.delete(item)
+    @gui_order_view.clear { print_items( @ordered_items ) }
     debug("Deleted #{item.product.name} from order.")
   end
 

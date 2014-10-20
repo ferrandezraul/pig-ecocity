@@ -64,7 +64,7 @@ class Order
     total
   end
 
-  def self.attributes_valid?( customer_name, product, quantity, peso )
+  def self.attributes_valid?( customer, product, quantity, peso )
     begin
       !Float(quantity)
     rescue
@@ -89,11 +89,11 @@ class Order
       alert "Selecciona un producte."
       return false
     end
-    if customer_name.nil?
+    if customer.nil?
       alert "Selecciona un client"
       return false
     end
-    if customer_name.empty?
+    if customer.name.empty?
       alert "Selecciona un client"
       return false
     end

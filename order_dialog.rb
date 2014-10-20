@@ -10,16 +10,15 @@ class OrderDialog
   def initialize( app, products, customers, orders )
     @app = app
     @orders = orders
-    @products = products
-    @customers = customers
+    @products = products.dup
+    @customers = customers.dup
     @product_names = ProductHelper.names(products)
     @customer_names = CustomerHelper.names(customers)
 
     @app.flow :margin => 4 do
       @app.border "#CD9"
 
-      # This stack is 260 pixels wide
-      # width needed to create 2 columns. See http://shoesrb.com/manual/Rules.html
+      # This stack is 260 pixels wide. See http://shoesrb.com/manual/Rules.html
       @app.stack :margin => 4, :width => 260 do
         @app.para "Data:", :stroke => "#CD9", :margin => 4
         @gui_date = @app.edit_line :margin => 4
@@ -32,10 +31,11 @@ class OrderDialog
         end
       end
 
-      # @gui_text_order_items is a stack 100% minus 230 pixels wide
+      # @gui_order_view is a stack 100% minus 230 pixels wide
       @gui_order_view = @app.stack :margin => 4, :width => -260
 
       @order_items_dialog = OrderItemsDialog.new( @app, @products, @gui_order_view )
+
       @app.stack :margin => 4, :width => 260 do
         @order_items_dialog.draw
       end
