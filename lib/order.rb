@@ -64,7 +64,7 @@ class Order
     total
   end
 
-  def self.attributes_valid?( customer_name, product_name, quantity, peso )
+  def self.attributes_valid?( customer_name, product, quantity, peso )
     begin
       !Float(quantity)
     rescue
@@ -72,22 +72,20 @@ class Order
       return false
     end
 
-    begin
-      !Float(peso)
-    rescue
-      alert "Pes ha de ser un numero en kg"
-      return false
+    if !product.has_subproducts?
+      begin
+        !Float(peso)
+      rescue
+        alert "Pes ha de ser un numero en kg"
+        return false
+      end
     end
 
     if quantity.to_i <= 0
       alert "Quantitat ha de ser mes gran que 0"
       return false
     end
-    if product_name.nil?
-      alert "Selecciona un producte."
-      return false
-    end
-    if product_name.empty?
+    if product.nil?
       alert "Selecciona un producte."
       return false
     end

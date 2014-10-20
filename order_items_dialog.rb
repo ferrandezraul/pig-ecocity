@@ -70,8 +70,9 @@ class OrderItemsDialog
 
 
   def add_item_to_ordered_items( product_name, quantity, weigh, observations )
-    if Order.attributes_valid?( @customer.name, product_name, quantity, weigh )
-      product = ProductHelper.find_product_with_name( @products, product_name )
+    product = ProductHelper.find_product_with_name( @products, product_name )
+
+    if Order.attributes_valid?( @customer.name, product, quantity, weigh )
       subproducts = @gui_subproducts_dialog.get_selected_subproducts
 
       @ordered_items << OrderItem.new( @customer, product, quantity.to_i, weigh.to_f, observations, subproducts )
