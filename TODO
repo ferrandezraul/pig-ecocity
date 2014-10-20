@@ -1,6 +1,20 @@
-Apply Observable module as done in robot exercise.
+Apply Observable module as done in robot exercise. Empieza con clases nuevas!! Nuevo main pig_ecocity. Dialogos no voy a tener. Solo views.
 El robot tiene observadores y el plateau es informado cuando un robot cambia su estado.
 La order tiene observadores y la order_view es informada cuando una order cambia.
+Necesito una order view y una orders view
+Un dialogo no es una view. Los dialogos tienen observadores y las views son informadas de cambios/o eventos como apretar un boton en el dialog.
+Las views pueden modificar los objetos
+
+Implica que:
+Cuando en el dialogo order_dialog apretamos "Crear comanda", llamamos a change y notify_observers(self):
+# Calls update(order_dialog) in observers -> views
+changed
+notify_observers( self )
+
+Esto es posible porque el dialogo tiene "include Observable" y "attr_reader :customer_name, :date, :products"
+De esa forma, en la funcion update(order_dialog) de la order_view podria leer :customer_name, :date, :products o cualquier otro atributo que se desee.
+
+//////////////////////////////
 
 Continue with SubProductsDialog. How to extract information from there ...
 
