@@ -17,6 +17,7 @@ require 'orders_view'
 require 'customers_view'
 require 'new_order_view'
 require 'date_dialog'
+require 'customers_dialog'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -82,13 +83,11 @@ Shoes.app :width => 1000, :height => 900 do
         @gui_main_window.clear{
           stack :margin => 4, :width => 260 do
             date_dialog = DateDialog.new(self)
-
-            para "Client:", :margin => 4
-            customer_name = list_box items: @customer_names, :margin => 4
+            customer_dialog = CustomersDialog.new(self, @customer_names)
 
             button "Acceptar", :margin => 4 do
               begin
-                customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text)
+                customer = CustomerHelper.find_customer_with_name( @customers, customer_dialog.customer_name)
               rescue Errors::CustomerHelperError
                 alert "Selecciona un client"
                 return
