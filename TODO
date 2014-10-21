@@ -1,3 +1,6 @@
+Olvida el observable y estudia y aplica http://shoesrb.com/manual/Rules.html
+
+
 Apply Observable module as done in robot exercise. Empieza con clases nuevas!! Nuevo main pig_ecocity. Dialogos no voy a tener. Solo views.
 El robot tiene observadores y el plateau es informado cuando un robot cambia su estado.
 La order tiene observadores y la order_view es informada cuando una order cambia.
