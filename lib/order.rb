@@ -15,6 +15,10 @@ class Order
     @total = calculate_total
   end
 
+  def <<( order_item)
+    @order_items << order_item
+  end
+
   def to_s
     items = "Productes: \n"
     @order_items.each do |item |
