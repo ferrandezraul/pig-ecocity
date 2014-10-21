@@ -5,10 +5,9 @@ class NewOrderView
   def initialize( app, products, customer, date )
     @app = app
     @products = products.dup
-    @customer = customer
     @product_names = ProductHelper.names(@products)
-    @date = date
 
+    @order = Order.new( customer, [], date )
     draw
   end
 
@@ -28,7 +27,7 @@ class NewOrderView
         @gui_subproducts = @app.stack :margin => 4
 
         @app.para "Observacions:", :stroke => "#CD9", :margin => 4
-        @observations = @app.edit_line items: @customer_names, :margin => 4
+        @observations = @app.edit_line :margin => 4
         @app.para "Quantitat:", :stroke => "#CD9", :margin => 4
         @quantity = @app.edit_line :margin => 4
         @app.para "Pes en Kg: (ex. 0.2 = 200g.)", :stroke => "#CD9", :margin => 4
@@ -42,7 +41,9 @@ class NewOrderView
       end
 
       # @gui_order_view is a stack 100% minus 260 pixels wide
-      @gui_order_view = @app.stack :margin => 4, :width => -260
+      @gui_order_view = @app.stack :margin => 4, :width => -260 do
+        @app.para "#{@order.customer.to_s}", :stroke => "#CD9", :margin => 4
+      end
     end
 
     @app.stack :margin => 4, :width => 260 do
