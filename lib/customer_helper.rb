@@ -16,7 +16,7 @@ class CustomerHelper
       end
     end
 
-    raise CustomerHelperError.new, "Customer not found."
+    raise Errors::CustomerHelperError.new, "Customer not found."
   end
 
 end
