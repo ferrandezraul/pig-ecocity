@@ -62,6 +62,7 @@ class NewOrderView
 
   def order_header_text
     @app.stack :margin => 4, :width => -260 do
+      @app.para "#{@order.date.to_s}", :margin => 4
       @app.para "#{@order.customer.name}", :margin => 4
       @app.para "#{@order.customer.address}", :margin => 4
     end

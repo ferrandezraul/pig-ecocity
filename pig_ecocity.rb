@@ -16,6 +16,7 @@ require 'products_view'
 require 'orders_view'
 require 'customers_view'
 require 'new_order_view'
+require 'date_dialog'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -80,9 +81,7 @@ Shoes.app :width => 1000, :height => 900 do
       button "Nova Comanda", :margin => 4 do
         @gui_main_window.clear{
           stack :margin => 4, :width => 260 do
-            border black
-            para "Data:", :margin => 4
-            date = edit_line "#{Date.today.to_s}", :margin => 4
+            date_dialog = DateDialog.new(self)
 
             para "Client:", :margin => 4
             customer_name = list_box items: @customer_names, :margin => 4
@@ -94,7 +93,7 @@ Shoes.app :width => 1000, :height => 900 do
                 alert "Selecciona un client"
                 return
               end
-              @gui_main_window.clear{ NewOrderView.new(self, @products, customer, date ) }
+              @gui_main_window.clear{ NewOrderView.new(self, @products, customer, date_dialog.date ) }
             end
           end
         }
@@ -112,4 +111,5 @@ Shoes.app :width => 1000, :height => 900 do
     end
 
   end
+
 end
