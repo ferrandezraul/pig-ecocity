@@ -6,7 +6,7 @@ class ProductsView
     @products = products
 
     @products.each do |product|
-      @app.para "#{product.to_s}\n", :stroke => "#DFA", :align => "left"
+      @app.para "#{product.to_s}\n", :align => "left"
     end
 
   end

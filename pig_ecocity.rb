@@ -44,12 +44,11 @@ def load_customers
 end
 
 Shoes.app :width => 1000, :height => 900 do
-  background "#555"
 
   @title = "Ecocity Porc"
 
   stack :margin => 10 do
-    title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
+    title strong(@title), :align => "center", :margin => 0
 
     @products = load_products
     @customers = load_customers
@@ -81,11 +80,11 @@ Shoes.app :width => 1000, :height => 900 do
       button "Nova Comanda", :margin => 4 do
         @gui_main_window.clear{
           stack :margin => 4, :width => 260 do
-            border "#CD9"
-            para "Data:", :stroke => "#CD9", :margin => 4
+            border black
+            para "Data:", :margin => 4
             date = edit_line "#{Date.today.to_s}", :margin => 4
 
-            para "Client:", :stroke => "#CD9", :margin => 4
+            para "Client:", :margin => 4
             customer_name = list_box items: @customer_names, :margin => 4
 
             button "Acceptar", :margin => 4 do

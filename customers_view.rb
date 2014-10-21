@@ -16,7 +16,7 @@ class CustomersView
   def print_customers(customers)
 
     customers.each do |customer|
-      @app.para "#{customer.to_s}\n", :stroke => "#CD9", :margin => 4
+      @app.para "#{customer.to_s}\n", :margin => 4
 
       #@app.stack :margin => 4, :width => 110 do
       #  @app.button "Eliminar", :margin => 4 do
