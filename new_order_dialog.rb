@@ -1,8 +1,8 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 class NewOrderDialog
-  def initialize( stack )
-    @stack = stack
+  def initialize( shoes_stack )
+    @stack = shoes_stack
 
     # Call @stack.app in order to be able to access global @orders and global @gui_main_window
     @stack.app do
@@ -19,7 +19,6 @@ class NewOrderDialog
             customer = CustomerHelper.find_customer_with_name( @customers, customer_name.text)
           rescue Errors::CustomerHelperError
             alert "Selecciona un client"
-            return
           end
 
           # TODO create new dialog for items
