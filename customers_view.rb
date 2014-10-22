@@ -1,36 +1,17 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 class CustomersView
-  def initialize( app, customers)
-    @app = app
-    @customers = customers
+  def initialize( stack )
+    @stack = stack
 
-    @gui = @app.flow do
-      print_customers(@customers)
+    # Call @stack.app in order to be able to access global @customers and global @gui_main_window
+    @stack.app do
+      @gui_main_window.clear{
+        @customers.each do |customer|
+          para "#{customer.to_s}\n", :align => "left"
+        end
+      }
     end
+
   end
-
-
-  private
-
-  def print_customers(customers)
-
-    customers.each do |customer|
-      @app.para "#{customer.to_s}\n", :margin => 4
-
-      #@app.stack :margin => 4, :width => 110 do
-      #  @app.button "Eliminar", :margin => 4 do
-      #    delete(customer)
-      #  end
-      #end
-    end
-  end
-
-
-  #def delete(customer)
-  #  @customers.delete(customer)
-  #  debug("Deleted customer #{customer.name}.")
-  #  @gui.clear { print_customers(@customers) }
-  #end
-
 end
