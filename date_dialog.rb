@@ -11,8 +11,8 @@ class DateDialog
   # ...
   # date_string = dialog.date
   #
-  def initialize( app )
-    @app = app
+  def initialize( shoes_stack )
+    @stack = shoes_stack
     @date = "#{Date.today.to_s}"
 
     draw
@@ -21,12 +21,17 @@ class DateDialog
   private
 
   def draw
-    @app.border @app.black
+    @stack.app do
+      para "Data:", :margin => 4
 
-    @app.para "Data:", :margin => 4
+      if @date.nil?
+        debug("date is nil")
+      end
+      debug(@date)
 
-    @app.edit_line @date, :margin => 4 do |line|
-      @date = line.text
+      edit_line @date, :margin => 4 do |line|
+        @date = line.text
+      end
     end
   end
 

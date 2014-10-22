@@ -1,5 +1,7 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
+require 'date_dialog'
+
 class NewOrderDialog
   def initialize( shoes_stack )
     @stack = shoes_stack
@@ -9,8 +11,8 @@ class NewOrderDialog
       @gui_main_window.clear{
         stack :margin => 4 do
           border black
-          para "Data:", :margin => 4
-          date = edit_line "#{Date.today.to_s}", :margin => 4
+          date_stack = stack :margin => 4
+          date_dialog = DateDialog.new( date_stack )
 
           para "Client:", :margin => 4
           customer_name = list_box items: @customer_names, :margin => 4
