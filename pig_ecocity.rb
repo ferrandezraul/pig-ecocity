@@ -11,6 +11,7 @@ require 'customer_helper'
 require 'products_view'
 require 'customers_view'
 require 'orders_view'
+require 'new_order_dialog'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -66,7 +67,7 @@ Shoes.app :width => 1000, :height => 900 do
       end
 
       button "Nova Comanda", :margin => 4 do
-        @gui_main_window.clear{ }
+        NewOrderDialog.new(@gui_main_window)
       end
 
       button "TOTAL", :margin => 4 do
