@@ -3,6 +3,8 @@ require 'product'
 require 'subproduct'
 require 'errors'
 
+require 'product_helper'
+
 module Columns
   NAME = 0            # Name
   PRICE_TIENDA = 1           # Price
