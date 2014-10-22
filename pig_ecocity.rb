@@ -51,8 +51,7 @@ Shoes.app :width => 1000, :height => 900 do
 
     flow :margin => 10 do
       button "Productes", :margin => 4 do
-        @gui_products_view = stack :margin => 4
-        @gui_main_window.clear{ ProductsView.new(@gui_products_view) }
+        ProductsView.new(@gui_main_window)
       end
 
       button "Comandes", :margin => 4 do
