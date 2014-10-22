@@ -10,6 +10,7 @@ require 'customer_helper'
 
 require 'products_view'
 require 'customers_view'
+require 'orders_view'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -46,6 +47,7 @@ Shoes.app :width => 1000, :height => 900 do
 
     @products = load_products
     @customers = load_customers
+    @orders = []
 
     @product_names = ProductHelper.names(@products)
     @customer_names = CustomerHelper.names(@customers)
@@ -56,7 +58,7 @@ Shoes.app :width => 1000, :height => 900 do
       end
 
       button "Comandes", :margin => 4 do
-        @gui_main_window.clear{ }
+        OrdersView.new(@gui_main_window)
       end
 
       button "Clients", :margin => 4 do
