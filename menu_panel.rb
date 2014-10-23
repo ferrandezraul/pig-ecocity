@@ -5,6 +5,7 @@ require 'products_view'
 class MenuPanel < Shoes::Widget
 
   def initialize( args )
+    style(Link, :underline => nil)
     @products = args[:products]
     print_links
 
@@ -42,10 +43,12 @@ class MenuPanel < Shoes::Widget
   end
 
   def print_links
-    para link("Productes").click { view_products }, :margin => 4
-    para link("Clients").click { view_customers }, :margin => 4
-    para link("Comandes").click { view_orders }, :margin => 4
-    para link("Nova Comanda").click { new_order }, :margin => 4
+    flow do
+      para link("Productes").click { view_products }, :margin => 10
+      para link("Clients").click { view_customers }, :margin => 10
+      para link("Comandes").click { view_orders }, :margin => 10
+      para link("Nova Comanda").click { new_order }, :margin => 10
+    end
   end
 
 end

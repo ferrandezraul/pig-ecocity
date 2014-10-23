@@ -36,7 +36,7 @@ Shoes.app :width => 1000, :height => 900 do
   @title = "Ecocity Porc"
 
   stack :margin => 10 do
-    title strong(@title), :align => "center", :margin => 0
+    title strong(@title), :align => "center", :margin => 4
 
     @products = load_products
     @customers = load_customers
