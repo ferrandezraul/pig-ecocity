@@ -43,7 +43,8 @@ Shoes.app :width => 1000, :height => 900 do
     @orders = []
 
     menu_panel :products => @products,
-               :customers => @customers
+               :customers => @customers,
+               :orders => @orders
   end
 
 end

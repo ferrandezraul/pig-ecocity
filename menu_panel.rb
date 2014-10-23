@@ -9,6 +9,7 @@ class MenuPanel < Shoes::Widget
     style(Link, :underline => nil)
     @products = args[:products]
     @customers = args[:customers]
+    @orders = args[:orders]
     print_links
 
     # Use yield here to implement something from the caller??
@@ -40,7 +41,7 @@ class MenuPanel < Shoes::Widget
   def new_order
     clear do
       print_links
-      new_order_panel @products, @customers
+      new_order_panel @products, @customers, @orders
     end
   end
 

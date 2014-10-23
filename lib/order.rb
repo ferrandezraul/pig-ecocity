@@ -7,7 +7,7 @@ class Order
   attr_reader :date
   attr_reader :total
 
-  def initialize(customer, order_items, date)
+  def initialize(customer, date, order_items=[])
     @customer = customer
     @order_items = order_items.dup
     @date = date
@@ -15,7 +15,7 @@ class Order
     @total = calculate_total
   end
 
-  def <<( order_item)
+  def <<(order_item)
     @order_items << order_item
   end
 

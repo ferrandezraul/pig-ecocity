@@ -3,18 +3,19 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 require 'products_view'
 require 'product_helper'
 require 'customer_helper'
+require 'order.rb'
+require 'order_item.rb'
 
 class NewOrderPanel < Shoes::Widget
 
-  def initialize( products, customers )
+  def initialize( products, customers, orders )
     @products = products
     @customers = customers
+    @orders = orders
     @product_names = ProductHelper.names(@products)
     @customer_names = CustomerHelper.names(@customers)
 
     select_date_and_customer
-
-    # Use yield here to implement something from the caller??
   end
 
   private
@@ -37,7 +38,11 @@ class NewOrderPanel < Shoes::Widget
 
       button "Acceptar", :margin => 4 do
         alert "Selecciona un client." unless @selected_customer
-        select_product if @selected_customer
+
+        if @selected_customer
+          @order = Order.new( @selected_customer, @date )
+          select_product
+        end
       end
     end
   end
@@ -76,10 +81,12 @@ class NewOrderPanel < Shoes::Widget
 
         button "Afegir Producte", :margin => 4 do
           if valid_parameters?
-            # Create order item
+            add_order_item_to_order
           end
         end
       end
+
+      print_current_order_details
     end
   end
 
@@ -97,6 +104,24 @@ class NewOrderPanel < Shoes::Widget
     end
 
     return true
+  end
+
+  def add_order_item_to_order
+    # read @selected_product, @observations, @quantity and @weight and create order item, add to @order and update display by calling again select_product
+
+    @order << OrderItem.new( @selected_customer, @selected_product, @quantity, @weight, @observations, [ ] )
+
+    select_product
+  end
+
+
+  def print_current_order_details
+    stack :margin => 4 do
+      para @order.customer.name, :margin => 4
+      para @order.customer.address, :margin => 4
+
+      para @order.order_items, :margin => 4
+    end
   end
 
 end
