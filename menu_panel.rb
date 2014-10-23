@@ -1,12 +1,14 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'products_view'
+require 'new_order_panel'
 
 class MenuPanel < Shoes::Widget
 
   def initialize( args )
     style(Link, :underline => nil)
     @products = args[:products]
+    @customers = args[:customers]
     print_links
 
     # Use yield here to implement something from the caller??
@@ -38,7 +40,7 @@ class MenuPanel < Shoes::Widget
   def new_order
     clear do
       print_links
-      para "Lets create an order!!"
+      new_order_panel @products, @customers
     end
   end
 
