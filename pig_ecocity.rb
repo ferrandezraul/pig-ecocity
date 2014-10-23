@@ -1,17 +1,9 @@
-# See shoes examples expert-funnies.rb
-
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
 require 'customers_csv'
-
-require 'product_helper'
-require 'customer_helper'
-
-require 'products_view'
-require 'customers_view'
-require 'orders_view'
-require 'new_order_dialog'
+require 'errors'
+require 'menu_panel'
 
 def products_csv__path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
@@ -50,37 +42,7 @@ Shoes.app :width => 1000, :height => 900 do
     @customers = load_customers
     @orders = []
 
-    @product_names = ProductHelper.names(@products)
-    @customer_names = CustomerHelper.names(@customers)
-
-    flow :margin => 10 do
-      button "Productes", :margin => 4 do
-        ProductsView.new(@gui_main_window)
-      end
-
-      button "Comandes", :margin => 4 do
-        OrdersView.new(@gui_main_window)
-      end
-
-      button "Clients", :margin => 4 do
-        CustomersView.new(@gui_main_window)
-      end
-
-      button "Nova Comanda", :margin => 4 do
-        NewOrderDialog.new(@gui_main_window)
-      end
-
-      button "TOTAL", :margin => 4 do
-        @gui_main_window.clear{ }
-      end
-
-      # This is for clearing flow when user press any button
-      # extracted from here http://ruby.about.com/od/shoes/ss/shoes3_2.htm
-      @gui_main_window = flow
-    end
-
-
-
+    menu_panel :products => @products
   end
 
 end
