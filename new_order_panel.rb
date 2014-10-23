@@ -19,9 +19,11 @@ class NewOrderPanel < Shoes::Widget
 
   private
 
+  # Enter date and customer
+  # Sets @date and @selected_customer
   def select_date_and_customer
-    stack do
-      # Enter date and customer
+    stack :margin => 4 do
+      border black
       para "Data:", :margin => 4
       @date = "#{Date.today.to_s}"
       edit_line "#{Date.today.to_s}", :margin => 4 do |line|
@@ -33,17 +35,19 @@ class NewOrderPanel < Shoes::Widget
         @selected_customer = CustomerHelper.find_customer_with_name( @customers, list.text)
       end
 
-      button "Acceptar" do
-        if @selected_customer
-          select_product
-        end
+      button "Acceptar", :margin => 4 do
+        alert "Selecciona un client." unless @selected_customer
+        select_product if @selected_customer
       end
     end
   end
 
+  # Enter product
+  # Sets @selected_product, @observations, @quantity and @weight
   def select_product
     clear do
-      stack do
+      border black
+      stack :margin => 4 do
         para "Producte:", :margin => 4
         list_box items: @product_names, :margin => 4 do |list|
           @selected_product = ProductHelper.find_product_with_name( @products, list.text )
@@ -64,13 +68,13 @@ class NewOrderPanel < Shoes::Widget
         @weight = 0
         para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
         flow do
-          edit_line :margin => 2 do |weight|
+          edit_line :margin => 4 do |weight|
             @weight = weight.text.to_f
           end
           para "Kg", :margin => 2
         end
 
-        button "Afegir Producte", :margin => 10 do
+        button "Afegir Producte", :margin => 4 do
           if valid_parameters?
             # Create order item
           end
@@ -79,6 +83,7 @@ class NewOrderPanel < Shoes::Widget
     end
   end
 
+  # Validates @selected_product, @quantity and @weight
   def valid_parameters?
     if @selected_product.nil?
       alert "Selecciona un producte"
@@ -92,7 +97,6 @@ class NewOrderPanel < Shoes::Widget
     end
 
     return true
-
   end
 
 end
