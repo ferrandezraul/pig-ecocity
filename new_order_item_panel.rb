@@ -28,7 +28,7 @@ class NewOrderItemPanel < Shoes::Widget
         quantity = cantidad.text.to_i
       end
 
-      para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
+      para "Pes en Kg: (0.2 = 200g.)", :margin => 4
       flow do
         edit_line :margin => 4 do |peso|
           weight = peso.text.to_f

@@ -27,11 +27,19 @@ class NewOrderPanel < Shoes::Widget
     date_customer_dialog items: @customers, :margin => 4 do |customer, date|
       if customer and !date.empty?
         @order = Order.new( customer, date )
-        clear do
-          flow :margin => 4 do
-            @gui_order_details = print_select_product_dialog
-            @gui_order_details = print_current_order_details
-          end
+        print
+      end
+    end
+  end
+
+  def print
+    clear do
+      flow :margin => 4 do
+        stack :margin => 4, :width => 260 do
+          print_select_product_dialog
+        end
+        stack :margin => 4, :width => -260 do
+          print_current_order_details
         end
       end
     end
@@ -41,19 +49,17 @@ class NewOrderPanel < Shoes::Widget
     new_order_item_panel products: @products, customer: @order.customer do |order_item|
       if order_item
         @order << order_item
-        @gui_order_details.clear{ print_current_order_details }
+        print
       end
     end
   end
 
   def print_current_order_details
-    stack :margin => 4, :width => -260 do
-      para @order.customer.name, :margin => 4
-      para @order.customer.address, :margin => 4
+    para @order.customer.name, :margin => 4
+    para @order.customer.address, :margin => 4
 
-      @order.order_items.each do |item|
-        para item, :margin => 4
-      end
+    @order.order_items.each do |item|
+      para item, :margin => 4
     end
   end
 
