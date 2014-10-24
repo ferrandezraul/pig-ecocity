@@ -9,6 +9,8 @@ require 'order_item.rb'
 class NewOrderPanel < Shoes::Widget
 
   def initialize( products, customers, orders )
+    reset_selected_product
+
     @products = products
     @customers = customers
     @orders = orders
@@ -58,19 +60,16 @@ class NewOrderPanel < Shoes::Widget
           @selected_product = ProductHelper.find_product_with_name( @products, list.text )
         end
 
-        @observations = ""
         para "Observacions:", :margin => 4
         edit_line :margin => 4 do |line|
           @observations = line.text
         end
 
-        @quantity = 0
         para "Quantitat:", :margin => 4
         edit_line :margin => 4 do |quantity|
           @quantity = quantity.text.to_i
         end
 
-        @weight = 0
         para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
         flow do
           edit_line :margin => 4 do |weight|
@@ -82,6 +81,8 @@ class NewOrderPanel < Shoes::Widget
         button "Afegir Producte", :margin => 4 do
           if valid_parameters?
             add_order_item_to_order
+            reset_selected_product
+            select_product
           end
         end
       end
@@ -107,11 +108,7 @@ class NewOrderPanel < Shoes::Widget
   end
 
   def add_order_item_to_order
-    # read @selected_product, @observations, @quantity and @weight and create order item, add to @order and update display by calling again select_product
-
     @order << OrderItem.new( @selected_customer, @selected_product, @quantity, @weight, @observations, [ ] )
-
-    select_product
   end
 
 
@@ -120,8 +117,17 @@ class NewOrderPanel < Shoes::Widget
       para @order.customer.name, :margin => 4
       para @order.customer.address, :margin => 4
 
-      para @order.order_items, :margin => 4
+      @order.order_items.each do |item|
+        para item, :margin => 4
+      end
     end
+  end
+
+  def reset_selected_product
+    @selected_product = nil
+    @weight = 0
+    @observations = ""
+    @quantity = 0
   end
 
 end
