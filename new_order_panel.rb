@@ -6,12 +6,11 @@ require 'customer_helper'
 require 'order.rb'
 require 'order_item.rb'
 require 'date_customer_dialog'
+require 'new_order_item_panel'
 
 class NewOrderPanel < Shoes::Widget
 
   def initialize( products, customers, orders )
-    reset_selected_product
-
     @products = products
     @customers = customers
     @orders = orders
@@ -24,79 +23,25 @@ class NewOrderPanel < Shoes::Widget
   private
 
   # Enter date and customer
-  # Sets @date and @selected_customer
   def select_date_and_customer
     date_customer_dialog items: @customers, :margin => 4 do |customer, date|
       if customer and !date.empty?
         @order = Order.new( customer, date )
-        select_product
+        clear do
+          flow :margin => 4 do
+            @gui_order_details = print_select_product_dialog
+            @gui_order_details = print_current_order_details
+          end
+        end
       end
     end
-  end
-
-  # Enter product
-  # Sets @selected_product, @observations, @quantity and @weight
-  def select_product
-    clear do
-      flow :margin => 4 do
-        print_select_product_dialog
-        print_current_order_details
-      end
-    end
-  end
-
-  # Validates @selected_product, @quantity and @weight
-  def valid_parameters?
-    if @selected_product.nil?
-      alert "Selecciona un producte"
-      return false
-    elsif @quantity == 0
-      alert "Quantitat ha de ser un numero"
-      return false
-    elsif @weight == 0
-      alert "Pes ha de ser un numero en kg"
-      return false
-    end
-
-    return true
-  end
-
-  def add_order_item_to_order
-    @order << OrderItem.new( @selected_customer, @selected_product, @quantity, @weight, @observations, [ ] )
   end
 
   def print_select_product_dialog
-    stack :margin => 4, :width => 260 do
-      border black
-      para "Producte:", :margin => 4
-      list_box items: @product_names, :margin => 4 do |list|
-        @selected_product = ProductHelper.find_product_with_name( @products, list.text )
-      end
-
-      para "Observacions:", :margin => 4
-      edit_line :margin => 4 do |line|
-        @observations = line.text
-      end
-
-      para "Quantitat:", :margin => 4
-      edit_line :margin => 4 do |quantity|
-        @quantity = quantity.text.to_i
-      end
-
-      para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
-      flow do
-        edit_line :margin => 4 do |weight|
-          @weight = weight.text.to_f
-        end
-        para "Kg", :margin => 2
-      end
-
-      button "Afegir Producte", :margin => 4 do
-        if valid_parameters?
-          add_order_item_to_order
-          reset_selected_product
-          select_product
-        end
+    new_order_item_panel products: @products, customer: @order.customer do |order_item|
+      if order_item
+        @order << order_item
+        @gui_order_details.clear{ print_current_order_details }
       end
     end
   end
@@ -110,13 +55,6 @@ class NewOrderPanel < Shoes::Widget
         para item, :margin => 4
       end
     end
-  end
-
-  def reset_selected_product
-    @selected_product = nil
-    @weight = 0
-    @observations = ""
-    @quantity = 0
   end
 
 end

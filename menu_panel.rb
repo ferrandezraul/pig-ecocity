@@ -10,9 +10,8 @@ class MenuPanel < Shoes::Widget
     @products = args[:products]
     @customers = args[:customers]
     @orders = args[:orders]
-    print_links
 
-    # Use yield here to implement something from the caller??
+    print_links
   end
 
   private
