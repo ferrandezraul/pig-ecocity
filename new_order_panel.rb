@@ -53,41 +53,10 @@ class NewOrderPanel < Shoes::Widget
   # Sets @selected_product, @observations, @quantity and @weight
   def select_product
     clear do
-      border black
-      stack :margin => 4 do
-        para "Producte:", :margin => 4
-        list_box items: @product_names, :margin => 4 do |list|
-          @selected_product = ProductHelper.find_product_with_name( @products, list.text )
-        end
-
-        para "Observacions:", :margin => 4
-        edit_line :margin => 4 do |line|
-          @observations = line.text
-        end
-
-        para "Quantitat:", :margin => 4
-        edit_line :margin => 4 do |quantity|
-          @quantity = quantity.text.to_i
-        end
-
-        para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
-        flow do
-          edit_line :margin => 4 do |weight|
-            @weight = weight.text.to_f
-          end
-          para "Kg", :margin => 2
-        end
-
-        button "Afegir Producte", :margin => 4 do
-          if valid_parameters?
-            add_order_item_to_order
-            reset_selected_product
-            select_product
-          end
-        end
+      flow :margin => 4 do
+        print_select_product_dialog
+        print_current_order_details
       end
-
-      print_current_order_details
     end
   end
 
@@ -111,9 +80,44 @@ class NewOrderPanel < Shoes::Widget
     @order << OrderItem.new( @selected_customer, @selected_product, @quantity, @weight, @observations, [ ] )
   end
 
+  def print_select_product_dialog
+    stack :margin => 4, :width => 260 do
+      border black
+      para "Producte:", :margin => 4
+      list_box items: @product_names, :margin => 4 do |list|
+        @selected_product = ProductHelper.find_product_with_name( @products, list.text )
+      end
+
+      para "Observacions:", :margin => 4
+      edit_line :margin => 4 do |line|
+        @observations = line.text
+      end
+
+      para "Quantitat:", :margin => 4
+      edit_line :margin => 4 do |quantity|
+        @quantity = quantity.text.to_i
+      end
+
+      para "Pes en Kg: (ex. 0.2 = 200g.)", :margin => 4
+      flow do
+        edit_line :margin => 4 do |weight|
+          @weight = weight.text.to_f
+        end
+        para "Kg", :margin => 2
+      end
+
+      button "Afegir Producte", :margin => 4 do
+        if valid_parameters?
+          add_order_item_to_order
+          reset_selected_product
+          select_product
+        end
+      end
+    end
+  end
 
   def print_current_order_details
-    stack :margin => 4 do
+    stack :margin => 4, :width => -260 do
       para @order.customer.name, :margin => 4
       para @order.customer.address, :margin => 4
 
