@@ -39,11 +39,11 @@ Shoes.app :width => 600, :height => 130 do
   @customers = load_customers
   @product_names = ProductHelper.names(@products)
 
-
-
-  date_customer_dialog items: @customers, :margin => 4 do |date, customer_name|
+  date_customer_dialog items: @customers, :margin => 4 do |customer, date|
+    debug( customer)
+    debug (date)
     para date
-    para customer_name
+    para customer.name
   end
 
 end

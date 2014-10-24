@@ -5,6 +5,7 @@ require 'product_helper'
 require 'customer_helper'
 require 'order.rb'
 require 'order_item.rb'
+require 'date_customer_dialog'
 
 class NewOrderPanel < Shoes::Widget
 
@@ -25,31 +26,18 @@ class NewOrderPanel < Shoes::Widget
   # Enter date and customer
   # Sets @date and @selected_customer
   def select_date_and_customer
-    date_customer_dialog items: @customer_names, :margin => 4 do |date, customer|
-      @date = date
-      @selected_customer = customer
-    end
-
-    stack :margin => 4 do
-      border black
-      para "Data:", :margin => 4
-      @date = "#{Date.today.to_s}"
-      edit_line "#{Date.today.to_s}", :margin => 4 do |line|
-        @date = line.text
+    date_customer_dialog items: @customers, :margin => 4 do |customer, date|
+      if customer.nil?
+        debug( "In new order dialog selected customer is nil")
       end
 
-      para "Client:", :margin => 4
-      list_box items: @customer_names, :margin => 4 do |list|
-        @selected_customer = CustomerHelper.find_customer_with_name( @customers, list.text)
+      if date.nil?
+        debug( "In new order dialog date is nil")
       end
 
-      button "Acceptar", :margin => 4 do
-        alert "Selecciona un client." unless @selected_customer
-
-        if @selected_customer
-          @order = Order.new( @selected_customer, @date )
-          select_product
-        end
+      if customer
+        @order = Order.new( customer, date )
+        select_product
       end
     end
   end
