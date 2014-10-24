@@ -27,15 +27,7 @@ class NewOrderPanel < Shoes::Widget
   # Sets @date and @selected_customer
   def select_date_and_customer
     date_customer_dialog items: @customers, :margin => 4 do |customer, date|
-      if customer.nil?
-        debug( "In new order dialog selected customer is nil")
-      end
-
-      if date.nil?
-        debug( "In new order dialog date is nil")
-      end
-
-      if customer
+      if customer and !date.empty?
         @order = Order.new( customer, date )
         select_product
       end

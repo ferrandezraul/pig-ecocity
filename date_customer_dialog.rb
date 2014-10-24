@@ -24,6 +24,7 @@ class DateCustomerDialog < Shoes::Widget
 
       button "Acceptar", :margin => 4 do
         alert "Selecciona un client." unless selected_customer
+        alert "Selecciona una data" if date.empty?
         yield [selected_customer,date]
       end
     end
