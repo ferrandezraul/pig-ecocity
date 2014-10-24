@@ -25,6 +25,11 @@ class NewOrderPanel < Shoes::Widget
   # Enter date and customer
   # Sets @date and @selected_customer
   def select_date_and_customer
+    date_customer_dialog items: @customer_names, :margin => 4 do |date, customer|
+      @date = date
+      @selected_customer = customer
+    end
+
     stack :margin => 4 do
       border black
       para "Data:", :margin => 4
