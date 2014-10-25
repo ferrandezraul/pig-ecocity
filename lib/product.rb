@@ -19,20 +19,28 @@ class Product
     # Align to the left with a size of 20 chars
     name_formatted = '%-20.20s' % @name
 
-    subproducts_formatted = ""
-
     if has_subproducts?
-      subproducts_formatted += "\n\tOpcions a escollir:\n"
-      @subproducts.each do |subproduct|
-        subproducts_formatted += "\t#{subproduct.weight} Kg\t#{subproduct.name}\n"
-      end
+      name_formatted << subproducts_to_s
     end
 
-    name_formatted + subproducts_formatted
+    name_formatted
   end
 
   def has_subproducts?
     @subproducts.empty? ? false : true
+  end
+
+  def subproducts_to_s
+    subproducts_formatted = String.new
+
+    if has_subproducts?
+      subproducts_formatted << "\n\tOpcions a escollir:\n"
+      @subproducts.each do |subproduct|
+        subproducts_formatted << "\t#{subproduct.weight} Kg\t#{subproduct.name}\n"
+      end
+    end
+
+    subproducts_formatted
   end
 
 end
