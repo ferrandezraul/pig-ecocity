@@ -17,6 +17,7 @@ class Order
 
   def <<(order_item)
     @order_items << order_item
+    @total = calculate_total
   end
 
   def to_s
@@ -24,7 +25,7 @@ class Order
     @order_items.each do |item |
       items += "#{item.to_s}\n"
     end
-    "#{@date.to_s} #{@customer.name} \n#{ items }TOTAL = #{ '%.2f' % @total } EUR"
+    "#{@date.to_s} #{@customer.name} \n#{@customer.address}\n#{ items }TOTAL = #{ '%.2f' % @total } EUR"
   end
 
   # Returns number of times a product has been ordered

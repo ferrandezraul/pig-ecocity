@@ -55,11 +55,13 @@ class NewOrderPanel < Shoes::Widget
   end
 
   def print_current_order_details
-    para @order.customer.name, :margin => 4
-    para @order.customer.address, :margin => 4
+    para @order.to_s, :margin => 4
 
-    @order.order_items.each do |item|
-      para item, :margin => 4
+    button "Crear comanda", :margin => 4 do
+      @orders << @order
+      clear do
+        para "Comanda afegida."
+      end
     end
   end
 
