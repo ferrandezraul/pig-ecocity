@@ -1,6 +1,8 @@
 Continue sub_poducts_panel refactoring and making functions smaller
 
 Add button to delete order items from new order
+Add button to delete orders from orders view
+Add button to delete products from products view
 
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
 
