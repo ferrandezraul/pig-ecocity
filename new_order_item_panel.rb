@@ -1,11 +1,14 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
+require 'sub_products_panel'
+
 class NewOrderItemPanel < Shoes::Widget
   def initialize( args )
     products = args[:products]
     customer = args[:customer]
     product_names = ProductHelper.names(products)
     selected_product = nil
+    selected_subproducts = Array.new
     order_item = nil
     observations = String.new
     quantity = 0
@@ -16,7 +19,21 @@ class NewOrderItemPanel < Shoes::Widget
       para "Producte:", :margin => 4
       list_box items: product_names, :margin => 4 do |list|
         selected_product = ProductHelper.find_product_with_name( products, list.text )
+
+        if selected_product.has_subproducts?
+          @gui_subproducts_panel.clear do
+            sub_products_panel( :subproducts => selected_product.subproducts ) do |subproducts|
+              selected_subproducts = subproducts
+            end
+          end
+        else
+          selected_subproducts.clear
+          @gui_subproducts_panel.clear
+        end
+
       end
+
+      @gui_subproducts_panel = stack :margin => 4
 
       para "Observacions:", :margin => 4
       edit_line :margin => 4 do |line|
@@ -38,7 +55,7 @@ class NewOrderItemPanel < Shoes::Widget
 
       button "Afegir Producte", :margin => 4 do
         if valid_parameters?( selected_product, quantity, weight )
-          order_item = OrderItem.new( customer, selected_product, quantity, weight, observations, [ ] )
+          order_item = OrderItem.new( customer, selected_product, quantity, weight, observations, selected_subproducts )
         end
         yield order_item
       end
