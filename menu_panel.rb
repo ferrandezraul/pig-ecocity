@@ -2,6 +2,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'products_view'
 require 'orders_view'
+require 'customers_view'
 require 'new_order_panel'
 
 class MenuPanel < Shoes::Widget
@@ -27,7 +28,7 @@ class MenuPanel < Shoes::Widget
   def view_customers
     clear do
       print_links
-      para "Estos son mis clientes"
+      customers_view @customers
     end
   end
 

@@ -21,10 +21,15 @@ class Order
   end
 
   def to_s
-    items = "Productes: \n"
-    @order_items.each do |item |
-      items += "#{item.to_s}\n"
+    items = String.new
+
+    if @order_items.any?
+      items << "Productes: \n"
+      @order_items.each do |item |
+        items << "#{item.to_s}\n"
+      end
     end
+
     "#{@date.to_s} #{@customer.name} \n#{@customer.address}\n\n#{ items }\n\TOTAL = #{ '%.2f' % @total } EUR"
   end
 

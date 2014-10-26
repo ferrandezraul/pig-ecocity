@@ -33,7 +33,7 @@ end
 
 Shoes.app :width => 1000, :height => 900 do
 
-  @title = "Ecocity Porc"
+  @title = "Porc Ecocity"
 
   stack :margin => 10 do
     title strong(@title), :align => "center", :margin => 4
