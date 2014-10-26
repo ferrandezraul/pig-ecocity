@@ -17,6 +17,7 @@ class OrdersView < Shoes::Widget
           stack :width => '40%' do
             order.order_items.each do |order_item|
               para print_order_item_entry(order_item), :margin => 4, :align => 'right'
+              para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
             end
           end
           stack :width => '25%' do
@@ -54,14 +55,14 @@ class OrdersView < Shoes::Widget
       order_item_string << "#{order_item.quantity.to_i} x #{'%.3f' % order_item.weight.to_f} kg #{order_item.product.name} = #{'%.2f' % order_item.price.to_f} €"
     end
 
-    order_item_string << print_subproducts(order_item.sub_products)
+    order_item_string
   end
 
   def print_subproducts(sub_products)
     sub_string = String.new
     if sub_products.any?
       sub_products.each do |subproduct|
-        sub_string += "\n\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
+        sub_string += "#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}\n"
       end
     end
 
