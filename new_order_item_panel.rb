@@ -14,7 +14,7 @@ class NewOrderItemPanel < Shoes::Widget
     quantity = 0
     weight = 0
 
-    stack :margin => 4, :width => 300 do
+    stack :margin => 4 do
       border black
       para "Producte:", :margin => 4
       list_box items: product_names, :margin => 4 do |list|
