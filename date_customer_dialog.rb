@@ -10,7 +10,7 @@ class DateCustomerDialog < Shoes::Widget
     selected_customer = nil
     date = "#{Date.today.to_s}"
 
-    stack :margin => 4, :width => 260 do
+    stack :margin => 4, :width => 300 do
       border black
       para "Data:", :margin => 4
       edit_line date, :margin => 4 do |line|

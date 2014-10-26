@@ -21,8 +21,7 @@ class SubProductsPanel < Shoes::Widget
 
       @button = button "Confirmar selecció", :margin => 4 do
         yield get_selected_subproducts
-
-        freeze_checkbox_and_weight
+        disable_checkbox_and_weight
       end
     end
 
@@ -47,7 +46,7 @@ class SubProductsPanel < Shoes::Widget
     end
   end
 
-  def freeze_checkbox_and_weight
+  def disable_checkbox_and_weight
     @selected.each do |checkbox, weight_editor, subproduct|
       checkbox.state = "disabled"
       weight_editor.state = "disabled"

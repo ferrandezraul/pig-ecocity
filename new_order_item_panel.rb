@@ -14,7 +14,7 @@ class NewOrderItemPanel < Shoes::Widget
     quantity = 0
     weight = 0
 
-    stack :margin => 4, :width => 260 do
+    stack :margin => 4, :width => 300 do
       border black
       para "Producte:", :margin => 4
       list_box items: product_names, :margin => 4 do |list|
@@ -26,6 +26,7 @@ class NewOrderItemPanel < Shoes::Widget
               selected_subproducts = subproducts
             end
           end
+
         else
           selected_subproducts.clear
           @gui_subproducts_panel.clear

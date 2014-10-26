@@ -35,10 +35,10 @@ class NewOrderPanel < Shoes::Widget
   def print
     clear do
       flow :margin => 4 do
-        stack :margin => 4, :width => 260 do
+        stack :margin => 4, :width => 300 do
           print_select_product_dialog
         end
-        stack :margin => 4, :width => -260 do
+        stack :margin => 4, :width => -300 do
           print_current_order_details
         end
       end
