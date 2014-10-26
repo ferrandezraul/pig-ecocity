@@ -55,7 +55,7 @@ class NewOrderItemPanel < Shoes::Widget
       end
 
       button "Afegir Producte", :margin => 4 do
-        if valid_parameters?( selected_product, quantity, weight )
+        if valid_parameters?( selected_product, quantity, weight, selected_subproducts )
           order_item = OrderItem.new( customer, selected_product, quantity, weight, observations, selected_subproducts )
         end
         yield order_item
@@ -66,15 +66,21 @@ class NewOrderItemPanel < Shoes::Widget
 
   private
 
-  def valid_parameters?(product, quantity, weight)
+  def valid_parameters?(product, quantity, weight, selected_subproducts)
     if product.nil?
       alert "Selecciona un producte."
       return false
     elsif quantity.zero?
       alert "Quantitat incorrecte"
       return false
-    elsif weight.zero?
+    elsif weight.zero? and product.subproducts.empty?
       alert "Pes incorrecte"
+      return false
+    elsif weight != 0 and product.subproducts.any?
+      alert "Pes incorrecte. Pes fixe per lots."
+      return false
+    elsif product.subproducts.any? and selected_subproducts.empty?
+      alert "Has de afegir els subproductes del lot per poder afegir un lot"
       return false
     end
 
