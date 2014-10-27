@@ -7,6 +7,7 @@ require 'order.rb'
 require 'order_item.rb'
 require 'date_customer_dialog'
 require 'new_order_item_panel'
+require 'order_view'
 
 class NewOrderPanel < Shoes::Widget
 
@@ -55,7 +56,7 @@ class NewOrderPanel < Shoes::Widget
   end
 
   def print_current_order_details
-    para @order.to_s, :margin => 4
+    order_view(@order)
 
     if @order.order_items.any?
       button "Crear comanda", :margin => 4 do

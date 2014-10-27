@@ -20,6 +20,11 @@ class Order
     @total = calculate_total
   end
 
+  def delete(order_item)
+    @order_items.delete(order_item)
+    @total = calculate_total
+  end
+
   def to_s
     items = String.new
 
