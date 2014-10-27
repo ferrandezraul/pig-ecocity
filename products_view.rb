@@ -29,6 +29,7 @@ class ProductsView < Shoes::Widget
 
   def headers
     flow :margin => 4 do
+      border black
       stack :width => '25%' do
         para strong("NAME"), :margin => 4, :align => 'left'
       end
