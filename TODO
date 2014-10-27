@@ -1,10 +1,13 @@
 Continue sub_poducts_panel refactoring and making functions smaller
 
 Add button to delete products from products view
+Add panel for resume
+Add panel for pig (percentages of products)
+
 
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
 
-Generar factura e imprimir/guardar/escribir factura
+imprimir/guardar/escribir factura
 
 Cada producto resta una parte del cerdo
     - Tabla producto / partes del cerdo
