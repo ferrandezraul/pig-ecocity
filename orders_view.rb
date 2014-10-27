@@ -8,6 +8,7 @@ class OrdersView < Shoes::Widget
       headers
       orders.each do |order|
         flow :margin => 4 do
+          border black
           stack :width => '10%' do
             para "#{order.date}", :margin => 4, :align => 'left'
           end
@@ -32,6 +33,7 @@ class OrdersView < Shoes::Widget
 
   def headers
     flow :margin => 4 do
+      border black
       stack :width => '10%' do
         para strong("DATE"), :margin => 4, :align => 'left'
       end
