@@ -41,11 +41,15 @@ class OrderView < Shoes::Widget
       stack :width => '50%' do
         @order.order_items.each do |order_item|
           flow :margin => 4 do
-            button "Eliminar", :margin => 4 do
-              @order.delete(order_item)
-              print
+            stack :width => '20%' do
+              button "Eliminar", :margin => 4 do
+                @order.delete(order_item)
+                print
+              end
             end
-            para print_order_item_entry(order_item), :margin => 4, :align => 'right'
+            stack :width => '80%' do
+              para print_order_item_entry(order_item), :margin => 4, :align => 'right'
+            end
           end
           para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
         end
