@@ -6,6 +6,7 @@ module CustomerColumns
   NAME = 0       # Name
   ADDRESS = 1    # Price
   TYPE = 2       # Price for cope
+  NIF = 3       # Price for cope
 end
 
 class CustomerCSV
@@ -34,7 +35,8 @@ class CustomerCSV
     customers_array.map do |customer_attributes|
       Customer.new( :name => customer_attributes[CustomerColumns::NAME],
                     :address => customer_attributes[CustomerColumns::ADDRESS],
-                    :type => customer_attributes[CustomerColumns::TYPE] )
+                    :type => customer_attributes[CustomerColumns::TYPE],
+                    :nif => customer_attributes[CustomerColumns::NIF])
     end
 
   end
@@ -46,6 +48,7 @@ class CustomerCSV
     raise Errors::CustomersCSVError.new, "Error loading customers csv. Addreca del client \"#{attributes[CustomerColumns::NAME]}\" invalid" unless attributes[CustomerColumns::ADDRESS]
     raise Errors::CustomersCSVError.new, "Error loading customers csv. Tipus del client \"#{attributes[CustomerColumns::NAME]}\" invalid" unless attributes[CustomerColumns::TYPE]
     raise Errors::CustomersCSVError.new, "Error loading customers csv. Tipus del client \"#{attributes[CustomerColumns::NAME]}\" invalid. Tipus ha de ser CLIENT, COOPE o TIENDA" unless attributes[CustomerColumns::TYPE] =~ /CLIENT|COOPE|TIENDA/
+    raise Errors::CustomersCSVError.new, "Error loading customers csv. NIF invalid \"#{attributes[CustomerColumns::NIF]}\" invalid" unless attributes[CustomerColumns::NIF]
   end
 
 end

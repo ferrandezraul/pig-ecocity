@@ -13,8 +13,7 @@ class CustomersView < Shoes::Widget
             para "#{customer.address}", :margin => 4, :align => 'right'
           end
           stack :width => '33%' do
-            #para "#{customer.nif} €/KG", :margin => 4, :align => 'right'
-            para "77314883-S", :margin => 4, :align => 'right'
+            para "#{customer.nif}", :margin => 4, :align => 'right'
           end
         end
       end

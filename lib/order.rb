@@ -30,7 +30,7 @@ class Order
       end
     end
 
-    "#{@date.to_s} #{@customer.name} \n#{@customer.address}\n\n#{ items }\n\TOTAL = #{ '%.2f' % @total } EUR"
+    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\n\TOTAL = #{ '%.2f' % @total } EUR"
   end
 
   # Returns number of times a product has been ordered

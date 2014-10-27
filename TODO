@@ -1,6 +1,5 @@
 Continue sub_poducts_panel refactoring and making functions smaller
 
-Add nif column to customers
 Add button to delete order items from new order
 Add button to delete orders from orders view
 Add button to delete products from products view
