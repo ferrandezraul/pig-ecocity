@@ -4,38 +4,26 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 class OrdersView < Shoes::Widget
   def initialize( orders )
-    stack :margin => 4 do
-      headers
-      orders.each do |order|
-        flow :margin => 4 do
-          border black
-          stack :width => '10%' do
-            para "#{order.date}", :margin => 4, :align => 'left'
-          end
-          stack :width => '25%' do
-            para "#{order.customer.name}", :margin => 4, :align => 'right'
-          end
-          stack :width => '40%' do
-            order.order_items.each do |order_item|
-              para print_order_item_entry(order_item), :margin => 4, :align => 'right'
-              para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
-            end
-          end
-          stack :width => '25%' do
-            para "#{ '%.2f' % order.total} €", :margin => 4, :align => 'right'
-          end
-        end
-      end
-    end
+    @orders = orders
+    print
   end
 
   private
+
+  def print
+    clear do
+      stack :margin => 4 do
+        headers
+        print_table_body
+      end
+    end
+  end
 
   def headers
     flow :margin => 4 do
       border black
       stack :width => '10%' do
-        para strong("DATE"), :margin => 4, :align => 'left'
+        para strong("DATE"), :margin => 4, :align => 'center'
       end
       stack :width => '25%' do
         para strong("CUSTOMER"), :margin => 4, :align => 'right'
@@ -45,6 +33,39 @@ class OrdersView < Shoes::Widget
       end
       stack :width => '25%' do
         para strong("TOTAL"), :margin => 4, :align => 'right'
+      end
+    end
+  end
+
+  def print_table_body
+    @orders.each do |order|
+      flow :margin => 4 do
+        border black
+        stack :width => '25%' do
+          flow do
+            stack :width => '50%', :align => 'left' do
+              button "Eliminar", :margin => 1 do
+                @orders.delete(order)
+                print
+              end
+            end
+            stack :width => '50%' do
+              para "#{order.date}", :margin => 1, :align => 'left'
+            end
+          end
+        end
+        stack :width => '15%' do
+          para "#{order.customer.name}", :margin => 4, :align => 'center'
+        end
+        stack :width => '40%' do
+          order.order_items.each do |order_item|
+            para print_order_item_entry(order_item), :margin => 4, :align => 'right'
+            para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
+          end
+        end
+        stack :width => '20%' do
+          para "#{ '%.2f' % order.total} €", :margin => 4, :align => 'right'
+        end
       end
     end
   end
