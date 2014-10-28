@@ -4,6 +4,7 @@ require 'products_view'
 require 'orders_view'
 require 'customers_view'
 require 'new_order_panel'
+require 'resum_panel'
 
 class MenuPanel < Shoes::Widget
 
@@ -46,12 +47,20 @@ class MenuPanel < Shoes::Widget
     end
   end
 
+  def resum
+    clear do
+      print_links
+      resum_panel @products, @customers, @orders
+    end
+  end
+
   def print_links
     flow do
       para link("Productes").click { view_products }, :margin => 10
       para link("Clients").click { view_customers }, :margin => 10
       para link("Comandes").click { view_orders }, :margin => 10
       para link("Nova Comanda").click { new_order }, :margin => 10
+      para link("Resum").click { resum }, :margin => 10
     end
   end
 
