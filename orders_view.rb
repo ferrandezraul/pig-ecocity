@@ -49,7 +49,7 @@ class OrdersView < Shoes::Widget
         border black
         stack :width => DATE_COLUMN_WIDTH do
           flow do
-            stack :width => '50%', :align => 'left' do
+            stack :width => '70%', :align => 'left' do
               flow do
                 button "Guardar", :margin => 1 do
                   write_order_to_file( order )
@@ -61,7 +61,7 @@ class OrdersView < Shoes::Widget
                 end
               end
             end
-            stack :width => '50%' do
+            stack :width => '30%' do
               para "#{order.date}", :margin => 1, :align => 'right'
             end
           end
