@@ -1,6 +1,7 @@
-Continue sub_poducts_panel refactoring and making functions smaller
 
-Cuando se escribe factura, no se anyade el IVA, Modificar order.to_s para que muestre el IVA
+Anyadir IVA del 10% al csv de productos.
+Anyadir iva a order_item y orders y todas sus views.
+Cuando se escribe factura, no se anyade el IVA, Modificar order.to_s para que muestre el IVA.
 
 Add button to delete products from products view
 Extend resume panel

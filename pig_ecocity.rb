@@ -31,7 +31,7 @@ def load_customers
   end
 end
 
-Shoes.app :width => 1000, :height => 900 do
+Shoes.app :width => 1500, :height => 900 do
 
   title = "Porc Ecocity"
 

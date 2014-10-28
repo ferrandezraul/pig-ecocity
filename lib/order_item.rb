@@ -14,20 +14,14 @@ class OrderItem
     @quantity = quantity
     @weight = weight
     @observations = observations
-    @price = calculate_price(customer.type)
     @sub_products = sub_products.dup
+    @price = 0
+
+    calculate_price(customer.type)
   end
 
   def to_s
     get_item_string + get_observations_string + get_subproducts_string
-  end
-
-  def has_observations?
-    if @observations.empty?
-      false
-    else
-      true
-    end
   end
 
   private
@@ -44,42 +38,36 @@ class OrderItem
   end
 
   def calculate_price_based_on_weight(customer_type)
-    total = 0
     case customer_type
       when "CLIENT"
-        total += @quantity * @weight.to_f * @product.price_pvp.to_f
+        @price = @quantity * @weight.to_f * @product.price_pvp.to_f
       when "COOPE"
-        total += @quantity * @weight.to_f * @product.price_coope.to_f
+        @price = @quantity * @weight.to_f * @product.price_coope.to_f
       when "TIENDA"
-        total += @quantity * @weight.to_f * @product.price_tienda.to_f
+        @price = @quantity * @weight.to_f * @product.price_tienda.to_f
       else
-        total += 0
+        @price = 0
     end
-
-    total
   end
 
   def calculate_price_based_on_units(customer_type)
-    total = 0
     case customer_type
       when "CLIENT"
-        total += @quantity * @product.price_pvp.to_f
+        @price = @quantity * @product.price_pvp.to_f
       when "COOPE"
-        total += @quantity * @product.price_coope.to_f
+        @price = @quantity * @product.price_coope.to_f
       when "TIENDA"
-        total += @quantity * @product.price_tienda.to_f
+        @price = @quantity * @product.price_tienda.to_f
       else
-        total += 0
+        @price = 0
     end
-
-    total
   end
 
   def get_observations_string
-    if has_observations?
-      "\nObservacions: #{@observations.to_s}"
+    if @observations.empty?
+      String.new
     else
-      " "
+      "\nObservacions: #{@observations.to_s}"
     end
   end
 
