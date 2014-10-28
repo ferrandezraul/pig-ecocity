@@ -1,13 +1,12 @@
 Continue sub_poducts_panel refactoring and making functions smaller
 
+Cuando se escribe factura, no se anyade el IVA, Modificar order.to_s para que muestre el IVA
+
 Add button to delete products from products view
-Add panel for resume
+Extend resume panel
 Add panel for pig (percentages of products)
 
-
 save as/load comandes (orders) in csv para poder cargarlas si se desea. Cuidado que aqui el cerdo no puede con tantas comandas?
-
-imprimir/guardar/escribir factura
 
 Cada producto resta una parte del cerdo
     - Tabla producto / partes del cerdo
