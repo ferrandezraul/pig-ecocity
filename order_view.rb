@@ -3,6 +3,12 @@
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 class OrderView < Shoes::Widget
+
+  DATE_COLUMN_WIDTH = '15%'
+  CUSTOMER_COLUMN_WIDTH = '15%'
+  PRODUCTES_COLUMN_WIDTH = '50%'
+  TOTAL_COLUMN_WIDTH = '20%'
+
   def initialize( order )
     @order = order
 
@@ -14,16 +20,16 @@ class OrderView < Shoes::Widget
   def headers
     flow :margin => 4 do
       border black
-      stack :width => '15%' do
+      stack :width => DATE_COLUMN_WIDTH do
         para strong("DATE"), :margin => 4, :align => 'left'
       end
-      stack :width => '15%' do
+      stack :width => CUSTOMER_COLUMN_WIDTH do
         para strong("CUSTOMER"), :margin => 4, :align => 'right'
       end
-      stack :width => '50%' do
+      stack :width => PRODUCTES_COLUMN_WIDTH do
         para strong("PRODUCTES"), :margin => 4, :align => 'center'
       end
-      stack :width => '20%' do
+      stack :width => TOTAL_COLUMN_WIDTH do
         para strong("TOTAL"), :margin => 4, :align => 'right'
       end
     end
@@ -32,13 +38,13 @@ class OrderView < Shoes::Widget
   def table_body
     flow :margin => 4 do
       border black
-      stack :width => '15%' do
+      stack :width => DATE_COLUMN_WIDTH do
         para "#{@order.date}", :margin => 4, :align => 'left'
       end
-      stack :width => '15%' do
+      stack :width => CUSTOMER_COLUMN_WIDTH do
         para "#{@order.customer.name}", :margin => 4, :align => 'right'
       end
-      stack :width => '50%' do
+      stack :width => PRODUCTES_COLUMN_WIDTH do
         @order.order_items.each do |order_item|
           flow :margin => 4 do
             stack :width => '20%' do
@@ -54,7 +60,7 @@ class OrderView < Shoes::Widget
           para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
         end
       end
-      stack :width => '20%' do
+      stack :width => TOTAL_COLUMN_WIDTH do
         para "#{ '%.2f' % @order.total} €", :margin => 4, :align => 'right'
       end
     end
