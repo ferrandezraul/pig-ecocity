@@ -34,9 +34,9 @@ class ResumPanel < Shoes::Widget
   end
 
   def print_resume( times_ordered, kg_ordered, euros_ordered)
-    para "Ordered #{times_ordered.to_i} times\n", :margin => 4
-    para strong("Total #{'%.3f' % kg_ordered.to_f} Kg\n"), :margin => 4
-    para strong("Total #{'%.2f' % euros_ordered.to_f} EUR\n"), :margin => 4
+    para "Ordered #{times_ordered.to_i} times", :margin => 4
+    para strong("Total #{'%.3f' % kg_ordered.to_f} Kg"), :margin => 4
+    para strong("Total #{'%.2f' % euros_ordered.to_f} EUR"), :margin => 4
   end
 
 end

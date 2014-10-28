@@ -22,16 +22,16 @@ class OrdersView < Shoes::Widget
   def headers
     flow :margin => 4 do
       border black
-      stack :width => '10%' do
-        para strong("DATE"), :margin => 4, :align => 'center'
+      stack :width => '30%' do
+        para strong("DATE"), :margin => 4, :align => 'right'
       end
-      stack :width => '25%' do
-        para strong("CUSTOMER"), :margin => 4, :align => 'right'
+      stack :width => '15%' do
+        para strong("CUSTOMER"), :margin => 4, :align => 'center'
       end
       stack :width => '40%' do
         para strong("PRODUCTES"), :margin => 4, :align => 'right'
       end
-      stack :width => '25%' do
+      stack :width => '15%' do
         para strong("TOTAL"), :margin => 4, :align => 'right'
       end
     end
@@ -41,16 +41,23 @@ class OrdersView < Shoes::Widget
     @orders.each do |order|
       flow :margin => 4 do
         border black
-        stack :width => '25%' do
+        stack :width => '30%' do
           flow do
             stack :width => '50%', :align => 'left' do
-              button "Eliminar", :margin => 1 do
-                @orders.delete(order)
-                print
+              flow do
+                button "Guardar", :margin => 1 do
+                  file_path = ask_save_file
+                  File.open(file_path, 'w') { |file| file.write(order.to_s) }
+                  alert "Archiu guardat."
+                end
+                button "Eliminar", :margin => 1 do
+                  @orders.delete(order)
+                  print
+                end
               end
             end
             stack :width => '50%' do
-              para "#{order.date}", :margin => 1, :align => 'left'
+              para "#{order.date}", :margin => 1, :align => 'right'
             end
           end
         end
@@ -63,7 +70,7 @@ class OrdersView < Shoes::Widget
             para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
           end
         end
-        stack :width => '20%' do
+        stack :width => '15%' do
           para "#{ '%.2f' % order.total} €", :margin => 4, :align => 'right'
         end
       end
