@@ -11,8 +11,10 @@ class OrderView < Shoes::Widget
   TOTAL_WITHOUT_TAXES_COLUMN_WIDTH = '10%'
   TAXES_COLUMN_WIDTH = '10%'
 
-  def initialize( order )
-    @order = order
+  def initialize( params )
+    @order = params[:order]
+    @include_headers = params[:headers] ||= false
+    @delete_item_button = params[:delete_button] ||= false
 
     print
   end
@@ -56,9 +58,11 @@ class OrderView < Shoes::Widget
         @order.order_items.each do |order_item|
           flow :margin => 4 do
             stack :width => '20%' do
-              button "Eliminar", :margin => 4 do
-                @order.delete(order_item)
-                print
+              if @delete_item_button
+                button "Eliminar", :margin => 4 do
+                  @order.delete(order_item)
+                  print
+                end
               end
             end
             stack :width => '80%' do
@@ -83,7 +87,7 @@ class OrderView < Shoes::Widget
   def print
     clear do
       stack :margin => 4 do
-        headers
+        headers if @include_headers
         table_body
       end
     end

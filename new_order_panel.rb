@@ -58,7 +58,8 @@ class NewOrderPanel < Shoes::Widget
   end
 
   def print_current_order_details
-    order_view(@order)
+    # Include order view with its headers
+    order_view( :order => @order, :headers => true, :delete_button => true )
 
     if @order.order_items.any?
       button "Crear comanda", :margin => 4 do
