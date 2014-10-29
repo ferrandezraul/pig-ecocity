@@ -3,6 +3,7 @@ class Product
   attr_reader :price_tienda
   attr_reader :price_coope
   attr_reader :price_pvp
+  attr_reader :iva
   attr_reader :observations
   attr_accessor :subproducts
 
@@ -11,6 +12,7 @@ class Product
     @price_tienda = params[:price_tienda]
     @price_coope = params[:price_coope]
     @price_pvp = params[:pvp]
+    @iva = params[:iva]
     @observations = params[:observations]
     @subproducts = params[:subproducts]
   end

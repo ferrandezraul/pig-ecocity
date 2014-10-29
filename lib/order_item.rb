@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'product'
 require 'customer'
 
@@ -16,6 +18,8 @@ class OrderItem
     @observations = observations
     @sub_products = sub_products.dup
     @price = 0
+    @taxes = 0
+    @price_without_taxes = 0
 
     calculate_price(customer.type)
   end
@@ -35,6 +39,7 @@ class OrderItem
       calculate_price_based_on_weight(customer_type)
     end
 
+    calculate_taxes
   end
 
   def calculate_price_based_on_weight(customer_type)
@@ -63,6 +68,11 @@ class OrderItem
     end
   end
 
+  def calculate_taxes
+    @taxes = ( @price * @product.iva ) / ( 100 + @product.iva )
+    @price_without_taxes = @price - @taxes
+  end
+
   def get_observations_string
     if @observations.empty?
       String.new
@@ -73,9 +83,9 @@ class OrderItem
 
   def get_item_string
     if @weight.to_f == 0.0
-      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price.to_f} EUR"
+      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
     else
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price.to_f} EUR"
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
     end
   end
 

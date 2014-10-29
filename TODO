@@ -1,6 +1,5 @@
 
-Anyadir IVA del 10% al csv de productos.
-Anyadir iva a order_item y orders y todas sus views.
+Cuando se imprime order, especificar el total de IVA y el total sin IVA. Si hay varios tipos de IVA, especificarlos tambien (4%, 10%, etc ... )
 Cuando se escribe factura, no se anyade el IVA, Modificar order.to_s para que muestre el IVA.
 
 Add button to delete products from products view

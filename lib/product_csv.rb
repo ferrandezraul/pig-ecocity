@@ -7,11 +7,12 @@ require 'product_helper'
 
 module Columns
   NAME = 0            # Name
-  PRICE_TIENDA = 1           # Price
+  PRICE_TIENDA = 1    # Price (with taxes)
   PRICE_COOPE = 2     # Price for cope
   PVP = 3             # PVP
-  OBSERVATIONS = 4    # Observations
-  SUBPRODUCTS = 5     # Sub-products
+  IVA = 4             # IVA
+  OBSERVATIONS = 5    # Observations
+  SUBPRODUCTS = 6     # Sub-products
 end
 
 class ProductCSV
@@ -46,6 +47,7 @@ class ProductCSV
                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
                    :pvp => product_attributes[Columns::PVP].to_f,
+                   :iva => product_attributes[Columns::IVA].to_i,
                    :observations => product_attributes[Columns::OBSERVATIONS],
                    :subproducts => subproducts )
 
@@ -70,6 +72,7 @@ class ProductCSV
     raise Errors::ProductCSVError.new, "Error loading csv. Preu tenda del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_TIENDA]
     raise Errors::ProductCSVError.new, "Error loading csv. Preu coope del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_COOPE]
     raise Errors::ProductCSVError.new, "Error loading csv. Preu PVP del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PVP]
+    raise Errors::ProductCSVError.new, "Error loading csv. IVA del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::IVA]
   end
 
   def self.has_subproducts?( product_attributes )

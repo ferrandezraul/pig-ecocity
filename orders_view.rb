@@ -71,8 +71,7 @@ class OrdersView < Shoes::Widget
         end
         stack :width => PRODUCTES_COLUMN_WIDTH do
           order.order_items.each do |order_item|
-            para print_order_item_entry(order_item), :margin => 4, :align => 'right'
-            para print_subproducts(order_item.sub_products), :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
+            para order_item.to_s, :margin => 4, :align => 'right'
           end
         end
         stack :width => TOTAL_COLUMN_WIDTH do
@@ -80,28 +79,6 @@ class OrdersView < Shoes::Widget
         end
       end
     end
-  end
-
-  def print_order_item_entry(order_item)
-    order_item_string = String.new
-    if order_item.weight.to_f == 0.0
-      order_item_string << "#{order_item.quantity.to_i} x #{order_item.product.name} = #{'%.2f' % order_item.price.to_f} €"
-    else
-      order_item_string << "#{order_item.quantity.to_i} x #{'%.3f' % order_item.weight.to_f} kg #{order_item.product.name} = #{'%.2f' % order_item.price.to_f} €"
-    end
-
-    order_item_string
-  end
-
-  def print_subproducts(sub_products)
-    sub_string = String.new
-    if sub_products.any?
-      sub_products.each do |subproduct|
-        sub_string += "#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}\n"
-      end
-    end
-
-    sub_string
   end
 
   def write_order_to_file(order)
