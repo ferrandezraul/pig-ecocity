@@ -2,12 +2,12 @@
 
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
+require 'order_view'
+
 class OrdersView < Shoes::Widget
 
-  DATE_COLUMN_WIDTH = '30%'
-  CUSTOMER_COLUMN_WIDTH = '15%'
-  PRODUCTES_COLUMN_WIDTH = '40%'
-  TOTAL_COLUMN_WIDTH = '15%'
+  CONTROLS_COLUMN_WIDTH = '20%'
+  ORDER_VIEW_COLUMN_WIDTH = '80%'
 
   def initialize( orders )
     @orders = orders
@@ -26,56 +26,35 @@ class OrdersView < Shoes::Widget
   end
 
   def headers
-    flow :margin => 4 do
-      border black
-      stack :width => DATE_COLUMN_WIDTH do
-        para strong("DATE"), :margin => 4, :align => 'right'
-      end
-      stack :width => CUSTOMER_COLUMN_WIDTH do
-        para strong("CUSTOMER"), :margin => 4, :align => 'center'
-      end
-      stack :width => PRODUCTES_COLUMN_WIDTH do
-        para strong("PRODUCTES"), :margin => 4, :align => 'right'
-      end
-      stack :width => TOTAL_COLUMN_WIDTH do
-        para strong("TOTAL"), :margin => 4, :align => 'right'
-      end
-    end
+    #flow :margin => 4 do
+    #  border black
+    #  stack :width => CONTROLS_COLUMN_WIDTH do
+    #    para strong(" "), :margin => 4
+    #  end
+    #  stack :width => ORDER_VIEW_COLUMN_WIDTH do
+    #    para strong(" "), :margin => 4
+    #  end
+    #end
   end
 
   def print_table_body
     @orders.each do |order|
       flow :margin => 4 do
         border black
-        stack :width => DATE_COLUMN_WIDTH do
+        stack :width => CONTROLS_COLUMN_WIDTH do
           flow do
-            stack :width => '70%', :align => 'left' do
-              flow do
-                button "Guardar", :margin => 1 do
-                  write_order_to_file( order )
-                  alert "Archiu guardat."
-                end
-                button "Eliminar", :margin => 1 do
-                  @orders.delete(order)
-                  print
-                end
-              end
+            button "Guardar", :margin => 1 do
+              write_order_to_file( order )
+              alert "Archiu guardat."
             end
-            stack :width => '30%' do
-              para "#{order.date}", :margin => 1, :align => 'right'
+            button "Eliminar", :margin => 1 do
+              @orders.delete(order)
+              print
             end
           end
         end
-        stack :width => CUSTOMER_COLUMN_WIDTH do
-          para "#{order.customer.name}", :margin => 4, :align => 'center'
-        end
-        stack :width => PRODUCTES_COLUMN_WIDTH do
-          order.order_items.each do |order_item|
-            para order_item.to_s, :margin => 4, :align => 'right'
-          end
-        end
-        stack :width => TOTAL_COLUMN_WIDTH do
-          para "#{ '%.2f' % order.total} €", :margin => 4, :align => 'right'
+        stack :width => ORDER_VIEW_COLUMN_WIDTH do
+          order_view order
         end
       end
     end

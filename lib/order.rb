@@ -8,6 +8,7 @@ class Order
   attr_reader :total
   attr_reader :total_without_taxes
   attr_reader :taxes
+  attr_reader :taxes_hash
 
   def initialize(customer, date, order_items=[])
     @customer = customer
