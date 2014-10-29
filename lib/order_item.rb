@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'product'
 require 'customer'
 
@@ -32,9 +30,9 @@ class OrderItem
 
   def item_to_s
     if @weight.to_f == 0.0
-      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
+      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} EUR + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} EUR"
     else
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} EUR + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} EUR"
     end
   end
 

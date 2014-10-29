@@ -1,4 +1,4 @@
-
+En orders view, utilizar la clase order view!!! anyadiendo los botones de eliminar guardar
 En orders view, anyadir columnas taxes y total sin taxes
 Cuando se imprime order, especificar el total de IVA y el total sin IVA. Si hay varios tipos de IVA, especificarlos tambien (4%, 10%, etc ... )
 Cuando se escribe factura, no se anyade el IVA, Modificar order.to_s para que muestre el IVA.

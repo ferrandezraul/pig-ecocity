@@ -4,10 +4,12 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 class OrderView < Shoes::Widget
 
-  DATE_COLUMN_WIDTH = '15%'
-  CUSTOMER_COLUMN_WIDTH = '15%'
+  DATE_COLUMN_WIDTH = '10%'
+  CUSTOMER_COLUMN_WIDTH = '10%'
   PRODUCTES_COLUMN_WIDTH = '50%'
-  TOTAL_COLUMN_WIDTH = '20%'
+  TOTAL_COLUMN_WIDTH = '10%'
+  TOTAL_WITHOUT_TAXES_COLUMN_WIDTH = '10%'
+  TAXES_COLUMN_WIDTH = '10%'
 
   def initialize( order )
     @order = order
@@ -28,6 +30,12 @@ class OrderView < Shoes::Widget
       end
       stack :width => PRODUCTES_COLUMN_WIDTH do
         para strong("PRODUCTES"), :margin => 4, :align => 'center'
+      end
+      stack :width => TOTAL_WITHOUT_TAXES_COLUMN_WIDTH do
+        para strong("TOTAL (Sense IVA)"), :margin => 4, :align => 'right'
+      end
+      stack :width => TAXES_COLUMN_WIDTH do
+        para strong("IVA"), :margin => 4, :align => 'right'
       end
       stack :width => TOTAL_COLUMN_WIDTH do
         para strong("TOTAL"), :margin => 4, :align => 'right'
@@ -59,6 +67,12 @@ class OrderView < Shoes::Widget
             end
           end
         end
+      end
+      stack :width => TOTAL_WITHOUT_TAXES_COLUMN_WIDTH do
+        para "#{ '%.2f' % @order.total_without_taxes} €", :margin => 4, :align => 'right'
+      end
+      stack :width => TAXES_COLUMN_WIDTH do
+        para "#{ '%.2f' % @order.taxes} €", :margin => 4, :align => 'right'
       end
       stack :width => TOTAL_COLUMN_WIDTH do
         para "#{ '%.2f' % @order.total} €", :margin => 4, :align => 'right'
