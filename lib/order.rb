@@ -11,18 +11,21 @@ class Order
     @customer = customer
     @order_items = order_items.dup
     @date = date
+    @total = 0
+    @total_without_taxes = 0
+    @taxes = 0
 
-    @total = calculate_total
+    calculate
   end
 
   def <<(order_item)
     @order_items << order_item
-    @total = calculate_total
+    calculate
   end
 
   def delete(order_item)
     @order_items.delete(order_item)
-    @total = calculate_total
+    calculate
   end
 
   def to_s
@@ -35,7 +38,7 @@ class Order
       end
     end
 
-    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\n\TOTAL = #{ '%.2f' % @total } EUR"
+    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\nTOTAL = #{ '%.2f' % @total } EUR"
   end
 
   # Returns number of times a product has been ordered
@@ -71,12 +74,16 @@ class Order
     euros_ordered
   end
 
-  def calculate_total
-    total = 0
+  def calculate
+    @total = 0
+    @total_without_taxes = 0
+    @taxes = 0
+
     @order_items.each do |item|
-      total += item.price
+      @total += item.price
+      @total_without_taxes += item.price_without_taxes
+      @taxes += item.taxes
     end
-    total
   end
 
   def self.attributes_valid?( customer, product, quantity, peso )

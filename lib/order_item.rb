@@ -9,6 +9,8 @@ class OrderItem
   attr_reader :weight
   attr_reader :observations
   attr_reader :price
+  attr_reader :price_without_taxes
+  attr_reader :taxes
   attr_reader :sub_products  # Only for lots (A list of SubProduct objects)
 
   def initialize(customer, product, quantity, weight, observations, sub_products)
