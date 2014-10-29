@@ -14,6 +14,7 @@ class Order
     @total = 0
     @total_without_taxes = 0
     @taxes = 0
+    @taxes_hash = Hash.new
 
     calculate
   end
@@ -38,7 +39,7 @@ class Order
       end
     end
 
-    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\nTOTAL = #{ '%.2f' % @total } EUR"
+    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\nIVA = #{ '%.2f' % @taxes } EUR\nTOTAL = #{ '%.2f' % @total } EUR"
   end
 
   # Returns number of times a product has been ordered
@@ -78,11 +79,21 @@ class Order
     @total = 0
     @total_without_taxes = 0
     @taxes = 0
+    @taxes_hash = Hash.new
 
     @order_items.each do |item|
       @total += item.price
       @total_without_taxes += item.price_without_taxes
       @taxes += item.taxes
+
+      # Store all taxes separately. i.e. 10%, 4%
+      # == Example
+      # @taxes_hash = { 10 => 250, 4 => 37 }
+      if @taxes_hash.has_key?(item.product.iva)
+        @taxes_hash[item.product.iva] += item.taxes
+      else
+        @taxes_hash[item.product.iva] = item.taxes
+      end
     end
   end
 

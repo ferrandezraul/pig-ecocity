@@ -27,7 +27,26 @@ class OrderItem
   end
 
   def to_s
-    get_item_string + get_observations_string + get_subproducts_string
+    item_to_s + observations_to_s + subproducts_to_s
+  end
+
+  def item_to_s
+    if @weight.to_f == 0.0
+      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
+    else
+      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
+    end
+  end
+
+  def subproducts_to_s
+    sub_string = String.new
+    if !@sub_products.empty?
+      @sub_products.each do |subproduct|
+        sub_string << "\n\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
+      end
+    end
+
+    sub_string
   end
 
   private
@@ -75,31 +94,12 @@ class OrderItem
     @price_without_taxes = @price - @taxes
   end
 
-  def get_observations_string
+  def observations_to_s
     if @observations.empty?
       String.new
     else
       "\nObservacions: #{@observations.to_s}"
     end
-  end
-
-  def get_item_string
-    if @weight.to_f == 0.0
-      "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
-    else
-      "#{@quantity.to_i} x #{'%.3f' % @weight.to_f} kg #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} € + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} €"
-    end
-  end
-
-  def get_subproducts_string
-    sub_string = String.new
-    if !@sub_products.empty?
-      @sub_products.each do |subproduct|
-        sub_string << "\n\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
-      end
-    end
-
-    sub_string
   end
 
 end
