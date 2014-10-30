@@ -1,8 +1,3 @@
-Customizar order_view para que se pueda crear sin headers y sin botton de eliminar.
-Utilizar una instancia de esta sin headers y boton en orders_view
-
-DONE - En orders view, utilizar la clase order view!!! anyadiendo los botones de eliminar guardar
-
 Cuando se imprime order, especificar el total de IVA y el total sin IVA. Si hay varios tipos de IVA, especificarlos tambien (4%, 10%, etc ... )
 Parte de ello ya implementado en lib/order.rb (See taxes_hash !!)
 

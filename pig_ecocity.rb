@@ -37,6 +37,9 @@ Shoes.app :width => 1500, :height => 900 do
 
   title = "Porc Ecocity"
 
+  # Execute ruby -v a print output into console
+  debug( %x[ruby -v] )
+
   stack :margin => 10 do
     title strong(title), :align => "center", :margin => 4
 
