@@ -43,9 +43,7 @@ class OrderItem
         sub_string << "\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
 
         # Do not add new line in last iteration
-        if index != @sub_products.size - 1
-          sub_string << "\n"
-        end
+        sub_string << "\n" if index != @sub_products.size - 1
       end
     end
 

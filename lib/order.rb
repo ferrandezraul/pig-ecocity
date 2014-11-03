@@ -37,12 +37,25 @@ class Order
 
     if @order_items.any?
       items << "Productes: \n"
-      @order_items.each do |item |
-        items << "#{item.to_s}\n"
+      @order_items.each_with_index do |item, index |
+        items << "#{item.to_s}"
+
+        items << "\n" if index != @order_items.size - 1
       end
     end
 
-    "#{@date.to_s} #{@customer.name} #{@customer.nif}\n#{@customer.address}\n\n#{ items }\nIVA = #{ '%.2f' % @taxes } EUR\nTOTAL = #{ '%.2f' % @total } EUR"
+    result = String.new
+
+    result << "#{@date.to_s} #{@customer.name} #{@customer.nif}" << "\n"
+    result << "#{@customer.address}" << "\n"
+    result << "\n"
+    result << "#{ items }" << "\n"
+    esult << "\n"
+    result << "IVA = #{ '%.2f' % @taxes } EUR" << "\n"
+    result << "TOTAL (Sense IVA) = #{ '%.2f' %@total_without_taxes}EUR" << "\n"
+    esult << "\n"
+    result << "TOTAL = #{ '%.2f' % @total } EUR"
+
   end
 
   # Returns number of times a product has been ordered
