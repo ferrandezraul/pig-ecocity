@@ -39,8 +39,13 @@ class OrderItem
   def subproducts_to_s
     sub_string = String.new
     if !@sub_products.empty?
-      @sub_products.each do |subproduct|
-        sub_string << "\n\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
+      @sub_products.each_with_index do |subproduct, index|
+        sub_string << "\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
+
+        # Do not add new line in last iteration
+        if index != @sub_products.size - 1
+          sub_string << "\n"
+        end
       end
     end
 
