@@ -1,4 +1,20 @@
-Huevos no debe tener peso mandatory
+Huevos no debe tener peso mandatory.
+En new_order_item_panel
+
+def valid_parameters?(product, quantity, weight, selected_subproducts)
+    if product.nil?
+      alert "Selecciona un producte."
+      return false
+    elsif quantity.zero?
+      alert "Quantitat incorrecte"
+      return false
+    elsif weight.zero? and product.subproducts.empty?
+
+cambiar producto para que tenga una propiedad (tipo_precio) que puede ser por_unidad o por_kilo.
+Leer esa propiedad del csv de productos
+usar esta propiedad en new_order_item_panel para saber si peso es necesario.
+
+Teoricamente no deberia usar el clear en mis vistas si estan utilizan el observable pattern ?? hacer mis vistas listeners suscritos a eventos lanzados por mis clases de lib.
 
 Add button to delete products from products view
 Extend resume panel
