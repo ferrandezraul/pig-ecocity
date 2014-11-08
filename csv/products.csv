@@ -1,4 +1,7 @@
-# NAME #,# TIENDA €/kg #,# COOPE €/kg #,# PVP #,# IVA % #,# OBSERVACIONS #,"# SUB-PRODUCT
+# NAME #,"# TIENDA €/kg #
+IVA INCLUIDO","# COOPE €/kg #
+IVA INCLUIDO","# PVP #
+IVA INCLUIDO",# IVA % #,# OBSERVACIONS #,"# SUB-PRODUCT
 WEIGHT EN KG#",# SUB-PRODUCT#,"# SUB-PRODUCT
 WEIGHT EN KG#",# SUB-PRODUCT#,"# SUB-PRODUCT
 WEIGHT EN KG#","# SUB-PRODUCT# NOTA: para diferentes opciones. 
@@ -48,3 +51,5 @@ Llonzat sencer,11,11,11,10,6 kg aprox,,,,,,,,,,,,,,,,
 Lot 2.5 kg,10,10.75,11.95,10,,0.5,Llom,0.4,Carn picada,0.5,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap,0.6,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap|Salsitxes / Xoriç per cuinar,0.4,Cansalada|Costelles,,,,,,
 Lot 4 kg,9.5,10.25,11.5,10,,0.5,Llom,1,Carn picada,0.5,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap,0.4,Cansalada,0.6,Hamburgueses|Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap,0.6,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap|Salsitxes / Xoriç per cuinar,0.4,Cap de llom|Carn per estofar,,
 Lot 6 kg,9,9.75,10.95,10,,0.5,Llom,1,Carn picada,0.5,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap,0.6,Costelles,0.6,Cansalada|Ossos d'espinada,0.8,Hamburgueses,0.4,Cap de llom|Carn per estofar,1.6,Botifarra d'ou|Botifarra fetge|Botifarra negra|Botifarra cap|Salsitxes / Xoriç per cuinar
+6 ous,1.65,1.75,1.8,4,,,,,,,,,,,,,,,,,
+12 ous,3.3,3.45,3.85,4,,,,,,,,,,,,,,,,,

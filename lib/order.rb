@@ -58,7 +58,7 @@ class Order
 
     result << "\n"
     result << "IVA TOTAL = #{ '%.2f' % @taxes } EUR" << "\n"
-    result << "TOTAL (Sense IVA) = #{ '%.2f' %@total_without_taxes}EUR" << "\n"
+    result << "TOTAL (Sense IVA) = #{ '%.2f' %@total_without_taxes} EUR" << "\n"
     result << "\n"
     result << "TOTAL = #{ '%.2f' % @total } EUR"
 
