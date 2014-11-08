@@ -55,7 +55,7 @@ class OrderItem
   def calculate_price(customer_type)
     raise "Wrong customer type found" unless customer_type =~ /CLIENT|COOPE|TIENDA/
 
-    if @product.has_subproducts?
+    if @product.price_type == Product::PriceType::POR_UNIDAD
       calculate_price_based_on_units(customer_type)
     else
       calculate_price_based_on_weight(customer_type)

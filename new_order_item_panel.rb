@@ -75,11 +75,11 @@ class NewOrderItemPanel < Shoes::Widget
     elsif quantity.zero?
       alert "Quantitat incorrecte"
       return false
-    elsif weight.zero? and product.subproducts.empty?
+    elsif weight.zero? and product.price_type == Product::PriceType::POR_KILO
       alert "Pes incorrecte"
       return false
-    elsif weight != 0 and product.subproducts.any?
-      alert "Pes incorrecte. Pes fixe per lots."
+    elsif weight != 0 and product.price_type == Product::PriceType::POR_UNIDAD
+      alert "Pes incorrecte. Aquest producte es compra per unitats."
       return false
     elsif product.subproducts.any? and selected_subproducts.empty?
       alert "Has de afegir els subproductes del lot per poder afegir un lot"

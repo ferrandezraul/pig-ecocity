@@ -11,8 +11,9 @@ module Columns
   PRICE_COOPE = 2     # Price for cope
   PVP = 3             # PVP
   IVA = 4             # IVA
-  OBSERVATIONS = 5    # Observations
-  SUBPRODUCTS = 6     # Sub-products
+  TIPO = 5            # Tipo de precio (por_unidad o por_kilo)
+  OBSERVATIONS = 6    # Observations
+  SUBPRODUCTS = 7     # Sub-products
 end
 
 class ProductCSV
@@ -48,6 +49,7 @@ class ProductCSV
                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
                    :pvp => product_attributes[Columns::PVP].to_f,
                    :iva => product_attributes[Columns::IVA].to_i,
+                   :price_type => product_attributes[Columns::TIPO],
                    :observations => product_attributes[Columns::OBSERVATIONS],
                    :subproducts => subproducts )
 
@@ -73,6 +75,7 @@ class ProductCSV
     raise Errors::ProductCSVError.new, "Error loading csv. Preu coope del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PRICE_COOPE]
     raise Errors::ProductCSVError.new, "Error loading csv. Preu PVP del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::PVP]
     raise Errors::ProductCSVError.new, "Error loading csv. IVA del producte   #{attributes[Columns::NAME]} invalid" unless attributes[Columns::IVA]
+    raise Errors::ProductCSVError.new, "Error loading csv. Tipus de preu del producte #{attributes[Columns::NAME]} invalid" unless attributes[Columns::TIPO]
   end
 
   def self.has_subproducts?( product_attributes )
@@ -93,6 +96,7 @@ class ProductCSV
       return subproducts
     end
 
+    # Read all subproducts and add them to
     i = 0
     while product_attributes[Columns::SUBPRODUCTS + i]
       subproduct_weight = product_attributes[Columns::SUBPRODUCTS + i]
