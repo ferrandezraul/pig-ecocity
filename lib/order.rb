@@ -50,10 +50,16 @@ class Order
     result << "#{@customer.address}" << "\n"
     result << "\n"
     result << "#{ items }" << "\n"
-    esult << "\n"
-    result << "IVA = #{ '%.2f' % @taxes } EUR" << "\n"
+    result << "\n"
+
+    @taxes_hash.each do |key, value|
+      result << "IVA #{key}% #{ '%.2f' % value } EUR\n"
+    end
+
+    result << "\n"
+    result << "IVA TOTAL = #{ '%.2f' % @taxes } EUR" << "\n"
     result << "TOTAL (Sense IVA) = #{ '%.2f' %@total_without_taxes}EUR" << "\n"
-    esult << "\n"
+    result << "\n"
     result << "TOTAL = #{ '%.2f' % @total } EUR"
 
   end
