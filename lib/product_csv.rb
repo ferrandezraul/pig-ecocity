@@ -6,14 +6,15 @@ require 'errors'
 require 'product_helper'
 
 module Columns
-  NAME = 0            # Name
-  PRICE_TIENDA = 1    # Price (with taxes)
-  PRICE_COOPE = 2     # Price for cope
-  PVP = 3             # PVP
-  IVA = 4             # IVA
-  TIPO = 5            # Tipo de precio (por_unidad o por_kilo)
-  OBSERVATIONS = 6    # Observations
-  SUBPRODUCTS = 7     # Sub-products
+  NAME = 0                # Name
+  PRICE_TIENDA = 1        # Price (with taxes)
+  PRICE_COOPE = 2         # Price for cope
+  PVP = 3                 # PVP
+  IVA = 4                 # IVA
+  TIPO = 5                # Tipo de precio (por_unidad o por_kilo)
+  PESO_APROX_UNIDAD = 6   # Tipo de precio (por_unidad o por_kilo)
+  OBSERVATIONS = 7        # Observations
+  SUBPRODUCTS = 8         # Sub-products
 end
 
 class ProductCSV
@@ -44,12 +45,16 @@ class ProductCSV
     # Returns new array with product objects
     products_list = products_attributes_list.map do |product_attributes|
       subproducts = get_subproducts_attributes( product_attributes )
+
+
+
       Product.new( :name => product_attributes[Columns::NAME],
                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
                    :pvp => product_attributes[Columns::PVP].to_f,
                    :iva => product_attributes[Columns::IVA].to_i,
                    :price_type => product_attributes[Columns::TIPO],
+                   :weight_per_unit => validate_weight_per_unit(product_attributes[Columns::PESO_APROX_UNIDAD]),
                    :observations => product_attributes[Columns::OBSERVATIONS],
                    :subproducts => subproducts )
 
@@ -68,6 +73,14 @@ class ProductCSV
   end
 
   private
+
+  def self.validate_weight_per_unit(weight_per_unit)
+    if weight_per_unit
+      weight_per_unit.to_f
+    else
+      0
+    end
+  end
 
   def self.verify_product_attributes( attributes )
     raise Errors::ProductCSVError.new, "Error loading csv. Nom de producte invalid" unless attributes[Columns::NAME]

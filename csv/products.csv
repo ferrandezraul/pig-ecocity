@@ -1,7 +1,7 @@
 # NAME #,"# TIENDA €/kg #
 IVA INCLUIDO","# COOPE €/kg #
 IVA INCLUIDO","# PVP #
-IVA INCLUIDO",# IVA % #,# TIPO DE PRECIO #,# PESO POR UNIDAD #,# OBSERVACIONS #,"# SUB-PRODUCT
+IVA INCLUIDO",# IVA % #,# TIPO DE PRECIO #,# PESO EN KG POR UNIDAD #,# OBSERVACIONS #,"# SUB-PRODUCT
 WEIGHT EN KG#",# SUB-PRODUCT#,"# SUB-PRODUCT
 WEIGHT EN KG#",# SUB-PRODUCT#,"# SUB-PRODUCT
 WEIGHT EN KG#","# SUB-PRODUCT# NOTA: para diferentes opciones. 
@@ -14,15 +14,15 @@ WEIGHT EN KG#",,"# SUB-PRODUCT
 WEIGHT EN KG#",
 Costelles,8.5,9.5,10.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Filet,16,16,17,10,EUR/Kg,,,,,,,,,,,,,,,,,,
-Secret,14,14,15,10,EUR/Kg,,,,,,,,,,,,,,,,,,
-Pedacet,9,10,11,10,EUR/Kg,,,,,,,,,,,,,,,,,,
+Secret,14,14,15,10,EUR/Kg,0.25,,,,,,,,,,,,,,,,,
+Pedacet,9,10,11,10,EUR/Kg,0.15,,,,,,,,,,,,,,,,,
 Llom,13.5,14.5,15.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Cap de llom,9,9.5,10.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Ossos d'espinada,3,4,5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
-Cua,8,8.5,9,10,EUR/Kg,,,,,,,,,,,,,,,,,,
-Galtes,6.5,6.5,7.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
+Cua,8,8.5,9,10,EUR/Kg,0.3,,,,,,,,,,,,,,,,,
+Galtes,6.5,6.5,7.5,10,EUR/Kg,0.25,,,,,,,,,,,,,,,,,
 Fetge,3.5,4,5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
-Peus de porc,5,5,6,10,EUR/Kg,,Cuits o sense coure,,,,,,,,,,,,,,,,
+Peus de porc,5,5,6,10,EUR/Kg,0.2,Cuits o sense coure,,,,,,,,,,,,,,,,
 Llonzat,11.5,12.5,13.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Cansalada,4,5,6,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Carn per estofar,9,9.5,10.5,10,EUR/Kg,,,,,,,,,,,,,,,,,,
@@ -36,9 +36,9 @@ Botifarra d'ou,13.5,14,16,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Botifarra fetge,13.5,14,16,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Botifarra negra,13.5,14,16,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Botifarra cap,14,15,17,10,EUR/Kg,,No disponible temporalm.,,,,,,,,,,,,,,,,
-Fuet,19,20,22,10,EUR/Kg,,No disponible temporalm.,,,,,,,,,,,,,,,,
-Llonganissa,23,24,26,10,EUR/Kg,,No disponible temporalm.,,,,,,,,,,,,,,,,
-Xoriç embotit,19,20,22,10,EUR/Kg,,No disponible temporalm.,,,,,,,,,,,,,,,,
+Fuet,19,20,22,10,EUR/Kg,0.2,No disponible temporalm.,,,,,,,,,,,,,,,,
+Llonganissa,23,24,26,10,EUR/Kg,0.3,No disponible temporalm.,,,,,,,,,,,,,,,,
+Xoriç embotit,19,20,22,10,EUR/Kg,0.2,No disponible temporalm.,,,,,,,,,,,,,,,,
 Papada a granel,4,4,4,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Espatlla sense pell a granel,6,6,6,10,EUR/Kg,,,,,,,,,,,,,,,,,,
 Espatlla amb pell a granel,5.7,5.7,5.7,10,EUR/Kg,,,,,,,,,,,,,,,,,,

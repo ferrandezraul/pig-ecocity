@@ -20,6 +20,7 @@ class Product
     @price_tienda = params[:price_tienda]
     @price_coope = params[:price_coope]
     @price_pvp = params[:pvp]
+    @weight_per_unit = params[:@weight_per_unit]
 
     @iva = params[:iva]
     @observations = params[:observations]
