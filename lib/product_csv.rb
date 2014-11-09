@@ -46,8 +46,6 @@ class ProductCSV
     products_list = products_attributes_list.map do |product_attributes|
       subproducts = get_subproducts_attributes( product_attributes )
 
-
-
       Product.new( :name => product_attributes[Columns::NAME],
                    :price_tienda => product_attributes[Columns::PRICE_TIENDA].to_f,
                    :price_coope => product_attributes[Columns::PRICE_COOPE].to_f,
@@ -76,9 +74,9 @@ class ProductCSV
 
   def self.validate_weight_per_unit(weight_per_unit)
     if weight_per_unit
-      weight_per_unit.to_f
+      return weight_per_unit.to_f
     else
-      0
+      return 0
     end
   end
 

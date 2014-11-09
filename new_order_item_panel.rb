@@ -34,6 +34,15 @@ class NewOrderItemPanel < Shoes::Widget
           @gui_subproducts_panel.clear
         end
 
+        # Set default weight if available
+        if selected_product.weight_per_unit
+          @gui_weight.text = "#{'%.3f' % selected_product.weight_per_unit.to_f }"
+          debug("Weight set to #{@gui_weight.text}")
+        else
+          @gui_weight.text = ""
+          debug("Weight reset to empty")
+        end
+
       end
 
       @gui_subproducts_panel = stack :margin => 4
@@ -44,13 +53,19 @@ class NewOrderItemPanel < Shoes::Widget
       end
 
       para "Quantitat:", :margin => 4
-      edit_line :margin => 4 do |cantidad|
+      @gui_quantity = edit_line :margin => 4 do |cantidad|
         quantity = cantidad.text.to_i
+
+        # Update default weight if available
+        if selected_product.weight_per_unit
+          @gui_weight.text = "#{'%.3f' % ( selected_product.weight_per_unit.to_f * quantity ) }"
+          weight = @gui_weight.text.to_f
+        end
       end
 
       para "Pes en Kg: (0.2 = 200g.)", :margin => 4
       flow do
-        edit_line :margin => 4 do |peso|
+        @gui_weight = edit_line :margin => 4 do |peso|
           weight = peso.text.to_f
         end
         para "Kg", :margin => 2

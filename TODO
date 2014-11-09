@@ -1,5 +1,6 @@
-Utilizar el weight_per_unit nuevo del csv en los productos y utilizar ese weight en las views y cuando se anyadan productos
-En new_order_item_panel
+Testear el weight_per_unit en las views cuando se anyadan productos
+
+Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?
 
 def valid_parameters?(product, quantity, weight, selected_subproducts)
     if product.nil?

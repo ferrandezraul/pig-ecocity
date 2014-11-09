@@ -7,6 +7,7 @@ class Product
   attr_reader :iva
   attr_reader :observations
   attr_accessor :subproducts
+  attr_accessor :weight_per_unit
 
   module PriceType
     POR_KILO = "EUR/KG"
@@ -20,7 +21,7 @@ class Product
     @price_tienda = params[:price_tienda]
     @price_coope = params[:price_coope]
     @price_pvp = params[:pvp]
-    @weight_per_unit = params[:@weight_per_unit]
+    @weight_per_unit = params[:weight_per_unit]
 
     @iva = params[:iva]
     @observations = params[:observations]
