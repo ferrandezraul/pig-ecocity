@@ -1,22 +1,6 @@
-Fix test (ruby test/ts_all_test.rb)
-
-Testear el weight_per_unit en las views cuando se anyadan productos
-
 Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?
-
-def valid_parameters?(product, quantity, weight, selected_subproducts)
-    if product.nil?
-      alert "Selecciona un producte."
-      return false
-    elsif quantity.zero?
-      alert "Quantitat incorrecte"
-      return false
-    elsif weight.zero? and product.subproducts.empty?
-
-cambiar producto para que tenga una propiedad (tipo_precio) que puede ser por_unidad o por_kilo.
-Leer esa propiedad del csv de productos
-usar esta propiedad en new_order_item_panel para saber si peso es necesario.
-
+Revisar el weight_per_unit en las views cuando se anyadan productos
+En new_order_item_panel::valid_parameters? se decide si peso es necesario
 
 Las comandas tienen que poder ser exportadas y guardadas y poder ser editadas despues de haber sido generadas.
 

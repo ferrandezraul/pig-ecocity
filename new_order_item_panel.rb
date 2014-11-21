@@ -37,10 +37,8 @@ class NewOrderItemPanel < Shoes::Widget
         # Set default weight if available
         if selected_product.weight_per_unit
           @gui_weight.text = "#{'%.3f' % selected_product.weight_per_unit.to_f }"
-          debug("Weight set to #{@gui_weight.text}")
         else
           @gui_weight.text = ""
-          debug("Weight reset to empty")
         end
 
       end

@@ -68,7 +68,6 @@ class OrdersView < Shoes::Widget
           flow do
             button "Guardar", :margin => 1 do
               write_order_to_file( order )
-              alert "Archiu guardat."
             end
             button "Eliminar", :margin => 1 do
               @orders.delete(order)
@@ -86,9 +85,11 @@ class OrdersView < Shoes::Widget
 
   def write_order_to_file(order)
     file_path = ask_save_file
-
-    # File object will automatically be closed when the block terminates
-    File.open(file_path, 'w') { |file| file.write(order.to_s) }
+    if file_path
+      # File object will automatically be closed when the block terminates
+      File.open(file_path, 'w') { |file| file.write(order.to_s) }
+      alert "Archiu guardat."
+    end
   end
 
 end
