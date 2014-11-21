@@ -40,7 +40,13 @@ class Product
   end
 
   def has_subproducts?
-    @subproducts.empty? ? false : true
+    if @subproducts
+      if @subproducts.any?
+        return true
+      end
+    end
+
+    return false
   end
 
   private
