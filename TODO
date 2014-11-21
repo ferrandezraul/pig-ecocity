@@ -1,3 +1,5 @@
+Fix test (ruby test/ts_all_test.rb)
+
 Testear el weight_per_unit en las views cuando se anyadan productos
 
 Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?
