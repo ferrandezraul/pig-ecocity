@@ -33,6 +33,8 @@ class ProductCSV
   #]
   def self.read( file_path )
 
+    raise "File not found #{file_path}" unless File.exist?(file_path)
+
     # By default separator is ","
     # CSV.read(file_path, { :col_sep => ';' })
     products_attributes_list = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8

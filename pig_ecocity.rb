@@ -4,21 +4,26 @@ $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
 require 'product_csv'
 require 'customers_csv'
+require 'order_csv'
 require 'errors'
 require 'menu_panel'
 
-def products_csv__path
+def products_csv_path
   return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
 end
 
-def customers_csv__path
+def customers_csv_path
   return ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
+end
+
+def orders_csv_path
+  return ::File.join( File.dirname( __FILE__ ), "csv/orders.csv" )
 end
 
 def load_products
   debug( "Loading Products ..." )
   begin
-    ProductCSV.read( products_csv__path )
+    ProductCSV.read( products_csv_path )
   rescue Errors::ProductCSVError => e
     alert e.message
   end
@@ -27,7 +32,16 @@ end
 def load_customers
   debug( "Loading Customers ..." )
   begin
-    CustomerCSV.read( customers_csv__path )
+    CustomerCSV.read( customers_csv_path )
+  rescue Errors::CustomersCSVError => e
+    alert e.message
+  end
+end
+
+def load_orders(products, customers)
+  debug( "Loading Orders ..." )
+  begin
+    OrderCSV.read( orders_csv_path, products, customers )
   rescue Errors::CustomersCSVError => e
     alert e.message
   end
@@ -45,7 +59,8 @@ Shoes.app :width => 1500, :height => 900 do
 
     products = load_products
     customers = load_customers
-    orders = []
+    orders = load_orders(products, customers)
+    #orders = []
 
     menu_panel :products => products,
                :customers => customers,

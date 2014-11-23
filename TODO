@@ -1,3 +1,5 @@
+Load orders by start up the app.
+
 Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?
 Revisar el weight_per_unit en las views cuando se anyadan productos
 En new_order_item_panel::valid_parameters? se decide si peso es necesario
