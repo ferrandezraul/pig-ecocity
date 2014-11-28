@@ -32,15 +32,15 @@ class OrderCSV
 
     # By default separator is ","
     # CSV.read(file_path, { :col_sep => ';' })
-    orders_attributes_list = CSV.read(file_path, encoding: "ISO8859-1")  # uses encoding: "ISO8859-1" to be able to read UTF8
+    orders_attributes_list = CSV.read(file_path, encoding: 'ISO8859-1')  # uses encoding: "ISO8859-1" to be able to read UTF8
 
     # Filter headers. Note that it is assumed that headers start with '#'
-    orders_attributes_list.reject! { |order_attributes| order_attributes.first.start_with?("#") }
+    orders_attributes_list.reject! { |order_attributes| order_attributes.first.start_with?('#') }
 
     orders_attributes_list.each { |order_attributes| verify_order_attributes( order_attributes ) }
 
     # Returns new array with product objects
-    orders_list = orders_attributes_list.map do |order_attributes|
+    orders_attributes_list.map do |order_attributes|
       items = get_order_items( order_attributes )
 
       # customer, date, order_items=[]
