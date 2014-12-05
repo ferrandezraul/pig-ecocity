@@ -9,15 +9,15 @@ require 'errors'
 require 'menu_panel'
 
 def products_csv_path
-  return ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
+  ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
 end
 
 def customers_csv_path
-  return ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
+  ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
 end
 
 def orders_csv_path
-  return ::File.join( File.dirname( __FILE__ ), "csv/orders.csv" )
+  ::File.join( File.dirname( __FILE__ ), "csv/orders.csv" )
 end
 
 def load_products
