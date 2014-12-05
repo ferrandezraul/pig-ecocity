@@ -39,6 +39,34 @@ class Product
     name_formatted
   end
 
+  # How to write your to_json method for your own classes
+  # http://stackoverflow.com/questions/4775777/converting-a-custom-object-into-json-using-json-gem
+  def to_json(*a)
+    {
+        :json_class   => self.class.name,
+        :data         => { :name => @name,
+                           :price_tienda=> @price_tienda,
+                           :price_coope => @price_coope,
+                           :price_pvp=> @price_pvp,
+                           :price_type=> @price_type,
+                           :iva=> @iva,
+                           :observations=> @observations,
+                           :subproducts => @subproducts,
+                           :weight_per_unit => @weight_per_unit
+        }
+    }.to_json(*a)
+  end
+
+  attr_reader :name
+  attr_reader :price_tienda
+  attr_reader :price_coope
+  attr_reader :price_pvp
+  attr_reader :price_type
+  attr_reader :iva
+  attr_reader :observations
+  attr_accessor :subproducts
+  attr_accessor :weight_per_unit
+
   def has_subproducts?
     if @subproducts
       if @subproducts.any?
@@ -46,7 +74,7 @@ class Product
       end
     end
 
-    return false
+    false
   end
 
   private
