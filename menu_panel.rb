@@ -7,6 +7,10 @@ require 'orders_view'
 require 'customers_view'
 require 'new_order_panel'
 require 'resum_panel'
+require 'json'
+
+$LOAD_PATH << ENV['HOME']+ '/.rvm/gems/ruby-2.0.0-p247@pigecocity/gems/awesome_print-1.2.0/lib'
+require 'awesome_print'
 
 class MenuPanel < Shoes::Widget
 
@@ -56,6 +60,14 @@ class MenuPanel < Shoes::Widget
     end
   end
 
+  def save_orders
+    clear do
+      print_links
+      para ap @orders.to_json if @orders.any?
+    end
+
+  end
+
   def print_links
     flow do
       para link("Productes").click { view_products }, :margin => 10
@@ -63,6 +75,7 @@ class MenuPanel < Shoes::Widget
       para link("Comandes").click { view_orders }, :margin => 10
       para link("Nova Comanda").click { new_order }, :margin => 10
       para link("Resum").click { resum }, :margin => 10
+      para link("Save Orders").click { save_orders }, :margin => 10
     end
   end
 

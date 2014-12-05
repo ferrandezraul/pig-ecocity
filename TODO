@@ -1,4 +1,5 @@
-Load orders by start up the app.
+Create to_json method to all my classes
+Load orders by start up the app. (Load json file orders.json)
 
 Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?
 Revisar el weight_per_unit en las views cuando se anyadan productos
