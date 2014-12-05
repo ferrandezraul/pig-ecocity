@@ -8,22 +8,16 @@ require 'order_csv'
 require 'errors'
 require 'menu_panel'
 
-def products_csv_path
-  ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
-end
+ORDERS_JSON_PATH = ::File.join( File.dirname( __FILE__ ), "csv/orders.json" )
+PRODUCTS_CSV_PATH = ::File.join( File.dirname( __FILE__ ), "csv/products.csv" )
+CUSTOMERS_CSV_PATH = ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
+ORDERS_CSV_PATH = ::File.join( File.dirname( __FILE__ ), "csv/orders.csv" )
 
-def customers_csv_path
-  ::File.join( File.dirname( __FILE__ ), "csv/customers.csv" )
-end
-
-def orders_csv_path
-  ::File.join( File.dirname( __FILE__ ), "csv/orders.csv" )
-end
 
 def load_products
   debug( "Loading Products ..." )
   begin
-    ProductCSV.read( products_csv_path )
+    ProductCSV.read( PRODUCTS_CSV_PATH )
   rescue Errors::ProductCSVError => e
     alert e.message
   end
@@ -32,7 +26,7 @@ end
 def load_customers
   debug( "Loading Customers ..." )
   begin
-    CustomerCSV.read( customers_csv_path )
+    CustomerCSV.read( CUSTOMERS_CSV_PATH )
   rescue Errors::CustomersCSVError => e
     alert e.message
   end
@@ -41,7 +35,7 @@ end
 def load_orders(products, customers)
   debug( "Loading Orders ..." )
   begin
-    OrderCSV.read( orders_csv_path, products, customers )
+    OrderCSV.read( ORDERS_CSV_PATH, products, customers )
   rescue Errors::CustomersCSVError => e
     alert e.message
   end

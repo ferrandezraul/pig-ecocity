@@ -63,7 +63,10 @@ class MenuPanel < Shoes::Widget
   def save_orders
     clear do
       print_links
-      para JSON.pretty_generate(@orders) if @orders.any?
+      if @orders.any?
+        para JSON.pretty_generate(@orders) if @orders.any?
+        File.open(ORDERS_JSON_PATH, 'w') { |f| f.write(JSON.pretty_generate(@orders)) }
+      end
     end
 
   end
