@@ -43,17 +43,15 @@ class Product
   # http://stackoverflow.com/questions/4775777/converting-a-custom-object-into-json-using-json-gem
   def to_json(*a)
     {
-        :json_class   => self.class.name,
-        :data         => { :name => @name,
-                           :price_tienda=> @price_tienda,
-                           :price_coope => @price_coope,
-                           :price_pvp=> @price_pvp,
-                           :price_type=> @price_type,
-                           :iva=> @iva,
-                           :observations=> @observations,
-                           :subproducts => @subproducts,
-                           :weight_per_unit => @weight_per_unit
-        }
+        :Product => { :name => @name,
+                      :price_tienda=> @price_tienda,
+                      :price_coope => @price_coope,
+                      :price_pvp=> @price_pvp,
+                      :price_type=> @price_type,
+                      :iva=> @iva,
+                      :observations=> @observations,
+                      :subproducts => @subproducts,
+                      :weight_per_unit => @weight_per_unit }
     }.to_json(*a)
   end
 

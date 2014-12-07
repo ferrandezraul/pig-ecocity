@@ -28,6 +28,21 @@ class OrderItem
     item_to_s + observations_to_s + subproducts_to_s
   end
 
+  # How to write your to_json method for your own classes
+  # http://stackoverflow.com/questions/4775777/converting-a-custom-object-into-json-using-json-gem
+  def to_json(*a)
+    {
+        :OrderItem => { :product => @product,
+                        :quantity => @quantity,
+                        :weight => @weight,
+                        :observations => @observations,
+                        :price => @price,
+                        :price_without_taxes => @price_without_taxes,
+                        :taxes => @taxes,
+                        :sub_products => @sub_products }
+    }.to_json(*a)
+  end
+
   def item_to_s
     if @weight.to_f == 0.0
       "#{@quantity.to_i} x #{@product.name} = #{'%.2f' % @price_without_taxes.to_f} EUR + #{@product.iva}% IVA = #{'%.2f' % @price.to_f} EUR"

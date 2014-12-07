@@ -22,11 +22,10 @@ class Customer
   # http://stackoverflow.com/questions/4775777/converting-a-custom-object-into-json-using-json-gem
   def to_json(*a)
     {
-        :json_class => self.class.name,
-        :data       => { :name => @name,
-                         :address => @address,
-                         :type => @type,
-                         :nif => @nif }
+        :Customer => { :name => @name,
+                       :address => @address,
+                       :type => @type,
+                       :nif => @nif }
     }.to_json(*a)
   end
 
