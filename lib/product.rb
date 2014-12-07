@@ -55,16 +55,6 @@ class Product
     }.to_json(*a)
   end
 
-  attr_reader :name
-  attr_reader :price_tienda
-  attr_reader :price_coope
-  attr_reader :price_pvp
-  attr_reader :price_type
-  attr_reader :iva
-  attr_reader :observations
-  attr_accessor :subproducts
-  attr_accessor :weight_per_unit
-
   def has_subproducts?
     if @subproducts
       if @subproducts.any?
