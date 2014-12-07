@@ -6,37 +6,36 @@ require 'sub_products_panel'
 
 class NewOrderItemPanel < Shoes::Widget
   def initialize( args )
-    products = args[:products]
-    customer = args[:customer]
-    product_names = ProductHelper.names(products)
-    selected_product = nil
-    selected_subproducts = Array.new
-    order_item = nil
-    observations = String.new
-    quantity = 0
-    weight = 0
+    @products = args[:products]
+    @customer = args[:customer]
+    @selected_product = nil
+    @selected_product_options = Array.new
+    @order_item = nil
+    @observations = String.new
+    @quantity = 0
+    @weight = 0
 
     stack :margin => 4 do
       border black
       para "Producte:", :margin => 4
-      list_box items: product_names, :margin => 4 do |list|
-        selected_product = ProductHelper.find_product_with_name( products, list.text )
+      list_box items: ProductHelper.names(@products), :margin => 4 do |list|
+        @selected_product = ProductHelper.find_product_with_name( @products, list.text )
 
-        if selected_product.has_options?
+        if @selected_product.has_options?
           @gui_subproducts_panel.clear do
-            sub_products_panel( :subproducts => selected_product.options ) do |subproducts|
-              selected_subproducts = subproducts
+            sub_products_panel( :subproducts => @selected_product.options ) do |product_options|
+              @selected_product_options = product_options
             end
           end
 
         else
-          selected_subproducts.clear
+          @selected_product_options.clear
           @gui_subproducts_panel.clear
         end
 
         # Set default weight if available
-        if selected_product.weight_per_unit
-          @gui_weight.text = "#{'%.3f' % selected_product.weight_per_unit.to_f }"
+        if @selected_product.weight_per_unit
+          @gui_weight.text = "#{'%.3f' % @selected_product.weight_per_unit.to_f }"
         else
           @gui_weight.text = ""
         end
@@ -47,33 +46,33 @@ class NewOrderItemPanel < Shoes::Widget
 
       para "Observacions:", :margin => 4
       edit_line :margin => 4 do |line|
-        observations = line.text
+        @observations = line.text
       end
 
       para "Quantitat:", :margin => 4
       @gui_quantity = edit_line :margin => 4 do |cantidad|
-        quantity = cantidad.text.to_i
+        @quantity = cantidad.text.to_i
 
         # Update default weight if available
-        if selected_product.weight_per_unit
-          @gui_weight.text = "#{'%.3f' % ( selected_product.weight_per_unit.to_f * quantity ) }"
-          weight = @gui_weight.text.to_f
+        if @selected_product.weight_per_unit
+          @gui_weight.text = "#{'%.3f' % ( @selected_product.weight_per_unit.to_f * @quantity ) }"
+          @weight = @gui_weight.text.to_f
         end
       end
 
       para "Pes en Kg: (0.2 = 200g.)", :margin => 4
       flow do
         @gui_weight = edit_line :margin => 4 do |peso|
-          weight = peso.text.to_f
+          @weight = peso.text.to_f
         end
         para "Kg", :margin => 2
       end
 
       button "Afegir Producte", :margin => 4 do
-        if valid_parameters?( selected_product, quantity, weight, selected_subproducts )
-          order_item = OrderItem.new( customer, selected_product, quantity, weight, observations, selected_subproducts )
+        if valid_parameters?( @selected_product, @quantity, @weight, @selected_product_options )
+          @order_item = OrderItem.new( @customer, @selected_product, @quantity, @weight, @observations, @selected_product_options )
         end
-        yield order_item
+        yield @order_item
       end
     end
 

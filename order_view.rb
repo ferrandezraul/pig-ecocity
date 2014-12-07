@@ -67,7 +67,7 @@ class OrderView < Shoes::Widget
             end
             stack :width => '80%' do
               para order_item.item_to_s, :margin => 4, :align => 'right'
-              para order_item.subproducts_to_s, :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.sub_products.any?
+              para order_item.product_options_to_s, :emphasis => 'italic', :margin => 4, :align => 'right' if order_item.product_options.any?
             end
           end
         end

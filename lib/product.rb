@@ -5,9 +5,9 @@ class Product
   attr_reader :price_pvp
   attr_reader :price_type
   attr_reader :iva
+  attr_accessor :weight_per_unit
   attr_reader :observations
   attr_accessor :options    # List of products in case that product contains options to choose
-  attr_accessor :weight_per_unit
 
   module PriceType
     POR_KILO = "EUR/KG"

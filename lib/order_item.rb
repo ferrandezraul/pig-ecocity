@@ -3,20 +3,20 @@ require 'customer'
 
 class OrderItem
   attr_reader :product
+  attr_reader :product_options  # Only for lots (A list of SubProduct objects)
   attr_reader :quantity
   attr_reader :weight
   attr_reader :observations
   attr_reader :price
   attr_reader :price_without_taxes
   attr_reader :taxes
-  attr_reader :sub_products  # Only for lots (A list of SubProduct objects)
 
   def initialize(customer, product, quantity, weight, observations, sub_products)
     @product = product
     @quantity = quantity
     @weight = weight
     @observations = observations
-    @sub_products = sub_products.dup
+    @product_options = sub_products.dup
     @price = 0
     @taxes = 0
     @price_without_taxes = 0
@@ -25,7 +25,7 @@ class OrderItem
   end
 
   def to_s
-    item_to_s + observations_to_s + subproducts_to_s
+    item_to_s + observations_to_s + product_options_to_s
   end
 
   # How to write your to_json method for your own classes
@@ -39,7 +39,7 @@ class OrderItem
                         :price => @price,
                         :price_without_taxes => @price_without_taxes,
                         :taxes => @taxes,
-                        :sub_products => @sub_products }
+                        :product_options => @product_options }
     }.to_json(*a)
   end
 
@@ -51,14 +51,14 @@ class OrderItem
     end
   end
 
-  def subproducts_to_s
+  def product_options_to_s
     sub_string = String.new
-    if !@sub_products.empty?
-      @sub_products.each_with_index do |subproduct, index|
+    if !@product_options.empty?
+      @product_options.each_with_index do |subproduct, index|
         sub_string << "\t#{subproduct.quantity} x #{subproduct.weight} kg #{subproduct.name}"
 
         # Do not add new line in last iteration
-        sub_string << "\n" if index != @sub_products.size - 1
+        sub_string << "\n" if index != @product_options.size - 1
       end
     end
 
