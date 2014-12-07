@@ -56,13 +56,13 @@ class ProductCSV
                    :price_type => product_attributes[Columns::TIPO],
                    :weight_per_unit => validate_weight_per_unit(product_attributes[Columns::PESO_APROX_UNIDAD]),
                    :observations => product_attributes[Columns::OBSERVATIONS],
-                   :subproducts => subproducts )
+                   :options => subproducts )
 
     end
 
     products_list.each do |product|
-      if !product.subproducts.empty?
-        subproducts_list = product.subproducts
+      if !product.options.empty?
+        subproducts_list = product.options
         subproducts_list.each do |subproduct|
           real_product = ProductHelper.find_product_with_name( products_list, subproduct.name )
           raise "Subproduct not found #{subproduct.name} in product #{product.name}" unless real_product

@@ -12,7 +12,7 @@ class TestProduct < Test::Unit::TestCase
                            :price_coope => 12,
                            :pvp => 14,
                            :observations => "Nothing",
-                           :subproducts => [ SubProduct.new( :name => "Leche", :weight => 0.2, :quantity => 1),
+                           :options => [ SubProduct.new( :name => "Leche", :weight => 0.2, :quantity => 1),
                                              SubProduct.new( :name => "Cacao", :weight => 0.2, :quantity => 1 ) ],
                            :price_type => Product::PriceType::POR_KILO )
 
@@ -21,8 +21,8 @@ class TestProduct < Test::Unit::TestCase
     assert_equal( 12, product.price_coope )
     assert_equal( 14, product.price_pvp )
     assert_equal( 'Nothing', product.observations )
-    assert_equal( "Leche", product.subproducts.first.name )
-    assert_equal( 0.2, product.subproducts.first.weight )
+    assert_equal( "Leche", product.options.first.name )
+    assert_equal( 0.2, product.options.first.weight )
   end
 
   def test_to_s_scenario1
@@ -31,7 +31,7 @@ class TestProduct < Test::Unit::TestCase
                            :price_coope => 12,
                            :pvp => 14,
                            :observations => "Nothing",
-                           :subproducts => [ SubProduct.new( :name => "Leche", :weight => 0.2, :quantity => 1),
+                           :options => [ SubProduct.new( :name => "Leche", :weight => 0.2, :quantity => 1),
                                              SubProduct.new( :name => "Cacao", :weight => 0.2, :quantity => 1 ) ],
                            :price_type => Product::PriceType::POR_KILO )
 

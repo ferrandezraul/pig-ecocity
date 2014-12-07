@@ -6,7 +6,7 @@ class Product
   attr_reader :price_type
   attr_reader :iva
   attr_reader :observations
-  attr_accessor :subproducts
+  attr_accessor :options    # List of products in case that product contains options to choose
   attr_accessor :weight_per_unit
 
   module PriceType
@@ -25,14 +25,14 @@ class Product
 
     @iva = params[:iva]
     @observations = params[:observations]
-    @subproducts = params[:subproducts]
+    @options = params[:options]
   end
 
   def to_s
     # Align to the left with a size of 20 chars
     name_formatted = '%-20.20s' % @name
 
-    if has_subproducts?
+    if has_options?
       name_formatted << subproducts_to_s
     end
 
@@ -50,14 +50,14 @@ class Product
                       :price_type=> @price_type,
                       :iva=> @iva,
                       :observations=> @observations,
-                      :subproducts => @subproducts,
+                      :options => @options,
                       :weight_per_unit => @weight_per_unit }
     }.to_json(*a)
   end
 
-  def has_subproducts?
-    if @subproducts
-      if @subproducts.any?
+  def has_options?
+    if @options
+      if @options.any?
         return true
       end
     end
@@ -70,10 +70,10 @@ class Product
   def subproducts_to_s
     subproducts_formatted = String.new
 
-    if has_subproducts?
+    if has_options?
       subproducts_formatted << "\n\tOpcions a escollir:\n"
-      @subproducts.each do |subproduct|
-        subproducts_formatted << "\t#{subproduct.weight} Kg\t#{subproduct.name}\n"
+      @options.each do |option|
+        subproducts_formatted << "\t#{option.weight} Kg\t#{option.name}\n"
       end
     end
 

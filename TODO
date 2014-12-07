@@ -1,4 +1,6 @@
-Create to_json method to all my classes
+A Product, anyadir selected_options y seguir refactorizando. Anyadir mas test.
+Ten en cuenta que los productos de una order_item no pueden ser los mismos que los productos originales.
+
 Load orders by start up the app. (Load json file orders.json)
 
 Revisar en new_order_item_panel cuando se aceptan productos sin peso o cantidad?

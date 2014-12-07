@@ -141,7 +141,7 @@ class Order
       return false
     end
 
-    if !product.has_subproducts?
+    if !product.has_options?
       begin
         !Float(peso)
       rescue

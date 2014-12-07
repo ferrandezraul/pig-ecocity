@@ -22,9 +22,9 @@ class NewOrderItemPanel < Shoes::Widget
       list_box items: product_names, :margin => 4 do |list|
         selected_product = ProductHelper.find_product_with_name( products, list.text )
 
-        if selected_product.has_subproducts?
+        if selected_product.has_options?
           @gui_subproducts_panel.clear do
-            sub_products_panel( :subproducts => selected_product.subproducts ) do |subproducts|
+            sub_products_panel( :subproducts => selected_product.options ) do |subproducts|
               selected_subproducts = subproducts
             end
           end
@@ -94,7 +94,7 @@ class NewOrderItemPanel < Shoes::Widget
     elsif weight != 0 and product.price_type == Product::PriceType::POR_UNIDAD
       alert "Pes incorrecte. Aquest producte es compra per unitats."
       return false
-    elsif product.subproducts.any? and selected_subproducts.empty?
+    elsif product.options.any? and selected_subproducts.empty?
       alert "Has de afegir els subproductes del lot per poder afegir un lot"
       return false
     end
