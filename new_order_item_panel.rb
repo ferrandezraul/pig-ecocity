@@ -37,7 +37,7 @@ class NewOrderItemPanel < Shoes::Widget
         if @selected_product.weight_per_unit
           @gui_weight.text = "#{'%.3f' % @selected_product.weight_per_unit.to_f }"
         else
-          @gui_weight.text = ""
+          @gui_weight.text = String.new
         end
 
       end
@@ -98,7 +98,7 @@ class NewOrderItemPanel < Shoes::Widget
       return false
     end
 
-    return true
+    true
 
   end
 end
