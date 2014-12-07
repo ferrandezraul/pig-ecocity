@@ -2,7 +2,7 @@
 
 $:.unshift File.join( File.dirname( __FILE__ ), "lib" )
 
-require 'sub_products_panel'
+require 'product_options_panel'
 
 class NewOrderItemPanel < Shoes::Widget
   def initialize( args )
@@ -22,9 +22,16 @@ class NewOrderItemPanel < Shoes::Widget
         @selected_product = ProductHelper.find_product_with_name( @products, list.text )
 
         if @selected_product.has_options?
+
           @gui_subproducts_panel.clear do
-            sub_products_panel( :subproducts => @selected_product.options ) do |product_options|
-              @selected_product_options = product_options
+            product_options_panel( :product_options => @selected_product.options,
+                                   :weight => @selected_product.weight_per_unit.to_f ) do |product_options, weight_selected, valid|
+
+              @selected_product_options = product_options if valid
+              unless valid
+                alert_invalid_weight_for_selected_products(@selected_product.weight_per_unit, weight_selected)
+              end
+
             end
           end
 
@@ -100,5 +107,21 @@ class NewOrderItemPanel < Shoes::Widget
 
     true
 
+  end
+
+  # Gives an alert on how required_weight and weight differ
+  def alert_invalid_weight_for_selected_products(required_weight, weight)
+    weight_difference = required_weight- weight
+    alert_message = String.new
+    alert_message << "Les opcions seleccionades han de sumar #{required_weight} kg.\n"
+    alert_message << "Les opcions seleccionades sumen #{weight} kg.\n"
+
+    if weight_difference > 0
+      alert_message << "Has d'afegir #{weight_difference} kg."
+    else
+      alert_message << "Has de treure #{weight_difference} kg."
+    end
+
+    alert alert_message
   end
 end

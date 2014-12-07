@@ -1,0 +1,203 @@
+[
+  {
+    "Order": {
+      "customer": {
+        "Customer": {
+          "name": "La Garrofa",
+          "address": "c/ Pirelli 5, 08800 Vilanova I la Geltru",
+          "type": "COOPE",
+          "nif": "12345678-A"
+        }
+      },
+      "date": "2014-12-07",
+      "total": 26.875,
+      "total_without_taxes": 24.43181818181818,
+      "taxes": 2.4431818181818183,
+      "taxes_hash": {
+        "10": 2.4431818181818183
+      },
+      "order_items": [
+        {
+          "OrderItem": {
+            "product": {
+              "Product": {
+                "name": "Lot 2.5 kg",
+                "price_tienda": 10.0,
+                "price_coope": 10.75,
+                "price_pvp": 11.95,
+                "price_type": "EUR/KG",
+                "iva": 10,
+                "observations": null,
+                "options": [
+                  {
+                    "SubProduct": {
+                      "name": "Llom",
+                      "weight": "0.5",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Carn picada",
+                      "weight": "0.4",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarra d'ou",
+                      "weight": "0.5",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarra fetge",
+                      "weight": "0.5",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarra negra",
+                      "weight": "0.5",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarra cap",
+                      "weight": "0.5",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarres",
+                      "weight": "0.6",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Salsitxes",
+                      "weight": "0.6",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Panxeta",
+                      "weight": "0.4",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Costelles",
+                      "weight": "0.4",
+                      "quantity": 1
+                    }
+                  }
+                ],
+                "weight_per_unit": 2.5
+              }
+            },
+            "quantity": 1,
+            "weight": 2.5,
+            "observations": "",
+            "price": 26.875,
+            "price_without_taxes": 24.43181818181818,
+            "taxes": 2.4431818181818183,
+            "product_options": [
+              {
+                "SubProduct": {
+                  "name": "Llom",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Carn picada",
+                  "weight": "0.4",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Botifarra d'ou",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Llom",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Carn picada",
+                  "weight": "0.4",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Botifarra d'ou",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Botifarres",
+                  "weight": "0.6",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Llom",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Carn picada",
+                  "weight": "0.4",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Botifarra d'ou",
+                  "weight": "0.5",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Botifarres",
+                  "weight": "0.6",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Costelles",
+                  "weight": "0.4",
+                  "quantity": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
