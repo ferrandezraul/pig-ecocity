@@ -3,28 +3,28 @@
     "Order": {
       "customer": {
         "Customer": {
-          "name": "La Garrofa",
-          "address": "c/ Pirelli 5, 08800 Vilanova I la Geltru",
-          "type": "COOPE",
-          "nif": "12345678-A"
+          "name": "Raul Ferrandez",
+          "address": "Skalitzer Str. 59A, 10997 Berlin",
+          "type": "CLIENT",
+          "nif": "77314883-S"
         }
       },
-      "date": "2014-12-07",
-      "total": 26.875,
-      "total_without_taxes": 24.43181818181818,
-      "taxes": 2.4431818181818183,
+      "date": "2014-12-08",
+      "total": 65.69999999999999,
+      "total_without_taxes": 59.72727272727272,
+      "taxes": 5.972727272727272,
       "taxes_hash": {
-        "10": 2.4431818181818183
+        "10": 5.972727272727272
       },
       "order_items": [
         {
           "OrderItem": {
             "product": {
               "Product": {
-                "name": "Lot 2.5 kg",
-                "price_tienda": 10.0,
-                "price_coope": 10.75,
-                "price_pvp": 11.95,
+                "name": "Lot 6 kg",
+                "price_tienda": 9.0,
+                "price_coope": 9.75,
+                "price_pvp": 10.95,
                 "price_type": "EUR/KG",
                 "iva": 10,
                 "observations": null,
@@ -39,7 +39,7 @@
                   {
                     "SubProduct": {
                       "name": "Carn picada",
-                      "weight": "0.4",
+                      "weight": "1",
                       "quantity": 1
                     }
                   },
@@ -73,14 +73,7 @@
                   },
                   {
                     "SubProduct": {
-                      "name": "Botifarres",
-                      "weight": "0.6",
-                      "quantity": 1
-                    }
-                  },
-                  {
-                    "SubProduct": {
-                      "name": "Salsitxes",
+                      "name": "Costelles",
                       "weight": "0.6",
                       "quantity": 1
                     }
@@ -88,39 +81,67 @@
                   {
                     "SubProduct": {
                       "name": "Panxeta",
+                      "weight": "0.6",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Ossos d'espinada",
+                      "weight": "0.6",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Hamburgueses",
+                      "weight": "0.8",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Cap de llom",
                       "weight": "0.4",
                       "quantity": 1
                     }
                   },
                   {
                     "SubProduct": {
-                      "name": "Costelles",
+                      "name": "Carn per estofar",
                       "weight": "0.4",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Botifarres",
+                      "weight": "1.6",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "SubProduct": {
+                      "name": "Salsitxes",
+                      "weight": "1.6",
                       "quantity": 1
                     }
                   }
                 ],
-                "weight_per_unit": 2.5
+                "weight_per_unit": 6.0
               }
             },
             "quantity": 1,
-            "weight": 2.5,
+            "weight": 6.0,
             "observations": "",
-            "price": 26.875,
-            "price_without_taxes": 24.43181818181818,
-            "taxes": 2.4431818181818183,
+            "price": 65.69999999999999,
+            "price_without_taxes": 59.72727272727272,
+            "taxes": 5.972727272727272,
             "product_options": [
               {
                 "SubProduct": {
-                  "name": "Llom",
-                  "weight": "0.5",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
                   "name": "Carn picada",
-                  "weight": "0.4",
+                  "weight": "1",
                   "quantity": 1
                 }
               },
@@ -133,63 +154,56 @@
               },
               {
                 "SubProduct": {
-                  "name": "Llom",
+                  "name": "Botifarra fetge",
                   "weight": "0.5",
                   "quantity": 1
                 }
               },
               {
                 "SubProduct": {
-                  "name": "Carn picada",
-                  "weight": "0.4",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
-                  "name": "Botifarra d'ou",
+                  "name": "Botifarra negra",
                   "weight": "0.5",
                   "quantity": 1
                 }
               },
               {
                 "SubProduct": {
-                  "name": "Botifarres",
-                  "weight": "0.6",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
-                  "name": "Llom",
+                  "name": "Botifarra cap",
                   "weight": "0.5",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
-                  "name": "Carn picada",
-                  "weight": "0.4",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
-                  "name": "Botifarra d'ou",
-                  "weight": "0.5",
-                  "quantity": 1
-                }
-              },
-              {
-                "SubProduct": {
-                  "name": "Botifarres",
-                  "weight": "0.6",
                   "quantity": 1
                 }
               },
               {
                 "SubProduct": {
                   "name": "Costelles",
+                  "weight": "0.6",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Panxeta",
+                  "weight": "0.6",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Ossos d'espinada",
+                  "weight": "0.6",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Hamburgueses",
+                  "weight": "0.8",
+                  "quantity": 1
+                }
+              },
+              {
+                "SubProduct": {
+                  "name": "Cap de llom",
                   "weight": "0.4",
                   "quantity": 1
                 }

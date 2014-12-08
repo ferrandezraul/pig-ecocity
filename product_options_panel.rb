@@ -35,6 +35,7 @@ class ProductOptionsPanel < Shoes::Widget
   private
 
   def get_selected_products_options
+    @product_options_selected.clear
     if @product_options_entries
       @product_options_entries.map do |c, weight, subproduct|
         @product_options_selected << subproduct if c.checked?
@@ -70,13 +71,17 @@ class ProductOptionsPanel < Shoes::Widget
         total_weight_selected += weight_editor.text.to_f if checkbox.checked?
       end
     end
-
     total_weight_selected
   end
 
   def weight_is_valid?(weight)
     if @weight_required != weight
-      false
+      # If the difference is bigger than 0.1 kg, weight is invalid
+      if (@weight_required - weight).abs > 0.1
+        false
+      else
+        true
+      end
     else
       true
     end

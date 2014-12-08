@@ -64,11 +64,19 @@ class MenuPanel < Shoes::Widget
     clear do
       print_links
       if @orders.any?
-        para JSON.pretty_generate(@orders) if @orders.any?
-        File.open(ORDERS_JSON_PATH, 'w') { |f| f.write(JSON.pretty_generate(@orders)) }
+        para JSON.pretty_generate(@orders)
+        write_orders_to_json_file
       end
     end
+  end
 
+  def write_orders_to_json_file
+    file_path = ask_save_file
+    if file_path
+      # File object will automatically be closed when the block terminates
+      File.open(file_path, 'w') { |file| file.write(JSON.pretty_generate(@orders)) }
+      alert "Archiu guardat."
+    end
   end
 
   def print_links

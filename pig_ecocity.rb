@@ -53,8 +53,8 @@ Shoes.app :width => 1500, :height => 900 do
 
     products = load_products
     customers = load_customers
-    orders = load_orders(products, customers)
-    #orders = []
+    #orders = load_orders(products, customers)
+    orders = []
 
     menu_panel :products => products,
                :customers => customers,
