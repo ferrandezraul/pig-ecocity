@@ -26,47 +26,29 @@ class MenuPanel < Shoes::Widget
   private
 
   def view_products
-    clear do
-      print_links
-      products_view @products
-    end
+    products_view @products
   end
 
   def view_customers
-    clear do
-      print_links
-      customers_view @customers
-    end
+    customers_view @customers
   end
 
   def view_orders
-    clear do
-      print_links
-      orders_view @orders
-    end
+    orders_view @orders
   end
 
   def new_order
-    clear do
-      print_links
-      new_order_panel @products, @customers, @orders
-    end
+    new_order_panel @products, @customers, @orders
   end
 
   def resum
-    clear do
-      print_links
-      resum_panel @products, @customers, @orders
-    end
+    resum_panel @products, @customers, @orders
   end
 
   def save_orders
-    clear do
-      print_links
-      if @orders.any?
-        para JSON.pretty_generate(@orders)
-        write_orders_to_json_file
-      end
+    if @orders.any?
+      para JSON.pretty_generate(@orders)
+      write_orders_to_json_file
     end
   end
 
@@ -81,12 +63,39 @@ class MenuPanel < Shoes::Widget
 
   def print_links
     flow do
-      para link("Productes").click { view_products }, :margin => 10
-      para link("Clients").click { view_customers }, :margin => 10
-      para link("Comandes").click { view_orders }, :margin => 10
-      para link("Nova Comanda").click { new_order }, :margin => 10
-      para link("Resum").click { resum }, :margin => 10
-      para link("Save Orders").click { save_orders }, :margin => 10
+      para link( 'Productes' ).click {
+        clear do
+          print_links
+          view_products
+        end
+      }, :margin => 10
+      para link( 'Clients' ).click {
+        clear do
+          print_links
+          view_customers
+        end
+      }, :margin => 10
+      para link( 'Comandes' ).click {
+        clear do
+          print_links
+          view_orders
+        end
+      }, :margin => 10
+      para link( 'Nova Comanda' ).click {
+        clear do
+          print_links
+          new_order
+        end
+      }, :margin => 10
+      para link( 'Resum' ).click {
+        clear do
+          print_links
+          resum
+        end
+      }, :margin => 10
+      para link( 'Save Orders' ).click {
+        save_orders
+      }, :margin => 10
     end
   end
 
